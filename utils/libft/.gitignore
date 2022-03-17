@@ -1,7 +1,0 @@
-*.o
-*.a
-*.dSYM
-/libft-war-machine
-.a.out
-/libft-unit-test
-/libftTester
