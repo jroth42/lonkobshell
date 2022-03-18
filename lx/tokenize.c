@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:19:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 00:16:07 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 16:16:44 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,23 @@ t_token	*new_token(t_token *token)
 void	lexer(t_node *node)
 {
 	char	*input;
-	t_token	*token_list;
+	int		i;
 
+	i = 0;
 	input = node->input;
 	while (*input)
 	{
-		if (*input == ' ')
+		if (whitespace(*input))
 			skip_whitespace(&input);
-		if (*input == '\"' || *input == '\'')
-			handle_quotation(node->token, &input);
-		else if (*input == '>' || *input == '<')
-			handle_redirections(node->token, &input);
-		else if (*input == '-')
-			handle_option(node->token, &input);
-		else
-			input++;
+		else 
+			handle_word(node->token, &input);
+		// if (*input == '\"' || *input == '\'')
+		// 	handle_quotation(node->token, &input);
+
+		// else if (*input == '>' || *input == '<')
+		// 	handle_redirections(node->token, &input);
+		// else if (*input == '-')
+		// 	handle_option(node->token, &input);
+		// else
 	}
 }
