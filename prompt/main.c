@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 18:42:52 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 21:41:51 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,21 @@ t_node	*add_node(t_node *node)
 	t_node *new;
 
 	new = malloc(sizeof(t_node));
+	if (!new)
+		return (NULL);
 	new->input = NULL;
 	new->next = NULL;
-	new->prev = node;
-	node->next = new;
-	new->token = malloc(sizeof(t_token));
+	if (node)
+	{
+		new->prev = node;
+		node->next = new;	
+	}
+	else
+	{
+		new->prev = NULL;
+		new->next = NULL;	
+	}
+	new->token = create_token(NULL);
 	return (new);
 }
 
@@ -32,13 +42,12 @@ int	main(int argc, char **argv, char **env)
 	t_node	*node;
 	t_table	*table;
 
-	node = malloc(sizeof(t_node));
-	node->token = new_token(NULL);
+	node = add_node(NULL);
 	while (1)
-	{
-		node->input = readline("\x1B[36mlonkobshell@»-(٩(̾●̮̮̃̾•̃̾)۶)->:\e[0m ");
-		input_handle(node);
+	{ 
+		node->input = readline("\x1B[36mlonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)->:\e[0m ");
 		add_history(node->input);
+		input_handle(node);
 		lexer(node);
 		node = add_node(node);
 	}

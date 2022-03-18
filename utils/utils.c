@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:41:08 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 18:35:27 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 22:20:50 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	print_nodes(t_node	*node)
 
 bool	stringcmp(char *str, char *cmp)
 {
-	if (ft_strlen(str) != ft_strlen(cmp))
-		return (false);
+	// if (ft_strlen(str) != ft_strlen(cmp))
+	// 	return (false);
 	while (*str)
 	{
 		if (!(*str) || !(*cmp))

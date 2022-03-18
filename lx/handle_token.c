@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 20:14:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 19:04:09 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 22:37:21 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,35 +48,33 @@ char	*find_filename_right(char *input)
 	return (ft_strdupn(input + i, j));
 }
 
-void	handle_redirections(t_token *token, char **input)
+void	handle_redirections(t_token **token, char **input)
 {
 	if (**input == '>' && **input + 1 == '>')
 	{
-		token->chr = ft_strjoin(find_filename_left(*input), ">>");
-		token->type = GREATGREAT;
+		(*token)->chr = ft_strjoin(find_filename_left(*input), ">>");
+		(*token)->type = GREATGREAT;
 	}
 	if (**input == '>')
 	{
-		token->chr = ft_strjoin(find_filename_left(*input), ">");
-		printf("%s\n", token->chr);
-		token->type = GREAT;
+		(*token)->chr = ft_strjoin(find_filename_left(*input), ">");
+		(*token)->type = GREAT;
 	}
 	if (**input == '<' && **input + 1 == '<')
 	{
-		token->chr = ft_strjoin("<<", find_filename_right(*input));
-		token->type = LESSLESS;
+		(*token)->chr = ft_strjoin("<<", find_filename_right(*input));
+		(*token)->type = LESSLESS;
 	}		
 	if (**input == '<')
 	{
-		token->chr = ft_strjoin("<", find_filename_right(*input));
-		printf("%s\n", token->chr);
-		token->type = LESS;
+		(*token)->chr = ft_strjoin("<", find_filename_right(*input));
+		(*token)->type = LESS;
 	}
-	if (token->chr != NULL)
-		token = new_token(token);
+	if ((*token)->chr)
+		*token = create_token(*token);
 }
 
-void	handle_option(t_token *token, char **input)
+void	handle_option(t_token **token, char **input)
 {
 	int		i;
 	char	*str;
@@ -87,15 +85,15 @@ void	handle_option(t_token *token, char **input)
 	{
 		while (str[i] && !whitespace(str[i]))
 			i++;
-		token->chr = ft_strdupn(str, i);
-		token->type = OPTION;
+		(*token)->chr = ft_strdupn(str, i);
+		(*token)->type = OPTION;
 	}
-	if (token->chr != NULL)
-		token = new_token(token);
+	if ((*token)->chr)
+		*token = create_token(*token);
 	(*input) += i;
 }
 
-void	handle_quotation(t_token *token, char **input)
+void	handle_quotation(t_token **token, char **input)
 {
 	int		i;
 	int		j;
@@ -110,8 +108,8 @@ void	handle_quotation(t_token *token, char **input)
 			i++;
 		if (str[i] == '\'')
 		{
-			token->chr = ft_strdupn((*input) + 1, i - 1);
-			token->type = SQUOTE;
+			(*token)->chr = ft_strdupn((*input), i + 1);
+			(*token)->type = SQUOTE;
 		}
 	}
 	else if (str[j++] == '\"')
@@ -120,16 +118,16 @@ void	handle_quotation(t_token *token, char **input)
 			j++;
 		if (str[j] == '\"')
 		{
-			token->chr = ft_strdupn((*input) + 1, j - 1);
-			token->type = DQUOTE;
+			(*token)->chr = ft_strdupn((*input), j + 1);
+			(*token)->type = DQUOTE;
 		}
 	}
-	if (token->chr != NULL)
-		token = new_token(token);
+	if ((*token)->chr)
+		*token = create_token(*token);
 	(*input) += j + i + 1;
 }
 
-void	handle_word(t_token *token, char **input)
+void	handle_word(t_token **token, char **input)
 {
 	int		i;
 	char	*str;
@@ -138,13 +136,13 @@ void	handle_word(t_token *token, char **input)
 	i = 0;
 	while (ft_isalpha(str[i]))
 		i++;
-	token->chr = ft_strdupn(*input, i);
-	if ((token->prev && token->prev->type == PIPE)
-		|| !token->prev)
-		token->type = COMMAND;
+	(*token)->chr = ft_strdupn(*input, i);
+	if (((*token)->prev && (*token)->prev->type == PIPE)
+		|| !(*token)->prev)
+		(*token)->type = COMMAND;
 	else
-		token->type = ARG;
-	if (token->chr)
-		token = new_token(token);
+		(*token)->type = ARG;
+	if ((*token)->chr)
+		*token = create_token(*token);
 	(*input) += i;
 }
