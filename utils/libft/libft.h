@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 15:04:00 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/17 21:26:04 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 16:08:23 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 # include "get_next_line_bonus.h"
 /* struct */
 typedef struct s_list
@@ -25,7 +26,7 @@ typedef struct s_list
 
 /* functions */
 
-int		ft_isalpha(int c);
+bool	ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);

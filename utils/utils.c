@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:41:08 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 00:16:20 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 15:52:30 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,14 @@ void	input_handle(t_node *node)
 
 void	skip_whitespace(char **str)
 {
-	while (**str == ' ')
-		(*str)++;
+		while (**str == ' ')
+			(*str)++;
+
+}
+
+bool	whitespace(const char c)
+{
+	if (c == ' ' || c == '\t' || c == '\v' || c == '\f' || c == '\r')
+		return (true);
+	return (false);
 }
