@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 20:14:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 16:19:25 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 16:24:33 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,14 +124,15 @@ void	handle_quotation(t_token *token, char **input)
 void	handle_word(t_token *token, char **input)
 {
 	int		i;
-	char *str;
+	char	*str;
 
 	str = *input;
 	i = 0;
 	while (ft_isalpha(str[i]))
 		i++;
 	token->chr = ft_strdupn(*input, i);
-	if (token->prev && token->prev->type == PIPE)
+	if ((token->prev && token->prev->type == PIPE)
+		|| !token->prev)
 		token->type = COMMAND;
 	else
 		token->type = ARG;
