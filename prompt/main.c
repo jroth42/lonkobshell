@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 00:13:29 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 18:42:52 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **env)
 	t_table	*table;
 
 	node = malloc(sizeof(t_node));
-	node->token = malloc(sizeof(t_token));
+	node->token = new_token(NULL);
 	while (1)
 	{
 		node->input = readline("\x1B[36mlonkobshell@»-(٩(̾●̮̮̃̾•̃̾)۶)->:\e[0m ");

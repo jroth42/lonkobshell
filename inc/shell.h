@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 16:13:23 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 18:42:43 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ void	input_handle(t_node *node);
 //
 void	skip_whitespace(char **str);
 char	**ft_split(char const *s, char c);
-void	create_tokens(t_node *node);
+t_token	*new_token(t_token *token);
 t_table *create_table(t_token *token);
 t_table	*init_table();
 t_token	*token_head(t_token *token);
 void	fill_table(t_table *table, t_token *token);
 void	handle_option(t_token *token, char **input);
 void	handle_redirections(t_token *token, char **input);
-void		handle_quotation(t_token *token, char **input);
+void	handle_quotation(t_token *token, char **input);
 void	handle_word(t_token *token, char **input);
 
 

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 20:14:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 16:24:33 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 19:04:09 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,47 +78,55 @@ void	handle_redirections(t_token *token, char **input)
 
 void	handle_option(t_token *token, char **input)
 {
-	int	i;
+	int		i;
+	char	*str;
 
 	i = 0;
-	if (*input[i] == '-')
+	str = *input;
+	if (str[i] == '-')
 	{
-		while (*input[i] && *input[i] != ' ')
+		while (str[i] && !whitespace(str[i]))
 			i++;
-		token->chr = ft_strdupn(*input, i);
+		token->chr = ft_strdupn(str, i);
 		token->type = OPTION;
 	}
 	if (token->chr != NULL)
 		token = new_token(token);
+	(*input) += i;
 }
 
 void	handle_quotation(t_token *token, char **input)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*str;
 
+	j = 0;
 	i = 0;
-	if (*input[i] == '\'')
+	str = *input;
+	if (str[i++] == '\'')
 	{
-		while (*input[i] != '\'')
+		while (str[i] != '\'')
 			i++;
-		if (*input[i] == '\'')
+		if (str[i] == '\'')
 		{
-			token->chr = ft_strdupn(*input, i);
+			token->chr = ft_strdupn((*input) + 1, i - 1);
 			token->type = SQUOTE;
 		}
-	}	
-	else if ((**input)++ == '\"')
+	}
+	else if (str[j++] == '\"')
 	{
-		while (*input[i] && *input[i] != '\"')
-			i++;
-		if (*input[i] == '\"')
+		while (str[j] && str[j] != '\"')
+			j++;
+		if (str[j] == '\"')
 		{
-			token->chr = ft_strdupn(*input, i);
+			token->chr = ft_strdupn((*input) + 1, j - 1);
 			token->type = DQUOTE;
 		}
 	}
 	if (token->chr != NULL)
 		token = new_token(token);
+	(*input) += j + i + 1;
 }
 
 void	handle_word(t_token *token, char **input)

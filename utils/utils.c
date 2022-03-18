@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:41:08 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 15:52:30 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/18 18:35:27 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ bool	stringcmp(char *str, char *cmp)
 
 void	input_handle(t_node *node)
 {
+	if (node->prev)
+	{
 		if (stringcmp("token", node->input))
 			print_tokens(node);
 		if (stringcmp("nodes", node->input))
 			print_nodes(node);
+	}
 		if (stringcmp("exit", node->input))
 			exit(0);
 }
