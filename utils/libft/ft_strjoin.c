@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 14:37:55 by jroth             #+#    #+#             */
-/*   Updated: 2021/09/15 17:40:56 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/19 17:01:51 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
+	len = (int) ft_strlen(s1) + (int) ft_strlen(s2);
 	s3 = (char *)malloc(sizeof(char) * (len + 1));
 	if (!s3)
 		return (NULL);

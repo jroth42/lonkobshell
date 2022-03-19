@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/03/17 22:06:30 by jroth            ###   ########.fr        #
+#    Updated: 2022/03/19 18:03:16 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,9 @@ UTL = ./utils/
 LIBFT = $(UTL)libft/
 
 SRC =	$(PRMPT)main.c \
-		$(LX)lx.c $(LX)tokenize.c $(LX)handle_token.c $(LX)cmdtable.c $(LX)fill_table.c\
-		$(UTL)utils.c
+		$(LX)tokenize.c $(LX)handle_token.c $(LX)cmdtable.c $(LX)fill_table.c\
+		$(LX)handle_redirect.c \
+		$(UTL)utils.c $(UTL)print.c
 
 CC = gcc -g
 #-Wall -Werror -Wextra
@@ -34,6 +35,7 @@ OBJ = $(SRC:c=o)
 $(NAME): $(OBJ)
 	make -C $(LIBFT) all
 	$(CC) -o $(NAME) $(OBJ) $(LIBFT)libft.a -lreadline
+	make clean
 
 %.o: %.c
 	$(CC) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 22:40:52 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/19 18:49:16 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 enum e_type
 {
     COMMAND = 0,
-    OPTION = -2,
-    ARG,
+    ARG = -1,
     SQUOTE = '\'',
     DQUOTE = '\"',
     PIPE = '|',
@@ -59,24 +58,21 @@ typedef struct		s_table
 }					t_table;
 
 
-//TOKENIZER :
+//	TOKENIZER :
 void	lexer(t_node *node);
 t_token	*create_token(t_token *token);
 void	skip_whitespace(char **str);
 bool	whitespace(const char c);
-void	handle_option(t_token **token, char **input);
-void	handle_redirections(t_token **token, char **input);
 void	handle_quotation(t_token **token, char **input);
+void	handle_redirections(t_token **token, char  **input);
 void	handle_word(t_token **token, char **input);
-	//print utils for tokenizer
-void	print_tokens(t_node	*node);
-void	print_nodes(t_node	*node);
-bool	stringcmp(char *str, char *cmp);
+void	handle_pipe(t_token **token, char **input);
+//	print utils for tokenizer
 void	input_handle(t_node *node);
 
 
 
-
+//	TABLESTUFF
 // void	fill_table(t_table *table, t_token *token);
 // t_table	*init_table();
 // t_table *create_table(t_token *token);

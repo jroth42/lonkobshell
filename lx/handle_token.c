@@ -6,100 +6,48 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 20:14:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 22:37:21 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/19 18:53:18 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-char	*find_filename_left(char *input)
+void	handle_pipe(t_token **token, char **input)
 {
-	int		i;
-	int		j;
-	int		k;
-	i = 0;
-	j = 0;
-	if (input[i] == '>')
-	{
-		while (*(input - i) == ' ')
-			i++;
-		while (*(input - i - j) != ' ')
-			j++;
-	}
-	return (ft_strdupn(input + j + i, j));
-}
-
-char	*find_filename_right(char *input)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	*file;
-
-	i = 0;
-	j = 0;
-	if (input[i] == '<')
-	{
-		while (input[i] == ' ' || input[i] == '<')
-			i++;
-		while (input[i + j] != ' ')
-			j++;
-	}
-	return (ft_strdupn(input + i, j));
-}
-
-void	handle_redirections(t_token **token, char **input)
-{
-	if (**input == '>' && **input + 1 == '>')
-	{
-		(*token)->chr = ft_strjoin(find_filename_left(*input), ">>");
-		(*token)->type = GREATGREAT;
-	}
-	if (**input == '>')
-	{
-		(*token)->chr = ft_strjoin(find_filename_left(*input), ">");
-		(*token)->type = GREAT;
-	}
-	if (**input == '<' && **input + 1 == '<')
-	{
-		(*token)->chr = ft_strjoin("<<", find_filename_right(*input));
-		(*token)->type = LESSLESS;
-	}		
-	if (**input == '<')
-	{
-		(*token)->chr = ft_strjoin("<", find_filename_right(*input));
-		(*token)->type = LESS;
-	}
+	(*token)->chr = ft_strdup("|");
+	(*token)->type = PIPE;
 	if ((*token)->chr)
 		*token = create_token(*token);
+	(*input)++;
 }
 
-void	handle_option(t_token **token, char **input)
+void	handle_dquote(t_token **token, char **input)
 {
 	int		i;
 	char	*str;
 
 	i = 0;
 	str = *input;
-	if (str[i] == '-')
+	if (str[i++] == '\"')
 	{
-		while (str[i] && !whitespace(str[i]))
+		while (str[i] != '\"')
 			i++;
-		(*token)->chr = ft_strdupn(str, i);
-		(*token)->type = OPTION;
+		if (str[i] == '\"')
+		{
+			(*token)->chr = ft_strdupn((*input), ++i);
+			(*token)->type = DQUOTE;
+		}
 	}
 	if ((*token)->chr)
 		*token = create_token(*token);
 	(*input) += i;
 }
 
-void	handle_quotation(t_token **token, char **input)
+void	handle_squote(t_token **token, char **input)
 {
 	int		i;
-	int		j;
 	char	*str;
 
-	j = 0;
 	i = 0;
 	str = *input;
 	if (str[i++] == '\'')
@@ -108,23 +56,21 @@ void	handle_quotation(t_token **token, char **input)
 			i++;
 		if (str[i] == '\'')
 		{
-			(*token)->chr = ft_strdupn((*input), i + 1);
+			(*token)->chr = ft_strdupn((*input), ++i);
 			(*token)->type = SQUOTE;
-		}
-	}
-	else if (str[j++] == '\"')
-	{
-		while (str[j] && str[j] != '\"')
-			j++;
-		if (str[j] == '\"')
-		{
-			(*token)->chr = ft_strdupn((*input), j + 1);
-			(*token)->type = DQUOTE;
 		}
 	}
 	if ((*token)->chr)
 		*token = create_token(*token);
-	(*input) += j + i + 1;
+	(*input) += i;
+}
+
+void	handle_quotation(t_token **token, char **input)
+{
+	if (**input == '\'')
+		handle_squote(token, input);
+	if (**input == '\"')
+		handle_dquote(token, input);
 }
 
 void	handle_word(t_token **token, char **input)
@@ -134,11 +80,11 @@ void	handle_word(t_token **token, char **input)
 
 	str = *input;
 	i = 0;
-	while (ft_isalpha(str[i]))
+	while (str[i] == '-' || ft_isalpha(str[i]) || ft_isdigit(str[i]))
 		i++;
 	(*token)->chr = ft_strdupn(*input, i);
-	if (((*token)->prev && (*token)->prev->type == PIPE)
-		|| !(*token)->prev)
+	if ((((*token)->prev && (*token)->prev->type == PIPE)
+		|| !(*token)->prev) && str[0] != '-')
 		(*token)->type = COMMAND;
 	else
 		(*token)->type = ARG;
