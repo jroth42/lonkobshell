@@ -6,13 +6,13 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:19:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/19 18:48:53 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/19 23:29:52 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-// creates and appends new token elements or lists
+// creates list of tokens if !token otherwise appends tokens to list
 t_token	*create_token(t_token *token)
 {
 	t_token *new;
@@ -21,7 +21,7 @@ t_token	*create_token(t_token *token)
 	if (!new)
 		return (NULL);
 	new->chr = NULL;
-	new->type = 0;
+	new->type = COMMAND;
 	new->next = NULL;
 	if (!token)
 	{
@@ -37,8 +37,8 @@ t_token	*create_token(t_token *token)
 }
 
 // IN THEORY: go through all the characters, skip whitespaces, 
-// create tokens for args, options, commands, redirects... -> handle_token.c
-// ... Move Pointer within each function **ptr
+// create tokens for args, commands, redirects... -> handle_token.c
+// ... move Pointer within each function **ptr (*input) += chars to be skipped.
 void	lexer(t_node *node)
 {
 	char	*input;

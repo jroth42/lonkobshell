@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/18 21:41:51 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/19 20:41:57 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **env)
 	node = add_node(NULL);
 	while (1)
 	{ 
-		node->input = readline("\x1B[36mlonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)->:\e[0m ");
+		node->input = readline("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)->...: ");
 		add_history(node->input);
 		input_handle(node);
 		lexer(node);

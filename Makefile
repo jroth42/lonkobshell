@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/03/19 18:03:16 by jroth            ###   ########.fr        #
+#    Updated: 2022/03/19 21:07:52 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,13 +28,13 @@ SRC =	$(PRMPT)main.c \
 CC = gcc -g
 #-Wall -Werror -Wextra
 
-LIBFT = ./utils/libft/
+LIBFT = $(UTL)libft/
 
 OBJ = $(SRC:c=o)
 
 $(NAME): $(OBJ)
 	make -C $(LIBFT) all
-	$(CC) -o $(NAME) $(OBJ) $(LIBFT)libft.a -lreadline
+	$(CC) -o $(NAME) $(OBJ) $(LIBFT)libft.a -lreadline -I/Users/$(USER)/.brew/opt/readline/include -L/Users/$(USER)/.brew/opt/readline/lib 
 	make clean
 
 %.o: %.c

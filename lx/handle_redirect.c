@@ -6,27 +6,22 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:24:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/19 18:29:40 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/19 23:09:19 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-void	handle_redirect_out(t_token **token, char **input)
+//	lil helper function
+bool	check_char(const char c)
 {
-	if (*(*input + 1) == '>')
-	{
-		(*token)->prev->type = GREATGREAT;	
-		(*input) += 2;
-	}
-	else
-	{
-		(*token)->prev->type = GREAT;
-		(*input) += 1;
-	}
+	if (c == '>' || c == '<')
+		return (true);
+	return (false);
 }
 
-char	*find_filename_right(char **input)
+//	finds and returns the next word after the redirection operator
+char	*find_filename(char **input)
 {
 	int		i;
 	int		j;
@@ -35,36 +30,58 @@ char	*find_filename_right(char **input)
 	i = 0;
 	j = 0;
 	str = *input;
-	if (str && str[i] == '<')
+	if (str && check_char(str[i]))
 	{
-		while (str[i] == '<')
+		while (check_char(str[i]))
 			i++;
 		while (str[i] && whitespace(str[i]))
 			i++;
 		while (str[i + j] && !whitespace(str[i + j]))
+		{
 			j++;
+			if (check_char(str[i + j]))
+				break ;
+		}
 	}
 	(*input) += (i + j);
-	str = ft_strdupn(str + i, j);
-	return (str);
+	return (ft_strdupn(str + i, j));
 }
 
+// checks if >> or > before assigning token
+void	handle_redirect_out(t_token **token, char **input)
+{
+	if (*(*input + 1) == '>')
+	{
+		(*token)->chr = find_filename(input);
+		(*token)->type = GREATGREAT;
+	}		
+	else
+	{
+		(*token)->chr = find_filename(input);
+		(*token)->type = GREAT;
+	}
+	if ((*token)->chr)
+		*token = create_token(*token);
+}
+
+// checks if << or < before assigning token
 void	handle_redirect_in(t_token **token, char **input)
 {
 	if (*(*input + 1) == '<')
 	{
-		(*token)->chr = find_filename_right(input);
+		(*token)->chr = find_filename(input);
 		(*token)->type = LESSLESS;
 	}		
 	else
 	{
-		(*token)->chr = find_filename_right(input);
+		(*token)->chr = find_filename(input);
 		(*token)->type = LESS;
 	}
 	if ((*token)->chr)
 		*token = create_token(*token);
 }
 
+//	redirect call from lexer
 void	handle_redirections(t_token **token, char  **input)
 {
 	if (**input == '<')
