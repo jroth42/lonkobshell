@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/19 18:49:16 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/22 18:56:10 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,42 +38,42 @@ typedef struct		s_token
 	struct s_token	*prev;
 }					t_token;
 
-typedef struct		s_node
-{
-	char			*input;
-	t_token			*token;
-	struct s_node	*next;
-	struct s_node	*prev;
-}					t_node;
-
 typedef struct		s_table
 {
-	int				num;
+	char			**cmd;
 	char			*exec;
-	char			**args;
+	char			*args;
 	char			*re_in;
 	char			*re_out;
 	struct s_table	*next;
 	struct s_table	*prev;
 }					t_table;
 
+typedef struct		s_node
+{
+	char			*input;
+	t_token			*token;
+	t_table			*table;
+	struct s_node	*next;
+	struct s_node	*prev;
+}					t_node;
 
 //	TOKENIZER :
 void	lexer(t_node *node);
 t_token	*create_token(t_token *token);
-void	skip_whitespace(char **str);
-bool	whitespace(const char c);
 void	handle_quotation(t_token **token, char **input);
 void	handle_redirections(t_token **token, char  **input);
 void	handle_word(t_token **token, char **input);
 void	handle_pipe(t_token **token, char **input);
-//	print utils for tokenizer
+
+//	UTILS
 void	input_handle(t_node *node);
+void	skip_whitespace(char **str);
+bool	whitespace(const char c);
 
+//	TABLEIZEME:
+t_table	*create_cmd(t_table *table);
+void	command_table(t_node *node);
 
-
-//	TABLESTUFF
-// void	fill_table(t_table *table, t_token *token);
-// t_table	*init_table();
-// t_table *create_table(t_token *token);
-// t_token	*token_head(t_token *token);
+void	print_table(t_node *node);
+bool	stringcmp(char *str, char *cmp);

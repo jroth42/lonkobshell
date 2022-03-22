@@ -10,97 +10,85 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "../inc/shell.h"
+#include "../inc/shell.h"
 
-// t_token	*token_head(t_token *token)
-// {
-// 	t_token	*tmp;
+t_table	*create_cmd(t_table *table)
+{
+	t_table *new;
 
-// 	tmp = token;
-// 	while (tmp && tmp->prev)
-// 		tmp = tmp->prev;
-// 	return (tmp);
-// }
+	new = malloc(sizeof(t_table));
+	if (!new)
+		return (NULL);
+	new->exec = NULL;
+	new->args = NULL;
+	new->re_in = NULL;
+	new->re_out = NULL;
+	new->next = NULL;
+	if (!table)
+	{
+		new->prev = NULL;
+		return (new);
+	}
+	else
+	{
+		new->prev = table;
+		table->next = new;
+	}
+	return (new);
+}
 
-// t_table	*init_table()
-// {
-// 	t_table	*new;
 
-// 	new = malloc(sizeof(t_table));
-// 	new->exec = "";
-// 	new->args = NULL;
-// 	new->re_in = "";
-// 	new->re_out = "";
-// 	new->prev = NULL;
-// 	new->next = NULL;
-// 	return (new);
-// }
+void	fill_arguments(t_token **token, t_table **table)
+{
+	t_token	*tmp;
+	char	*join;
+	char	*copy;
 
-// int get_cmd(t_token *token)
-// {
-// 	int		i;
-// 	t_token	*tmp;
+	tmp = *token;
+	copy = NULL;
+	join = NULL;
+	if ((*table)->args)
+	{
+		while (tmp && tmp->type != PIPE)
+		{
+			if (tmp->type == ARG)
+			{
+				join = ft_strjoin((*table)->args, " ");
+				copy = join;
+				join = ft_strjoin(copy, tmp->chr);
+				(*table)->args = join;
+			
+			}
+			tmp = tmp->next;
+		}
+	}
+	else
+		(*table)->args = ft_strdup(tmp->chr);
+}
 
-// 	i = 0;
-// 	tmp = token_head(token);
-// 	while (tmp && tmp->next)
-// 	{
-// 		if (*tmp->chr == '|')
-// 			i++;
-// 		tmp = tmp->next;
-// 	}
-// 	if (i == 0)
-// 		return (1);
-// 	if (i == 1)
-// 		return (2);
-// 	if (i == 2)
-// 		return (3);
-// 	return (i + 1);
-// }
+void	command_table(t_node *node)
+{
+	t_token	*tmp;
 
-// void	print_table(t_table *table)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (table && table->next)
-// 	{
-// 		if (table->exec)
-// 			printf("%s\n", table->exec);
-// 		if (table->args)
-// 		{
-// 			while (table->args[i])
-// 				printf("%s\n", table->args[i++]);
-// 		}
-// 		if (table->re_in)
-// 			printf("%s\n", table->re_in);
-// 		if (table->re_out)
-// 			printf("%s\n", table->re_out);
-// 		table = table->next;
-// 	}
-// }
-
-// t_table *create_table(t_token *token)
-// {
-// 	t_table	*new;
-// 	t_table	*tmp;
-
-// 	int		cmd;
-// 	int		i;
-// 	new = init_table();
-// 	cmd = get_cmd(token);
-// 	i = 0;
-// 	while (i++ < cmd)
-// 	{
-// 		new->num = i;
-// 		tmp = new;
-// 		new->next = init_table();
-// 		new = new->next;
-// 		new->prev = tmp;
-// 	}
-// 	while (new && new->prev)
-// 		new = new->prev;
-// 	fill_table(new, token);
-// 	print_table(new);
-// 	return (new);
-// }
+	tmp = node->token;
+	while (tmp && tmp->prev)
+		tmp = tmp->prev;
+	node->table = create_cmd(NULL);
+	while (tmp->next)
+	{
+		if (tmp->type == COMMAND)
+			(node)->table->exec = ft_strdup(tmp->chr);
+		if (tmp->type == ARG)
+			fill_arguments(&tmp, &(node)->table);
+		if (tmp->type == GREAT || tmp->type == GREATGREAT)
+			(node)->table->re_out = ft_strdup(tmp->chr);
+		if (tmp->type == LESS || tmp->type == LESSLESS)
+			(node)->table->re_in = ft_strdup(tmp->chr);
+		if (tmp->type == PIPE)
+		{
+			(node)->table->next = create_cmd(node->table);
+			node->table = node->table->next;
+		}
+		tmp = tmp->next;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/19 20:41:57 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/22 18:52:58 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ t_node	*add_node(t_node *node)
 int	main(int argc, char **argv, char **env)
 {
 	t_node	*node;
-	t_table	*table;
 
 	node = add_node(NULL);
 	while (1)
 	{ 
-		node->input = readline("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)->...: ");
+		node->input = readline("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)-> ...:  ");
 		add_history(node->input);
 		input_handle(node);
 		lexer(node);
+		command_table(node);
 		node = add_node(node);
 	}
 	return (0);

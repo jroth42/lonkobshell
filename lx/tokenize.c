@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:19:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/19 23:29:52 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/22 18:17:29 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ t_token	*create_token(t_token *token)
 	return (new);
 }
 
-// IN THEORY: go through all the characters, skip whitespaces, 
+// go through all the characters, skip whitespaces, 
 // create tokens for args, commands, redirects... -> handle_token.c
-// ... move Pointer within each function **ptr (*input) += chars to be skipped.
+// ... move Pointer within each function with **ptr -> (*ptr) += chars to be skipped.
 void	lexer(t_node *node)
 {
 	char	*input;

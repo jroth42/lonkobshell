@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:24:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/19 23:09:19 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/22 18:51:27 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,18 @@ char	*find_filename(char **input)
 // checks if >> or > before assigning token
 void	handle_redirect_out(t_token **token, char **input)
 {
+	char	*join;
+
 	if (*(*input + 1) == '>')
 	{
-		(*token)->chr = find_filename(input);
+		join = find_filename(input);
+		(*token)->chr = ft_strjoin(">>", join);
 		(*token)->type = GREATGREAT;
 	}		
 	else
 	{
-		(*token)->chr = find_filename(input);
+		join = find_filename(input);
+		(*token)->chr = ft_strjoin(">", join);
 		(*token)->type = GREAT;
 	}
 	if ((*token)->chr)
@@ -67,14 +71,18 @@ void	handle_redirect_out(t_token **token, char **input)
 // checks if << or < before assigning token
 void	handle_redirect_in(t_token **token, char **input)
 {
+	char	*join;
+
 	if (*(*input + 1) == '<')
 	{
-		(*token)->chr = find_filename(input);
+		join = find_filename(input);
+		(*token)->chr = ft_strjoin("<<", join);
 		(*token)->type = LESSLESS;
 	}		
 	else
 	{
-		(*token)->chr = find_filename(input);
+		join = find_filename(input);
+		(*token)->chr = ft_strjoin("<", join);
 		(*token)->type = LESS;
 	}
 	if ((*token)->chr)

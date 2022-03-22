@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 20:14:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/19 23:40:40 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/22 13:43:22 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ void	handle_quotation(t_token **token, char **input)
 
 void	handle_word(t_token **token, char **input)
 {
-	int		i;
 	char	*str;
-	t_token	*prev;
+	int		i;
+	int		type;
 
 	str = *input;
 	i = 0;
@@ -96,12 +96,12 @@ void	handle_word(t_token **token, char **input)
 	(*token)->chr = ft_strdupn(*input, i);
 	if ((*token)->prev)
 	{
-		prev = (*token)->prev;
-		if (prev->type != PIPE)
+		type = (*token)->prev->type;
+		if (type != PIPE)
 			(*token)->type = ARG;
-		if (prev->type == LESS || prev->type == LESSLESS)
+		if (type == LESS || type == LESSLESS)
 			(*token)->type = COMMAND; 
-		if (prev->type == GREAT || prev->type == GREATGREAT)
+		if (type == GREAT || type == GREATGREAT)
 			(*token)->type = COMMAND; 
 	}
 	if ((*token)->chr)
