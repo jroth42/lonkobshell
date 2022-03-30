@@ -1,41 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/10 14:37:55 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/30 19:12:39 by jroth            ###   ########.fr       */
+/*   Created: 2022/03/24 17:44:23 by jroth             #+#    #+#             */
+/*   Updated: 2022/03/30 18:43:23 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/shell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	**create_exec(t_node *node)
 {
-	size_t	len;
-	size_t	i;
-	size_t	j;
-	char	*s3;
+	char	**args;
+	static t_token	*token;
+	int		i;
 
-	if (!s1 || !s2)
-		return (NULL);
-	len = (int) ft_strlen(s1) + (int) ft_strlen(s2);
-	s3 = (char *)malloc(sizeof(char) * (len + 1));
-	if (!s3)
-		return (NULL);
 	i = 0;
-	while (i < ft_strlen(s1))
+	token = node->token;
+	while (token && token->prev)
 	{
-		s3[i] = s1[i];
+		token = token->prev;
 		i++;
 	}
-	j = 0;
-	while ((int) j < (int) ft_strlen(s2))
+	args = malloc(sizeof(char *) * (i));
+	i = 0;
+	while (token->next)
 	{
-		s3[i++] = s2[j++];
+		if (token->type == PIPE)
+			break ;
+		args[i] = token->chr;
+		token = token->next;
+		i++;
 	}
-	s3[i] = '\0';
-	return (s3);
+	args[i] = NULL;
+	return (args);
 }

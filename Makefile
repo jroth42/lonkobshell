@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/03/19 21:07:52 by jroth            ###   ########.fr        #
+#    Updated: 2022/03/29 20:28:36 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ LX = ./lx/
 
 PRMPT = ./prompt/
 
+EXEC = ./exec/
+
 UTL = ./utils/
 
 LIBFT = $(UTL)libft/
@@ -23,6 +25,7 @@ LIBFT = $(UTL)libft/
 SRC =	$(PRMPT)main.c \
 		$(LX)tokenize.c $(LX)handle_token.c $(LX)cmdtable.c $(LX)fill_table.c\
 		$(LX)handle_redirect.c \
+		$(EXEC)create_cmd.c \
 		$(UTL)utils.c $(UTL)print.c
 
 CC = gcc -g
@@ -45,6 +48,7 @@ clean:
 	rm -f ./lx/*.o
 	rm -f $(LIBFT)*.o
 	rm -f $(UTL)*.o
+	rm -f $(EXEC)*.o
 
 fclean:
 	rm -f $(NAME)

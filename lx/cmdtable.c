@@ -1,7 +1,7 @@
 // /* ************************************************************************** */
 // /*                                                                            */
 // /*                                                        :::      ::::::::   */
-// /*   cmdtable.c                                         :+:      :+:    :+:   */
+// /*   cmdcmd.c                                         :+:      :+:    :+:   */
 // /*                                                    +:+ +:+         +:+     */
 // /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 // /*                                                +#+#+#+#+#+   +#+           */
@@ -12,83 +12,110 @@
 
 #include "../inc/shell.h"
 
-t_table	*create_cmd(t_table *table)
+//	return empty cmd struct
+t_cmd	*create_cmd(t_cmd *cmd)
 {
-	t_table *new;
+	t_cmd *new;
 
-	new = malloc(sizeof(t_table));
+	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
 	new->exec = NULL;
 	new->args = NULL;
 	new->re_in = NULL;
 	new->re_out = NULL;
+	new->fd_in = STDIN;
+	new->fd_out = STDOUT;
 	new->next = NULL;
-	if (!table)
+	if (!cmd)
 	{
 		new->prev = NULL;
 		return (new);
 	}
 	else
 	{
-		new->prev = table;
-		table->next = new;
+		new->prev = cmd;
+		cmd->next = new;
 	}
 	return (new);
 }
 
-
-void	fill_arguments(t_token **token, t_table **table)
+//	strjoin args from tokenlist
+void	fill_arguments(t_token *token, t_cmd **cmd)
 {
-	t_token	*tmp;
 	char	*join;
 	char	*copy;
 
-	tmp = *token;
 	copy = NULL;
 	join = NULL;
-	if ((*table)->args)
+	if ((*cmd)->args)
 	{
-		while (tmp && tmp->type != PIPE)
-		{
-			if (tmp->type == ARG)
-			{
-				join = ft_strjoin((*table)->args, " ");
-				copy = join;
-				join = ft_strjoin(copy, tmp->chr);
-				(*table)->args = join;
-			
-			}
-			tmp = tmp->next;
-		}
+		join = ft_strjoin((*cmd)->args, " ");
+		copy = join;
+		join = ft_strjoin(copy, token->chr);
+		(*cmd)->args = join;
 	}
 	else
-		(*table)->args = ft_strdup(tmp->chr);
+		(*cmd)->args = ft_strdup(token->chr);
 }
 
-void	command_table(t_node *node)
+//	walk through tokens and append them to cmdcmd struct
+void	command_cmd(t_node *node)
 {
 	t_token	*tmp;
 
 	tmp = node->token;
 	while (tmp && tmp->prev)
 		tmp = tmp->prev;
-	node->table = create_cmd(NULL);
+	node->cmd = create_cmd(NULL);
 	while (tmp->next)
 	{
 		if (tmp->type == COMMAND)
-			(node)->table->exec = ft_strdup(tmp->chr);
-		if (tmp->type == ARG)
-			fill_arguments(&tmp, &(node)->table);
+			(node)->cmd->exec = ft_strdup(tmp->chr);
+		if (tmp->type == ARG || tmp->type == SQUOTE || tmp->type == DQUOTE)
+			fill_arguments(tmp, &node->cmd);
 		if (tmp->type == GREAT || tmp->type == GREATGREAT)
-			(node)->table->re_out = ft_strdup(tmp->chr);
+			(node)->cmd->re_out = ft_strdup(tmp->chr);
 		if (tmp->type == LESS || tmp->type == LESSLESS)
-			(node)->table->re_in = ft_strdup(tmp->chr);
+			(node)->cmd->re_in = ft_strdup(tmp->chr);
 		if (tmp->type == PIPE)
 		{
-			(node)->table->next = create_cmd(node->table);
-			node->table = node->table->next;
+			(node)->cmd->next = create_cmd(node->cmd);
+			node->cmd = node->cmd->next;
 		}
 		tmp = tmp->next;
 	}
 }
+
+
+// void	fill_arguments(t_token **token, t_cmd **cmd)
+// {
+// 	t_token	*tmp;
+// 	int i;
+// 	char	**args;
+
+// 	tmp = *token;
+// 	i = 0;
+// 	while (tmp && tmp->next)
+// 	{
+// 		if (tmp->type == ARG)
+// 			i++;
+// 		tmp = tmp->next;
+// 	}
+// 	if (i > 0)
+// 	{
+// 		args = malloc(sizeof(char **) * (i + 1));
+// 		tmp = *token;
+// 		i = 0;
+// 		while (tmp && tmp->next && tmp->type != PIPE)
+// 		{
+// 			if (tmp->type == ARG)
+// 				args[i++] = tmp->chr;
+// 			tmp = tmp->next;
+// 		}
+// 		args[i] = NULL;
+// 		if (tmp->next)
+// 			(*token) = tmp->next;
+// 		(*cmd)->args = args;
+// 	}
+// }

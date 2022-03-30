@@ -6,37 +6,36 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:31:42 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/22 18:55:56 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 19:40:36 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
 // printfuncttions for testing
-
-void	print_table(t_node *node)
+void	print_cmd(t_node *node)
 {
 	int	i;
-	t_table	*table;
+	t_cmd	*cmd;
 
-	table = node->table;
+	cmd = node->cmd;
 	i = 0;
-	while (table && table->prev)
-		table = table->prev;
-	while (table)
+	while (cmd && cmd->prev)
+		cmd = cmd->prev;
+	printf("------------------\n");
+	while (cmd)
 	{
-		printf("------------------\n");
 		printf("COMMAND %d:\n", ++i);
-		if (table->exec)
-			printf("exec:\t%s\n", table->exec);
-		if (table->args)
-			printf("args:\t%s\n", table->args);
-		if (table->re_in)
-			printf("re_in:\t%s\n", table->re_in);
-		if (table->re_out)
-			printf("re_out:\t%s\n", table->re_out);
+		if (cmd->exec)
+			printf("exec:\t%s\n", cmd->exec);
+		if (cmd->args)
+				printf("args:\t%s\n", cmd->args);
+		if (cmd->re_in)
+			printf("re_in:\t%s\n", cmd->re_in);
+		if (cmd->re_out)
+			printf("re_out:\t%s\n", cmd->re_out);
 		printf("------------------\n");
-		table = table->next;
+		cmd = cmd->next;
 	}
 }
 
@@ -96,9 +95,9 @@ void	input_handle(t_node *node)
 			print_tokens(node->prev);
 		if (stringcmp("node", node->input))
 			print_nodes(node->prev);
-		if (stringcmp("table", node->input))
-			print_table(node->prev);
+		if (stringcmp("cmd", node->input))
+			print_cmd(node->prev);
 	}
-		if (stringcmp("exit", node->input))
-			exit(0);
+	if (stringcmp("exit", node->input))
+		exit(0);
 }
