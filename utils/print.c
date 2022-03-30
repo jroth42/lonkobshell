@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:31:42 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/30 19:40:36 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 19:46:14 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	print_cmd(t_node *node)
 	while (cmd)
 	{
 		printf("COMMAND %d:\n", ++i);
-		if (cmd->exec)
-			printf("exec:\t%s\n", cmd->exec);
+		if (cmd->cmd)
+			printf("exec:\t%s\n", cmd->cmd);
 		if (cmd->args)
 				printf("args:\t%s\n", cmd->args);
 		if (cmd->re_in)

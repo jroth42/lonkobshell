@@ -40,18 +40,56 @@ t_cmd	*create_cmd(t_cmd *cmd)
 	return (new);
 }
 
+void	parse_args(t_cmd **cmd)
+{
+	char	**args;
+	int		i;
+
+	i = 0;
+	args = ft_split((*cmd)->args, ' ');
+	while (args[i])
+		i++;
+	(*cmd)->exec = malloc(sizeof(char **) * (i + 2));
+	if (!(*cmd)->exec)
+		return ;
+	(*cmd)->exec[0] = ft_strdup((*cmd)->cmd);
+	i = 0;
+	while (args[i++])
+		(*cmd)->exec[i] = ft_strdup(args[i - 1]);
+	(*cmd)->exec[i] = NULL;
+}
+
+void	create_exec(t_cmd **cmd)
+{
+	t_cmd	*head;
+
+	while ((*cmd) && (*cmd)->prev)
+		(*cmd) = (*cmd)->prev;
+	head = *cmd;
+	while ((*cmd))
+	{
+		if ((*cmd)->args && (*cmd)->cmd)
+			parse_args(cmd);
+		else if ((*cmd)->cmd)
+		{
+			(*cmd)->exec = malloc(sizeof(char **) * 2);
+			(*cmd)->exec[0] = ft_strdup((*cmd)->cmd);
+			(*cmd)->exec[1] = NULL;
+		}
+		*cmd = (*cmd)->next;
+	}
+	*cmd = head;
+}
+
 //	strjoin args from tokenlist
 void	fill_arguments(t_token *token, t_cmd **cmd)
 {
 	char	*join;
 	char	*copy;
 
-	copy = NULL;
-	join = NULL;
 	if ((*cmd)->args)
 	{
-		join = ft_strjoin((*cmd)->args, " ");
-		copy = join;
+		copy = ft_strjoin((*cmd)->args, " ");
 		join = ft_strjoin(copy, token->chr);
 		(*cmd)->args = join;
 	}
@@ -59,8 +97,8 @@ void	fill_arguments(t_token *token, t_cmd **cmd)
 		(*cmd)->args = ft_strdup(token->chr);
 }
 
-//	walk through tokens and append them to cmdcmd struct
-void	command_cmd(t_node *node)
+//	walk through tokens and append them to cmd struct
+void	parse_cmd(t_node *node)
 {
 	t_token	*tmp;
 
@@ -71,7 +109,7 @@ void	command_cmd(t_node *node)
 	while (tmp->next)
 	{
 		if (tmp->type == COMMAND)
-			(node)->cmd->exec = ft_strdup(tmp->chr);
+			(node)->cmd->cmd = ft_strdup(tmp->chr);
 		if (tmp->type == ARG || tmp->type == SQUOTE || tmp->type == DQUOTE)
 			fill_arguments(tmp, &node->cmd);
 		if (tmp->type == GREAT || tmp->type == GREATGREAT)
@@ -85,37 +123,5 @@ void	command_cmd(t_node *node)
 		}
 		tmp = tmp->next;
 	}
+	create_exec(&node->cmd);
 }
-
-
-// void	fill_arguments(t_token **token, t_cmd **cmd)
-// {
-// 	t_token	*tmp;
-// 	int i;
-// 	char	**args;
-
-// 	tmp = *token;
-// 	i = 0;
-// 	while (tmp && tmp->next)
-// 	{
-// 		if (tmp->type == ARG)
-// 			i++;
-// 		tmp = tmp->next;
-// 	}
-// 	if (i > 0)
-// 	{
-// 		args = malloc(sizeof(char **) * (i + 1));
-// 		tmp = *token;
-// 		i = 0;
-// 		while (tmp && tmp->next && tmp->type != PIPE)
-// 		{
-// 			if (tmp->type == ARG)
-// 				args[i++] = tmp->chr;
-// 			tmp = tmp->next;
-// 		}
-// 		args[i] = NULL;
-// 		if (tmp->next)
-// 			(*token) = tmp->next;
-// 		(*cmd)->args = args;
-// 	}
-// }

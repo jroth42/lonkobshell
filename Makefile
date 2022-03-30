@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/03/29 20:28:36 by jroth            ###   ########.fr        #
+#    Updated: 2022/03/30 21:42:28 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,8 @@ UTL = ./utils/
 LIBFT = $(UTL)libft/
 
 SRC =	$(PRMPT)main.c \
-		$(LX)tokenize.c $(LX)handle_token.c $(LX)cmdtable.c $(LX)fill_table.c\
-		$(LX)handle_redirect.c \
-		$(EXEC)create_cmd.c \
+		$(LX)tokenize.c $(LX)token_handle.c $(LX)token_redirect.c\
+		$(LX)parse_cmd.c\
 		$(UTL)utils.c $(UTL)print.c
 
 CC = gcc -g
@@ -36,23 +35,24 @@ LIBFT = $(UTL)libft/
 OBJ = $(SRC:c=o)
 
 $(NAME): $(OBJ)
-	make -C $(LIBFT) all
-	$(CC) -o $(NAME) $(OBJ) $(LIBFT)libft.a -lreadline -I/Users/$(USER)/.brew/opt/readline/include -L/Users/$(USER)/.brew/opt/readline/lib 
-	make clean
+	@echo 'compiling minishell...'
+	@make -C $(LIBFT) all
+	@$(CC) -o $(NAME) $(OBJ) $(LIBFT)libft.a -lreadline -I/Users/$(USER)/.brew/opt/readline/include -L/Users/$(USER)/.brew/opt/readline/lib 
+	@make clean
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	@$(CC) -c $< -o $@
 
 clean:
-	rm -f ./prompt/*.o
-	rm -f ./lx/*.o
-	rm -f $(LIBFT)*.o
-	rm -f $(UTL)*.o
-	rm -f $(EXEC)*.o
+	@rm -f ./prompt/*.o
+	@rm -f ./lx/*.o
+	@rm -f $(LIBFT)*.o
+	@rm -f $(UTL)*.o
+	@rm -f $(EXEC)*.o
 
 fclean:
-	rm -f $(NAME)
-	rm -f $(LIBFT)libft.a
+	@rm -f $(NAME)
+	@rm -f $(LIBFT)libft.a
 
 re: clean fclean $(NAME)
 

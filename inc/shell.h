@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/30 18:38:46 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 21:39:36 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ typedef struct		s_token
 
 typedef struct		s_cmd
 {
-	char			**cmd;
-	char			*exec;
+	char			**exec;
+	char			*cmd;
 	char			*args;
 	char			*re_in;
 	int				fd_in;
@@ -75,13 +75,13 @@ void	handle_pipe(t_token **token, char **input);
 
 //	cmdIZEME:
 t_cmd	*create_cmd(t_cmd *cmd);
-void	command_cmd(t_node *node);
+void	parse_cmd(t_node *node);
 
 void	print_cmd(t_node *node);
 bool	stringcmp(char *str, char *cmp);
 
 //	EXEC
-char	**create_exec(t_node *node);
+void	create_exec(t_cmd **cmd);
 
 //	UTILS
 void	input_handle(t_node *node);
