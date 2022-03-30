@@ -1,21 +1,21 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   cmdcmd.c                                         :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2022/03/15 14:23:37 by jroth             #+#    #+#             */
-// /*   Updated: 2022/03/15 22:19:34 by jroth            ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmdcmd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/15 14:23:37 by jroth             #+#    #+#             */
+/*   Updated: 2022/03/15 22:19:34 by jroth            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../inc/shell.h"
 
 //	return empty cmd struct
 t_cmd	*create_cmd(t_cmd *cmd)
 {
-	t_cmd *new;
+	t_cmd	*new;
 
 	new = malloc(sizeof(t_cmd));
 	if (!new)
@@ -40,6 +40,7 @@ t_cmd	*create_cmd(t_cmd *cmd)
 	return (new);
 }
 
+//	create 2D array of arguments
 void	parse_args(t_cmd **cmd)
 {
 	char	**args;
@@ -59,6 +60,7 @@ void	parse_args(t_cmd **cmd)
 	(*cmd)->exec[i] = NULL;
 }
 
+// create 2D array with exec cmd at [0] if args available parse_args
 void	create_exec(t_cmd **cmd)
 {
 	t_cmd	*head;
@@ -82,6 +84,7 @@ void	create_exec(t_cmd **cmd)
 }
 
 //	strjoin args from tokenlist
+//	later split them up again in parse_args -> create_exec to create **args
 void	fill_arguments(t_token *token, t_cmd **cmd)
 {
 	char	*join;
@@ -98,6 +101,7 @@ void	fill_arguments(t_token *token, t_cmd **cmd)
 }
 
 //	walk through tokens and append them to cmd struct
+//	create new cmd struct if pipe is found
 void	parse_cmd(t_node *node)
 {
 	t_token	*tmp;
@@ -110,7 +114,8 @@ void	parse_cmd(t_node *node)
 	{
 		if (tmp->type == COMMAND)
 			(node)->cmd->cmd = ft_strdup(tmp->chr);
-		if (tmp->type == ARG || tmp->type == SQUOTE || tmp->type == DQUOTE)
+		if (tmp->type == ARG || tmp->type == SQUOTE
+			|| tmp->type == DQUOTE)
 			fill_arguments(tmp, &node->cmd);
 		if (tmp->type == GREAT || tmp->type == GREATGREAT)
 			(node)->cmd->re_out = ft_strdup(tmp->chr);

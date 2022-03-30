@@ -6,16 +6,16 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:19:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/29 19:44:38 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 22:23:35 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-// creates list of tokens if !token otherwise appends tokens to list
+//	creates list of tokens if !token otherwise appends tokens to list
 t_token	*create_token(t_token *token)
 {
-	t_token *new;
+	t_token	*new;
 
 	new = malloc(sizeof(t_token));
 	if (!new)
@@ -36,9 +36,11 @@ t_token	*create_token(t_token *token)
 	return (new);
 }
 
-// go through all the characters, skip whitespaces, 
-// create tokens for args, commands, redirects... -> handle_token.c
-// ... move Pointer within each function with **ptr -> (*ptr) += chars to be skipped.
+//	go through all the characters, skip whitespaces, 
+//	create tokens for args, commands, redirects... -> handle_token.c
+//	... move Pointer within each function with **ptr 
+//		-> (*ptr) += chars to be skipped.
+//	afterwards send to cmd parser
 void	lexer(t_node *node)
 {
 	char	*input;
@@ -57,4 +59,5 @@ void	lexer(t_node *node)
 		else
 			handle_word(&node->token, &input);
 	}
+	parse_cmd(node);
 }

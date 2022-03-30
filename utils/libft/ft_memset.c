@@ -6,13 +6,13 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 14:28:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/22 18:14:02 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 22:20:50 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void	*s, int	c, size_t n)
+void	*ft_memset(void *s, int c, size_t n)
 {
 	char	*ptr;
 

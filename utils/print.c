@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:31:42 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/30 19:46:14 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 22:28:08 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // printfuncttions for testing
 void	print_cmd(t_node *node)
 {
-	int	i;
+	int		i;
 	t_cmd	*cmd;
 
 	cmd = node->cmd;
@@ -29,7 +29,7 @@ void	print_cmd(t_node *node)
 		if (cmd->cmd)
 			printf("exec:\t%s\n", cmd->cmd);
 		if (cmd->args)
-				printf("args:\t%s\n", cmd->args);
+			printf("args:\t%s\n", cmd->args);
 		if (cmd->re_in)
 			printf("re_in:\t%s\n", cmd->re_in);
 		if (cmd->re_out)
@@ -41,7 +41,7 @@ void	print_cmd(t_node *node)
 
 void	print_tokens(t_node	*node)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = node->token;
 	while (token && token->prev)
@@ -57,7 +57,7 @@ void	print_tokens(t_node	*node)
 
 void	print_nodes(t_node *node)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (node)

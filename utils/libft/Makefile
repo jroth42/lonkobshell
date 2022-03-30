@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/02 16:22:22 by jroth             #+#    #+#              #
-#    Updated: 2022/03/30 20:55:47 by jroth            ###   ########.fr        #
+#    Updated: 2022/03/30 21:58:54 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c
 
 $(NAME): $(SRC)
 	@gcc -Wall -Werror -Wextra -c $(SRC)
-	@ar -r $(NAME) $(SRC:.c=.o)
+	@ar -rcs $(NAME) $(SRC:.c=.o)
 	@make clean
 
 all: $(NAME) 

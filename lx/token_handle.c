@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_token.c                                     :+:      :+:    :+:   */
+/*   token_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 20:14:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/22 13:43:22 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 22:24:17 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ void	handle_word(t_token **token, char **input)
 		if (type != PIPE)
 			(*token)->type = ARG;
 		if (type == LESS || type == LESSLESS)
-			(*token)->type = COMMAND; 
+			(*token)->type = COMMAND;
 		if (type == GREAT || type == GREATGREAT)
-			(*token)->type = COMMAND; 
+			(*token)->type = COMMAND;
 	}
 	if ((*token)->chr)
 		*token = create_token(*token);

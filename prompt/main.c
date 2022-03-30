@@ -6,17 +6,16 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/30 21:39:39 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 22:25:15 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-
 // create node for each line of input
 t_node	*add_node(t_node *node)
 {
-	t_node *new;
+	t_node	*new;
 
 	new = malloc(sizeof(t_node));
 	if (!new)
@@ -26,12 +25,12 @@ t_node	*add_node(t_node *node)
 	if (node)
 	{
 		new->prev = node;
-		node->next = new;	
+		node->next = new;
 	}
 	else
 	{
 		new->prev = NULL;
-		new->next = NULL;	
+		new->next = NULL;
 	}
 	new->token = create_token(NULL);
 	return (new);
@@ -48,7 +47,6 @@ int	main(int argc, char **argv, char **env)
 		add_history(node->input);
 		input_handle(node);
 		lexer(node);
-		parse_cmd(node);
 		node = add_node(node);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/03/30 21:42:28 by jroth            ###   ########.fr        #
+#    Updated: 2022/03/30 21:59:08 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ OBJ = $(SRC:c=o)
 
 $(NAME): $(OBJ)
 	@echo 'compiling minishell...'
-	@make -C $(LIBFT) all
+	@make -C $(LIBFT)
 	@$(CC) -o $(NAME) $(OBJ) $(LIBFT)libft.a -lreadline -I/Users/$(USER)/.brew/opt/readline/include -L/Users/$(USER)/.brew/opt/readline/lib 
 	@make clean
 

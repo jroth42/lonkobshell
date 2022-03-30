@@ -6,9 +6,12 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/30 21:39:36 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 22:27:48 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef SHELL_H
+# define SHELL_H
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -23,18 +26,18 @@
 
 enum e_type
 {
-    COMMAND = 0,
-    ARG = -1,
-    SQUOTE = '\'',
-    DQUOTE = '\"',
-    PIPE = '|',
-    LESS = '<',
-    LESSLESS = 240,
-    GREAT = '>',
-    GREATGREAT = 248,
+	COMMAND = 0,
+	ARG = -1,
+	SQUOTE = '\'',
+	DQUOTE = '\"',
+	PIPE = '|',
+	LESS = '<',
+	LESSLESS = 240,
+	GREAT = '>',
+	GREATGREAT = 248,
 };
 
-typedef struct		s_token
+typedef struct s_token
 {
 	char			*chr;
 	int				type;
@@ -42,7 +45,7 @@ typedef struct		s_token
 	struct s_token	*prev;
 }					t_token;
 
-typedef struct		s_cmd
+typedef struct s_cmd
 {
 	char			**exec;
 	char			*cmd;
@@ -55,7 +58,7 @@ typedef struct		s_cmd
 	struct s_cmd	*prev;
 }					t_cmd;
 
-typedef struct		s_node
+typedef struct s_node
 {
 	char			*input;
 	t_token			*token;
@@ -68,22 +71,21 @@ typedef struct		s_node
 void	lexer(t_node *node);
 t_token	*create_token(t_token *token);
 void	handle_quotation(t_token **token, char **input);
-void	handle_redirections(t_token **token, char  **input);
+void	handle_redirections(t_token **token, char **input);
 void	handle_word(t_token **token, char **input);
 void	handle_pipe(t_token **token, char **input);
-
 
 //	cmdIZEME:
 t_cmd	*create_cmd(t_cmd *cmd);
 void	parse_cmd(t_node *node);
-
 void	print_cmd(t_node *node);
 bool	stringcmp(char *str, char *cmp);
 
 //	EXEC
-void	create_exec(t_cmd **cmd);
 
 //	UTILS
 void	input_handle(t_node *node);
 void	skip_whitespace(char **str);
 bool	whitespace(const char c);
+
+#endif

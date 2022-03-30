@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_redirect.c                                  :+:      :+:    :+:   */
+/*   token_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:24:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/22 18:51:27 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/30 22:23:53 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*find_filename(char **input)
 	return (ft_strdupn(str + i, j));
 }
 
-// checks if >> or > before assigning token
+//	checks if >> or > before assigning token
 void	handle_redirect_out(t_token **token, char **input)
 {
 	char	*join;
@@ -68,7 +68,7 @@ void	handle_redirect_out(t_token **token, char **input)
 		*token = create_token(*token);
 }
 
-// checks if << or < before assigning token
+//	checks if << or < before assigning token
 void	handle_redirect_in(t_token **token, char **input)
 {
 	char	*join;
@@ -90,7 +90,7 @@ void	handle_redirect_in(t_token **token, char **input)
 }
 
 //	redirect call from lexer
-void	handle_redirections(t_token **token, char  **input)
+void	handle_redirections(t_token **token, char **input)
 {
 	if (**input == '<')
 		handle_redirect_in(token, input);
