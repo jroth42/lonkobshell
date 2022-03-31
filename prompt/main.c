@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/30 22:25:15 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/31 18:44:49 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	main(int argc, char **argv, char **env)
 		add_history(node->input);
 		input_handle(node);
 		lexer(node);
+		// printf("%s\n", find_path(node->cmd->cmd, env));
+		eXecuTe(node->cmd, env);
 		node = add_node(node);
 	}
 	return (0);

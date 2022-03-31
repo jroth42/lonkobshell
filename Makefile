@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/03/30 21:59:08 by jroth            ###   ########.fr        #
+#    Updated: 2022/03/31 17:10:37 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ LIBFT = $(UTL)libft/
 SRC =	$(PRMPT)main.c \
 		$(LX)tokenize.c $(LX)token_handle.c $(LX)token_redirect.c\
 		$(LX)parse_cmd.c\
+		$(EXEC)exec_utils.c $(EXEC)execute.c\
 		$(UTL)utils.c $(UTL)print.c
 
 CC = gcc -g

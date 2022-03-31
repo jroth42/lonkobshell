@@ -24,8 +24,8 @@ t_cmd	*create_cmd(t_cmd *cmd)
 	new->args = NULL;
 	new->re_in = NULL;
 	new->re_out = NULL;
-	new->fd_in = STDIN;
-	new->fd_out = STDOUT;
+	// new->fd_in = STDIN;
+	// new->fd_out = STDOUT;
 	new->next = NULL;
 	if (!cmd)
 	{

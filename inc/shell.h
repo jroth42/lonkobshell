@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/30 22:27:48 by jroth            ###   ########.fr       */
+/*   Updated: 2022/03/31 21:26:01 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdbool.h>
 # include "../utils/libft/libft.h"
 
+# define INFILE 0
+# define OUTFILE 1
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
@@ -51,9 +53,9 @@ typedef struct s_cmd
 	char			*cmd;
 	char			*args;
 	char			*re_in;
-	int				fd_in;
+	// int				fd_in;
 	char			*re_out;
-	int				fd_out;
+	// int				fd_out;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;
@@ -82,6 +84,9 @@ void	print_cmd(t_node *node);
 bool	stringcmp(char *str, char *cmp);
 
 //	EXEC
+char	*find_path(char *cmd, char **env);
+void	eXecuTe(t_cmd *cmd, char **env);
+int		strlen_to_c(char *str, char c);
 
 //	UTILS
 void	input_handle(t_node *node);
