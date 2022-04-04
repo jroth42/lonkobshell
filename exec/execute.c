@@ -6,12 +6,11 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/31 21:06:45 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/04 13:37:22 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
-
 
 int	open_file(char *file, int mode, int bonus)
 {
@@ -19,10 +18,10 @@ int	open_file(char *file, int mode, int bonus)
 	{
 		if (access(file, F_OK))
 		{
-			write(STDERR, "Couldn't find file: ", 21);
-			write(STDERR, file, strlen_to_c(file, 0));
-			write(STDERR, "\n", 1);
-			return (STDIN);
+			write(STDERR_FILENO, "Couldn't find file: ", 21);
+			write(STDERR_FILENO, file, strlen_to_c(file, 0));
+			write(STDERR_FILENO, "\n", 1);
+			return (STDIN_FILENO);
 		}
 		return (open(file, O_RDONLY));
 	}
@@ -37,7 +36,7 @@ int	open_file(char *file, int mode, int bonus)
 	}
 }
 
-void	execute_cmd(t_cmd *cmd, char **env)
+static int	execute_cmd(t_cmd *cmd, char **env)
 {
 	char	**args;
 	char	*path;
@@ -45,37 +44,59 @@ void	execute_cmd(t_cmd *cmd, char **env)
 	env++;
 	path = find_path(cmd->cmd, env);
 	execve(path, cmd->exec, env);
-	write(STDERR, path, strlen_to_c(path, 0));
-	write(STDERR, ": command not found\n", 20);
-	exit(127);
+	return (127);
 }
 
 void	redirect(int in, int out, t_cmd *cmd, char **env)
 {
-	int		ends[2];
-	pid_t	parent;
-
-	if (pipe(ends) < 0)
+	int		fd[2];
+	pid_t	pid;
+	int		tmp_fd;
+	
+	tmp_fd = dup(STDIN_FILENO);
+	while (cmd)
 	{
-		write(STDERR, "Couldn't open pipe!\n", 21);
-		exit(-1);
-	}
-	parent = fork();
-	if (parent)
-	{
-		dup2(ends[0], out);
-		close(ends[1]);
-		close(ends[0]);
-		waitpid(parent, NULL, 0);
-	}
-	else
-	{
-		close(ends[0]);
-		dup2(ends[1], in);
-		if (in == STDIN)
-			exit(1);
-		else
-			execute_cmd(cmd, env);
+		if (cmd->next)
+		{
+			pipe(fd);
+			pid = fork();
+			if (pid < 0)
+				return ;
+			if (pid == 0)
+			{
+				dup2(tmp_fd, STDIN_FILENO);
+				dup2(fd[1], STDOUT_FILENO);
+				close(fd[0]);
+				close(fd[1]);
+				close(tmp_fd);
+				execute_cmd(cmd, env);
+			}
+			else
+			{
+				close(fd[1]);
+				close(tmp_fd);
+				waitpid(-1, NULL, WUNTRACED);
+				tmp_fd = dup(fd[0]);
+				close(fd[0]);
+			}
+		}
+		else if (!cmd->next)
+		{
+			pid = fork();
+			if ( pid == 0)
+			{
+				dup2(tmp_fd, STDIN_FILENO);
+				execute_cmd(cmd, env);
+				close(tmp_fd);
+			}
+			else
+			{
+				close(tmp_fd);
+				waitpid(-1, NULL, WUNTRACED);
+				tmp_fd = dup(STDIN_FILENO);
+			}
+		}
+		cmd = cmd->next;
 	}
 }
 
@@ -84,17 +105,9 @@ void	eXecuTe(t_cmd *cmd, char **env)
 	int	in;
 	int	out;
 
-	dup2(in, STDIN);
-	dup2(out, STDOUT);
-	// dup2(cmd->fd_in, STDIN);
-	// dup2(cmd->fd_out, STDOUT);
+	dup2(in, STDIN_FILENO);
+	dup2(out, STDOUT_FILENO);
 	if (in < 0 || out < 0)
 		return ;
-	if (cmd->re_in)
-		in = open_file(cmd->re_in, INFILE, 1);
-	if (cmd->re_out)
-		out = open_file(cmd->re_out, OUTFILE, 1);
 	redirect(in, out, cmd, env);
-	execute_cmd(cmd, env);
-	write(STDERR, "ERROR! Invalid Syntax!\n", 23);
 }

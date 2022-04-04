@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/31 21:26:01 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/04 13:21:20 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 
 # define INFILE 0
 # define OUTFILE 1
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
+// # define STDIN 0
+// # define STDOUT 1
+// # define STDERR 2
 
 enum e_type
 {
