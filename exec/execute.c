@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/04 13:37:22 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/04 13:39:43 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	redirect(int in, int out, t_cmd *cmd, char **env)
 			{
 				close(fd[1]);
 				close(tmp_fd);
-				waitpid(-1, NULL, WUNTRACED);
+				wait(NULL);
 				tmp_fd = dup(fd[0]);
 				close(fd[0]);
 			}
