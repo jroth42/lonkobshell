@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/04 13:39:43 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/04 13:50:46 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	execute_cmd(t_cmd *cmd, char **env)
 	return (127);
 }
 
-void	redirect(int in, int out, t_cmd *cmd, char **env)
+void	eXecuTe(t_cmd *cmd, char **env)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -83,7 +83,7 @@ void	redirect(int in, int out, t_cmd *cmd, char **env)
 		else if (!cmd->next)
 		{
 			pid = fork();
-			if ( pid == 0)
+			if (pid == 0)
 			{
 				dup2(tmp_fd, STDIN_FILENO);
 				execute_cmd(cmd, env);
@@ -98,16 +98,4 @@ void	redirect(int in, int out, t_cmd *cmd, char **env)
 		}
 		cmd = cmd->next;
 	}
-}
-
-void	eXecuTe(t_cmd *cmd, char **env)
-{
-	int	in;
-	int	out;
-
-	dup2(in, STDIN_FILENO);
-	dup2(out, STDOUT_FILENO);
-	if (in < 0 || out < 0)
-		return ;
-	redirect(in, out, cmd, env);
 }
