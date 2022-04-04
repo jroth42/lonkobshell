@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/04 13:38:57 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/04 14:17:53 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@
 
 # define INFILE 0
 # define OUTFILE 1
+# define READ 0
+# define WRITE 1
+
 // # define STDIN 0
 // # define STDOUT 1
 // # define STDERR 2
+
 
 enum e_type
 {
@@ -54,6 +58,7 @@ typedef struct s_cmd
 	char			*args;
 	char			*re_in;
 	char			*re_out;
+	pid_t			pid;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/04 13:50:46 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/04 14:18:27 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,19 @@ void	eXecuTe(t_cmd *cmd, char **env)
 			if (pid == 0)
 			{
 				dup2(tmp_fd, STDIN_FILENO);
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[0]);
-				close(fd[1]);
+				dup2(fd[WRITE], STDOUT_FILENO);
+				close(fd[READ]);
+				close(fd[WRITE]);
 				close(tmp_fd);
 				execute_cmd(cmd, env);
 			}
 			else
 			{
-				close(fd[1]);
+				close(fd[WRITE]);
 				close(tmp_fd);
 				wait(NULL);
-				tmp_fd = dup(fd[0]);
-				close(fd[0]);
+				tmp_fd = dup(fd[READ]);
+				close(fd[READ]);
 			}
 		}
 		else if (!cmd->next)
@@ -92,7 +92,7 @@ void	eXecuTe(t_cmd *cmd, char **env)
 			else
 			{
 				close(tmp_fd);
-				waitpid(-1, NULL, WUNTRACED);
+				wait(NULL);
 				tmp_fd = dup(STDIN_FILENO);
 			}
 		}
