@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/05 20:13:29 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/05 20:32:05 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ void	execute(t_cmd *cmd, char **env)
 			write_it(&exec, cmd, env);
 		cmd = cmd->next;
 	}
-	free_cmd_list(tmp);
 }
+	// free_cmd_list(tmp);

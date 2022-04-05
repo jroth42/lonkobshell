@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:02:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/05 20:07:53 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/05 20:43:08 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	free_cmd_list(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 
-	while (cmd->prev)
-		cmd = cmd->prev;
 	while (cmd)
 	{
 		if (cmd->exec)

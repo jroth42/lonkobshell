@@ -128,3 +128,4 @@ void	parse_cmd(t_node *node)
 	}
 	create_exec(&node->cmd);
 }
+	// free_token_list(tmp);
