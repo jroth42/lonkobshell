@@ -6,35 +6,11 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/04 14:18:27 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/05 18:53:08 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
-
-int	open_file(char *file, int mode, int bonus)
-{
-	if (mode == INFILE)
-	{
-		if (access(file, F_OK))
-		{
-			write(STDERR_FILENO, "Couldn't find file: ", 21);
-			write(STDERR_FILENO, file, strlen_to_c(file, 0));
-			write(STDERR_FILENO, "\n", 1);
-			return (STDIN_FILENO);
-		}
-		return (open(file, O_RDONLY));
-	}
-	else if (bonus)
-	{
-		return (open(file, O_CREAT | O_WRONLY | O_APPEND));
-	}
-	else
-	{
-		return (open(file, O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH));
-	}
-}
 
 static int	execute_cmd(t_cmd *cmd, char **env)
 {
@@ -44,56 +20,60 @@ static int	execute_cmd(t_cmd *cmd, char **env)
 	env++;
 	path = find_path(cmd->cmd, env);
 	execve(path, cmd->exec, env);
+	write(STDERR_FILENO, "lonkobshell: ", 13);
+	write(STDERR_FILENO, cmd->cmd, ft_strlen(cmd->cmd));
+	write(STDERR_FILENO, ": command not found\n", 20);
 	return (127);
 }
 
-void	eXecuTe(t_cmd *cmd, char **env)
+void	pipe_it(t_exec *exec, t_cmd *cmd, char **env)
 {
-	int		fd[2];
-	pid_t	pid;
-	int		tmp_fd;
-	
-	tmp_fd = dup(STDIN_FILENO);
+	pipe(exec->fd);
+	exec->pid = fork();
+	if (exec->pid < 0)
+		return ;
+	if (exec->pid == 0)
+	{
+		dup2(exec->tmp_fd, STDIN_FILENO);
+		dup2(exec->fd[WRITE], STDOUT_FILENO);
+		close(exec->fd[READ]);
+		close(exec->fd[WRITE]);
+		close(exec->tmp_fd);
+		execute_cmd(cmd, env);
+	}
+	else
+	{
+		close(exec->fd[WRITE]);
+		close(exec->tmp_fd);
+		wait(NULL);
+		exec->tmp_fd = dup(exec->fd[READ]);
+		close(exec->fd[READ]);
+	}
+}
+
+void	execute(t_cmd *cmd, char **env)
+{
+	t_exec	exec;
+
+	exec.tmp_fd = dup(STDIN_FILENO);
 	while (cmd)
 	{
 		if (cmd->next)
-		{
-			pipe(fd);
-			pid = fork();
-			if (pid < 0)
-				return ;
-			if (pid == 0)
-			{
-				dup2(tmp_fd, STDIN_FILENO);
-				dup2(fd[WRITE], STDOUT_FILENO);
-				close(fd[READ]);
-				close(fd[WRITE]);
-				close(tmp_fd);
-				execute_cmd(cmd, env);
-			}
-			else
-			{
-				close(fd[WRITE]);
-				close(tmp_fd);
-				wait(NULL);
-				tmp_fd = dup(fd[READ]);
-				close(fd[READ]);
-			}
-		}
+			pipe_it(&exec, cmd, env);
 		else if (!cmd->next)
 		{
-			pid = fork();
-			if (pid == 0)
+			exec.pid = fork();
+			if (exec.pid == 0)
 			{
-				dup2(tmp_fd, STDIN_FILENO);
+				dup2(exec.tmp_fd, STDIN_FILENO);
 				execute_cmd(cmd, env);
-				close(tmp_fd);
+				close(exec.tmp_fd);
 			}
 			else
 			{
-				close(tmp_fd);
+				close(exec.tmp_fd);
 				wait(NULL);
-				tmp_fd = dup(STDIN_FILENO);
+				exec.tmp_fd = dup(STDIN_FILENO);
 			}
 		}
 		cmd = cmd->next;
