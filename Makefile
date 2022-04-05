@@ -6,13 +6,13 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/03/31 17:10:37 by jroth            ###   ########.fr        #
+#    Updated: 2022/04/05 20:05:09 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-LX = ./lx/
+LX = ./parse/
 
 PRMPT = ./prompt/
 
@@ -24,12 +24,11 @@ LIBFT = $(UTL)libft/
 
 SRC =	$(PRMPT)main.c \
 		$(LX)tokenize.c $(LX)token_handle.c $(LX)token_redirect.c\
-		$(LX)parse_cmd.c\
-		$(EXEC)exec_utils.c $(EXEC)execute.c\
-		$(UTL)utils.c $(UTL)print.c
+		$(LX)parse_cmd.c \
+		$(EXEC)exec_utils.c $(EXEC)execute.c $(EXEC)exec_redirect.c\
+		$(UTL)utils.c $(UTL)print.c $(UTL)free.c
 
-CC = gcc -g
-#-Wall -Werror -Wextra
+CC = gcc -g -Wall -Werror -Wextra
 
 LIBFT = $(UTL)libft/
 
@@ -45,8 +44,8 @@ $(NAME): $(OBJ)
 	@$(CC) -c $< -o $@
 
 clean:
-	@rm -f ./prompt/*.o
-	@rm -f ./lx/*.o
+	@rm -f $(PRMPT)*.o
+	@rm -f $(LX)*.o
 	@rm -f $(LIBFT)*.o
 	@rm -f $(UTL)*.o
 	@rm -f $(EXEC)*.o

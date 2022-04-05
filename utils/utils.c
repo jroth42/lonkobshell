@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:41:08 by jroth             #+#    #+#             */
-/*   Updated: 2022/03/30 22:28:31 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/05 20:08:50 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,13 @@ bool	whitespace(const char c)
 	if (c == ' ' || c == '\t' || c == '\v' || c == '\f' || c == '\r')
 		return (true);
 	return (false);
+}
+
+void	myfree(void *mlc)
+{
+	if (mlc)
+	{
+		free(mlc);
+		mlc = NULL;
+	}
 }
