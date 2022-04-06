@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/05 19:58:45 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/06 16:42:08 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 void	input_handle(t_node *node);
 void	skip_whitespace(char **str);
 bool	whitespace(const char c);
+int		strlen_to_c(char *str, char c);
 
 // FREE
 void	myfree(void *mlc);

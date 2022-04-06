@@ -6,32 +6,29 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:52:07 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/05 18:52:19 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/06 16:43:35 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-int	open_file(char *file, int mode, int bonus)
+void	redirect_output(t_exec *exec, t_cmd *cmd, char **env)
 {
-	if (mode == INFILE)
+	pipe(exec->fd);
+	exec->pid = fork();
+	if (exec->pid < 0)
+		return ;
+	if (exec->pid == 0)
 	{
-		if (access(file, F_OK))
-		{
-			write(STDERR_FILENO, "Couldn't find file: ", 21);
-			write(STDERR_FILENO, file, strlen_to_c(file, 0));
-			write(STDERR_FILENO, "\n", 1);
-			return (STDIN_FILENO);
-		}
-		return (open(file, O_RDONLY));
-	}
-	else if (bonus)
-	{
-		return (open(file, O_CREAT | O_WRONLY | O_APPEND));
+		dup2(exec->file_fd, STDOUT_FILENO);
+		close(exec->file_fd);
+		execute_cmd(cmd, env);
 	}
 	else
 	{
-		return (open(file, O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH));
+		wait(NULL);
+		exec->tmp_fd = dup(exec->fd[READ]);
+		close(exec->tmp_fd);
+		close(exec->file_fd);
 	}
 }

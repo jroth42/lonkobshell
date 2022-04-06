@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:33:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/05 19:54:25 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/06 16:24:33 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_cmd
 	char			*args;
 	char			*re_in;
 	char			*re_out;
+	int				re_type;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;

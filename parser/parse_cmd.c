@@ -116,9 +116,15 @@ void	parse_cmd(t_node *node)
 			|| tmp->type == DQUOTE)
 			fill_arguments(tmp, &node->cmd);
 		if (tmp->type == GREAT || tmp->type == GREATGREAT)
+		{
 			(node)->cmd->re_out = ft_strdup(tmp->chr);
+			(node)->cmd->re_type = tmp->type;
+		}
 		if (tmp->type == LESS || tmp->type == LESSLESS)
+		{
 			(node)->cmd->re_in = ft_strdup(tmp->chr);
+			(node)->cmd->re_type = tmp->type;
+		}
 		if (tmp->type == PIPE)
 		{
 			(node)->cmd->next = create_cmd(node->cmd);

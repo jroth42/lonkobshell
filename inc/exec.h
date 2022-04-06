@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:36:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/05 18:54:42 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/06 16:42:03 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ typedef struct s_exec
 	int		file_fd;
 }				t_exec;
 
-char	*find_path(char *cmd, char **env);
 void	execute(t_cmd *cmd, char **env);
-int		strlen_to_c(char *str, char c);
+void	redirect_output(t_exec *exec, t_cmd *cmd, char **env);
+int		execute_cmd(t_cmd *cmd, char **env);
+
+void	check_redirects(t_exec *exec, t_cmd *cmd);
+char	*find_path(char *cmd, char **env);
+int		open_file(char *file, int mode, int type);
 
 #endif

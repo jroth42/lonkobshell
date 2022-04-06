@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:41:08 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/05 20:37:54 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/06 16:41:58 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,16 @@ void	myfree(void *mlc)
 		free(mlc);
 		mlc = NULL;
 	}
+}
+
+int	strlen_to_c(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != c)
+		i++;
+	if (str[i] == c)
+		return (i);
+	return (-1);
 }

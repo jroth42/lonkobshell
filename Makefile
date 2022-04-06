@@ -6,13 +6,13 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/04/05 20:05:09 by jroth            ###   ########.fr        #
+#    Updated: 2022/04/06 16:47:36 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-LX = ./parse/
+LX = ./parser/
 
 PRMPT = ./prompt/
 

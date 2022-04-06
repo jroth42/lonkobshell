@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:31:42 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/05 22:09:35 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/06 16:49:19 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ bool	stringcmp(char *str, char *cmp)
 // 	if (stringcmp("exit", node->input))
 // 		exit(0);
 // }
-
 
 void	input_handle(t_node *node)
 {
