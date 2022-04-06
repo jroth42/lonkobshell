@@ -3,51 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hngo <hngo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:40:10 by hngo              #+#    #+#             */
-/*   Updated: 2022/04/06 16:52:29 by hngo             ###   ########.fr       */
+/*   Updated: 2022/04/06 17:42:21 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../inc/shell.h"
 
-
-size_t	ft_strlen(const char *s)
+t_env	*last_node(t_env *node)
 {
-	int	i;
-
-	if (!s)
-		return 0;
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char		*s2;
-	int			i;
-	int			len;
-
-	len = ft_strlen(s1);
-	s2 = malloc(sizeof(char) * (len + 1));
-	if (s2 == NULL)
-		return ((char *) NULL);
-	i = 0;
-	while (i < len)
-	{
-		s2[i] = s1[i];
-		i++;
-	}
-	s2[i] = '\0';
-	return (s2);
-}
-
-t_envbuilt	*last_node(t_envbuilt *node)
-{
-	t_envbuilt *tmp;
+	t_env *tmp;
 
 	tmp = node;
 	while (tmp)
@@ -59,11 +26,11 @@ t_envbuilt	*last_node(t_envbuilt *node)
 	return (tmp);
 }
 
-t_envbuilt	*env_new(char *env_str)
+t_env	*env_new(char *env_str)
 {
-	t_envbuilt *new;
+	t_env *new;
 
-	new = (t_envbuilt *)malloc(sizeof(t_envbuilt));
+	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
 	new->str = NULL;
@@ -72,9 +39,9 @@ t_envbuilt	*env_new(char *env_str)
 	return (new);
 }
 
-void	env_add_back(t_envbuilt **list, char *str)
+void	env_add_back(t_env **list, char *str)
 {
-	t_envbuilt *tmp;
+	t_env *tmp;
 
 	tmp = NULL;
 	if (*list == NULL)
@@ -86,7 +53,7 @@ void	env_add_back(t_envbuilt **list, char *str)
 	}
 }
 
-void	create_env_list(t_envbuilt **env_list, char **environ)
+void	create_env_list(t_env **env_list, char **environ)
 {
 	int i;
 
@@ -98,9 +65,9 @@ void	create_env_list(t_envbuilt **env_list, char **environ)
 	}
 }
 
-void	print_nodes(t_envbuilt *ori)
+void	print_env(t_env *ori)
 {
-	t_envbuilt *node;
+	t_env *node;
 
 	node = ori;
 	int i;
@@ -111,15 +78,4 @@ void	print_nodes(t_envbuilt *ori)
 		printf("%s\n", node->str);
 		node = node->next;
 	}
-}
-
-int main(int argc, char **argv, char **envp)
-{
-	t_envbuilt *env_struct;
-
-	env_struct = NULL;
-	
-	create_env_list(&env_struct, envp);
-	print_nodes(env_struct);
-	return 0;
 }

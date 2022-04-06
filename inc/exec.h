@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:36:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/06 16:42:03 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/06 18:28:54 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_exec
 
 void	execute(t_cmd *cmd, char **env);
 void	redirect_output(t_exec *exec, t_cmd *cmd, char **env);
+void	redirect_input(t_exec *exec, t_cmd *cmd, char **env);
 int		execute_cmd(t_cmd *cmd, char **env);
 
 void	check_redirects(t_exec *exec, t_cmd *cmd);

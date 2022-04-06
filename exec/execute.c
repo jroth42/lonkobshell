@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/06 16:49:03 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/06 18:58:14 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,18 @@ void	write_it(t_exec *exec, t_cmd *cmd, char **env)
 	if (cmd->re_out)
 		redirect_output(exec, cmd, env);
 	else
-	{
 		exec->pid = fork();
-		if (exec->pid == 0)
-		{
-			dup2(exec->tmp_fd, STDIN_FILENO);
-			execute_cmd(cmd, env);
-			close(exec->tmp_fd);
-		}
-		else
-		{
-			close(exec->tmp_fd);
-			wait(NULL);
-			exec->tmp_fd = dup(STDIN_FILENO);
-		}
+	if (exec->pid == 0)
+	{
+		dup2(exec->tmp_fd, STDIN_FILENO);
+		execute_cmd(cmd, env);
+		close(exec->tmp_fd);
+	}
+	else
+	{
+		close(exec->tmp_fd);
+		wait(NULL);
+		exec->tmp_fd = dup(STDIN_FILENO);
 	}
 }
 
