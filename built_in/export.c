@@ -1,6 +1,8 @@
 
 
 #include "../inc/shell.h"
+#include "env.c"
+#include "libft.c"
 
 
 int has_equal(char *str)
@@ -62,7 +64,7 @@ void    modify_env(t_env **node, char *str)
     tmp = *node;
     while (tmp)
     {
-        if (is_env(tmp, str))
+        if (compare_env(tmp->str, str))
         {
 			//free(tmp->str);
             tmp->str = ft_strdup(str);
