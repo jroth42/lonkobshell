@@ -29,7 +29,7 @@ void    unset_env(t_env **head)
     //free(temp);
 }
 
-int has_equal(char *str)
+/* int has_equal(char *str)
 {
     int i;
 
@@ -109,7 +109,7 @@ void    modify_env(t_env **node, char *str, int mode)
         }
         tmp = tmp->next;
     }
-}
+} */
 
 void    built_unset(t_env **node, char *str)
 {
