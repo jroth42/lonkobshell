@@ -6,19 +6,11 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:58:40 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/06 16:50:51 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 22:08:40 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
-
-void	check_redirects(t_exec *exec, t_cmd *cmd)
-{
-	if (cmd->re_in)
-		exec->file_fd = open_file(cmd->re_in, INFILE, cmd->re_type);
-	if (cmd->re_out)
-		exec->file_fd = open_file(cmd->re_out, OUTFILE, cmd->re_type);
-}
 
 char	str_cmp_n(char *str, char *cmp, int n)
 {
@@ -76,26 +68,35 @@ char	*find_path(char *cmd, char **env)
 	return (cmd);
 }
 
-int	open_file(char *file, int mode, int type)
+int	file_error(char *name_b, char *msg, char *name_a)
 {
-	if (mode == INFILE)
+	if (name_b)
+		ft_putstr_fd(name_b, 2);
+	if (msg)
 	{
-		if (access(file, F_OK) != 0)
-		{
-			write(STDERR_FILENO, "Couldn't find file: ", 21);
-			write(STDERR_FILENO, file, strlen_to_c(file, 0));
-			write(STDERR_FILENO, "\n", 1);
-			return (STDIN_FILENO);
-		}
-		return (open(file, O_RDONLY));
+		if (name_b)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(msg, 2);
 	}
-	else if (type == LESSLESS || type == LESS)
-		return (open(file, O_CREAT | O_WRONLY | O_APPEND));
-	else if (type == GREAT)
-		return (open(file, O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH));
-	else if (type == GREATGREAT)
-		return (open(file, O_CREAT | O_WRONLY | O_APPEND,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH));
-	return (0);
+	if (name_a)
+	{
+		if (msg)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(name_a, 2);
+	}
+	ft_putchar_fd('\n', 2);
+	return (EXIT_FAILURE);
+}
+
+int	open_file(char *file, int mode, int rights)
+{
+	int	fd;
+
+	fd = open(file, mode, rights);
+	if (fd < 0 || access(file, W_OK) < 0)
+	{
+		file_error("minishell", "errno", file);
+		return (-1);
+	}
+	return (fd);
 }

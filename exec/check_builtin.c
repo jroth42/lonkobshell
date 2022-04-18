@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:26:37 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 16:57:01 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 21:38:31 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	built_in_exec(t_cmd *table, char **env)
 bool	check_single_built_in(t_cmd *tmp, char **env)
 {
 	if (tmp->prev == NULL && tmp->next == NULL
-		&& tmp->re_type == -1 && check_builtin(tmp))
+		&& check_builtin(tmp))
 	{
 		//g_exit_status = 
 		built_in_exec(tmp, env);

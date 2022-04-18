@@ -22,9 +22,7 @@ t_cmd	*create_cmd(t_cmd *cmd)
 		return (NULL);
 	new->exec = NULL;
 	new->args = NULL;
-	new->re_in = NULL;
-	new->re_out = NULL;
-	new->re_type = -1;
+	new->redirect = NULL;
 	new->next = NULL;
 	if (!cmd)
 	{
@@ -116,22 +114,22 @@ void	parse_cmd(t_node *node)
 		if (tmp->type == ARG || tmp->type == SQUOTE
 			|| tmp->type == DQUOTE)
 			fill_arguments(tmp, &node->cmd);
-		if (tmp->type == GREAT || tmp->type == GREATGREAT)
-		{
-			(node)->cmd->re_out = ft_strdup(tmp->chr);
-			(node)->cmd->re_type = tmp->type;
-		}
-		if (tmp->type == LESS || tmp->type == LESSLESS)
-		{
-			(node)->cmd->re_in = ft_strdup(tmp->chr);
-			(node)->cmd->re_type = tmp->type;
-		}
+		if (tmp->type == LESS || tmp->type == LESSLESS
+			|| tmp->type == GREAT || tmp->type == GREATGREAT)
+			add_redirection(tmp, &node->cmd->redirect);
 		if (tmp->type == PIPE)
 		{
 			(node)->cmd->next = create_cmd(node->cmd);
 			node->cmd = node->cmd->next;
 		}
 		tmp = tmp->next;
+	}
+
+	t_redir *blub = node->cmd->redirect;
+	while (blub)
+	{
+		printf("t:%ds:%s\n",blub->type, blub->file);
+		blub = blub->next;
 	}
 	create_exec(&node->cmd);
 }

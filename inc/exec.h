@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:36:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 16:56:05 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 22:37:04 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,39 @@
 
 typedef struct s_exec
 {
+	// pid_t	pid;
+	// int		fd[2];
+	// int		tmp_fd[2];
+	
+	// int		file_fd;
 	pid_t	pid;
 	int		fd[2];
+	int		here_fd[2];
 	int		tmp_fd;
+	int		stin;
+	int		stout;
 	int		file_fd;
+	int		cmd_count;
+	int		no_rights;
+	int		i;
 }				t_exec;
 
-void	execute(t_cmd *cmd, char **env);
-void	redirect_output(t_exec *exec, t_cmd *cmd, char **env);
-void	redirect_input(t_exec *exec, t_cmd *cmd, char **env);
-int		execute_cmd(t_cmd *cmd, char **env);
+void	execute_loop(t_cmd *cmd, char **env);
+int		exec(t_cmd *cmd, char **env);
+
+// REDIRECT
+int		route_stdout(t_cmd *cmd, t_exec *fds);
+int		route_stdin(t_cmd *cmd, t_exec *fds);
+int		multiple_redir_in(t_cmd *cmd, t_exec *fds);
+int		heredoc(char *delimiter, t_exec *fds, int type);
+int		open_file(char *file, int mode, int rights);
+char	*find_path(char *cmd, char **env);
 
 // BUILTINS
 bool	check_single_built_in(t_cmd *tm, char **env);
+bool	check_builtin(t_cmd *table);
+int		built_in_exec(t_cmd *table, char **env);
 
 // UTILS
-void	check_redirects(t_exec *exec, t_cmd *cmd);
-char	*find_path(char *cmd, char **env);
-int		open_file(char *file, int mode, int type);
 
 #endif

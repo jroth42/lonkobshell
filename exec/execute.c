@@ -6,92 +6,122 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 17:09:31 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 22:31:42 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-int	execute_cmd(t_cmd *cmd, char **env)
+static int	create_prcs(t_cmd *cmd, t_exec *fds, char **env)
 {
-	char	*path;
-
-	env++;
-	path = find_path(cmd->cmd, env);
-	execve(path, cmd->exec, env);
-	write(STDERR_FILENO, "lonkobshell: ", 13);
-	write(STDERR_FILENO, cmd->cmd, ft_strlen(cmd->cmd));
-	write(STDERR_FILENO, ": command not found\n", 20);
-	return (127);
+	pipe(fds->fd);
+	// define_sig_prc(cmd);
+	fds->i++;
+	fds->pid = fork();
+	if (fds->pid == 0)
+	{
+		close(fds->fd[READ]);
+		if (!cmd->prev && !cmd->next
+			&& !cmd->redirect && !check_builtin(cmd))
+				exec(cmd, env); //g_exit_status = 
+		else
+		{
+			if (route_stdin(cmd, fds) < 0)
+				exit(1);
+			if (route_stdout(cmd, fds) < 0)
+				exit(1);
+			exec(cmd, env); // g_exit_status = 
+		}
+	}
+	close(fds->tmp_fd);
+	dup2(fds->fd[READ], fds->tmp_fd);
+	close(fds->fd[READ]);
+	close(fds->fd[WRITE]);
+	return (fds->pid);
 }
 
-void	pipe_it(t_exec *exec, t_cmd *cmd, char **env)
+
+static void	end_prcs(t_exec *fds)
 {
-	if (cmd->re_out)
-		redirect_output(exec, cmd, env);
-	pipe(exec->fd);
-	exec->pid = fork();
-	if (exec->pid < 0)
-		return ;
-	if (exec->pid == 0)
+	close(fds->stin);
+	close(fds->stout);
+	close(fds->tmp_fd);
+	while (fds->i > 0)
 	{
-		dup2(exec->tmp_fd, STDIN_FILENO);
-		dup2(exec->fd[WRITE], STDOUT_FILENO);
-		close(exec->fd[WRITE]);
-		close(exec->tmp_fd);
-		execute_cmd(cmd, env);
+		waitpid(0, &fds->pid, 0);
+		// if (WIFEXITED(fds->pid))
+		// 	g_exit_status = WEXITSTATUS(fds->pid);
+		fds->i--;
 	}
-	else
-	{
-		wait(NULL);
-		close(exec->fd[WRITE]);
-		close(exec->tmp_fd);
-		exec->tmp_fd = dup(exec->fd[READ]);
-		close(exec->fd[READ]);
-	}
+	// free(fds);
 }
 
-void	write_it(t_exec *exec, t_cmd *cmd, char **env)
+void	set_exec(t_exec *exec)
 {
-	if (cmd->re_out)
-		redirect_output(exec, cmd, env);
-	else
-		exec->pid = fork();
-	if (exec->pid == 0)
-	{
-		dup2(exec->tmp_fd, STDIN_FILENO);
-		execute_cmd(cmd, env);
-		close(exec->tmp_fd);
-	}
-	else
-	{
-		close(exec->tmp_fd);
-		wait(NULL);
-		exec->tmp_fd = dup(STDIN_FILENO);
-	}
+	exec->fd[READ] = 0;
+	exec->fd[WRITE] = 0;
+	exec->here_fd[READ] = 0;
+	exec->here_fd[WRITE] = 0;
+	exec->stin = dup(STDIN_FILENO);
+	exec->stout = dup(STDOUT_FILENO);
+	exec->tmp_fd = dup(STDIN_FILENO);
+	exec->file_fd = 0;
+	exec->cmd_count = 0;
+	exec->no_rights = 0;
+	exec->pid = 0;
+	exec->i = 0;
 }
 
-void	execute(t_cmd *cmd, char **env)
+void	execute_loop(t_cmd *cmd, char **env)
 {
-	t_exec	exec;
 	t_cmd	*tmp;
-	
+	t_exec	exec;
+
 	tmp = cmd;
-	check_redirects(&exec, cmd);
-	exec.tmp_fd = dup(STDIN_FILENO);
-	while (cmd)
+	set_exec(&exec);
+	while (tmp)
 	{
+		if (!tmp->cmd)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		if (check_single_built_in(tmp, env))
 			break ;
-		if (cmd->next)
-			pipe_it(&exec, cmd, env);
-		else if (!cmd->next)
-			write_it(&exec, cmd, env);
-		cmd = cmd->next;
+		else
+		{
+			if (create_prcs(tmp, &exec, env) < 0)
+			{
+				// g_exit_status = 1;
+				break ;
+			}
+		}
+		tmp = tmp->next;
 	}
-	// close(exec.fd[READ]);
-	// close(exec.fd[WRITE]);
-	// close(exec.tmp_fd);
-	// close(exec.file_fd);
+	end_prcs(&exec);
 }
-	// free_cmd_list(tmp);
+
+int	exec(t_cmd *cmd, char **env)
+{
+	// char	**env_arr;
+	char	*path;
+
+	// env_arr = get_env_arr();
+	path = find_path(cmd->cmd, env);
+	if (!path)
+		perror("Could not resolve environ array.\n");
+	if (check_builtin(cmd))
+	{
+		built_in_exec(cmd, env);
+		// ft_free_split(env_arr);
+	}
+	else if (cmd->exec)
+	{
+		execve(path, cmd->exec, env);
+		// execve(cmd->cmd_arr[0], cmd->cmd_arr, env_arr);
+		// g_exit_status = -1;
+		// ft_free_split(env_arr);
+		exit(EXIT_FAILURE);
+	}
+	exit(EXIT_SUCCESS);
+}

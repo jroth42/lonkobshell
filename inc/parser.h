@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:33:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 15:03:47 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 22:38:46 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,20 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
-// typedef struct s_redir
-// {
-// 	t_type			type;
-// 	char			*file;
-// 	struct s_redir	*next;
-// 	struct s_redir	*prev;
-// }	t_redir;
+typedef struct s_redir
+{
+	char			*file;
+	int				type;
+	struct s_redir	*next;
+	struct s_redir	*prev;
+}				t_redir;
 
 typedef struct s_cmd
 {
 	char			**exec;
 	char			*cmd;
 	char			*args;
-	char			*re_in;
-	char			*re_out;
-	int				re_type;
+	t_redir			*redirect;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;
@@ -69,6 +67,10 @@ void	handle_quotation(t_token **token, char **input);
 void	handle_redirections(t_token **token, char **input);
 void	handle_word(t_token **token, char **input);
 void	handle_pipe(t_token **token, char **input);
+
+// REDIRECTs
+void	add_redirection(t_token *tmp, t_redir **redir);
+t_redir	*get_last_in_redir(t_redir *head);
 
 t_cmd	*create_cmd(t_cmd *cmd);
 void	parse_cmd(t_node *node);
