@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hngo <hngo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:36:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 21:56:31 by hngo             ###   ########.fr       */
+/*   Updated: 2022/04/18 16:56:05 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ typedef struct s_exec
 	int		file_fd;
 }				t_exec;
 
-void	execute(t_cmd *cmd, char **env, t_env *env_struct);
+void	execute(t_cmd *cmd, char **env);
 void	redirect_output(t_exec *exec, t_cmd *cmd, char **env);
 void	redirect_input(t_exec *exec, t_cmd *cmd, char **env);
 int		execute_cmd(t_cmd *cmd, char **env);
 
 // BUILTINS
-bool	check_single_built_in(t_cmd *tmp, t_env *env_struct);
+bool	check_single_built_in(t_cmd *tm, char **env);
 
 // UTILS
 void	check_redirects(t_exec *exec, t_cmd *cmd);
