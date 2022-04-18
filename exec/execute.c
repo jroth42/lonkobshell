@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 22:31:42 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 22:49:07 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	end_prcs(t_exec *fds)
 		// 	g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
-	// free(fds);
 }
 
 void	set_exec(t_exec *exec)
@@ -103,10 +102,8 @@ void	execute_loop(t_cmd *cmd, char **env)
 
 int	exec(t_cmd *cmd, char **env)
 {
-	// char	**env_arr;
 	char	*path;
 
-	// env_arr = get_env_arr();
 	path = find_path(cmd->cmd, env);
 	if (!path)
 		perror("Could not resolve environ array.\n");
@@ -118,7 +115,6 @@ int	exec(t_cmd *cmd, char **env)
 	else if (cmd->exec)
 	{
 		execve(path, cmd->exec, env);
-		// execve(cmd->cmd_arr[0], cmd->cmd_arr, env_arr);
 		// g_exit_status = -1;
 		// ft_free_split(env_arr);
 		exit(EXIT_FAILURE);

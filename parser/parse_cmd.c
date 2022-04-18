@@ -124,13 +124,6 @@ void	parse_cmd(t_node *node)
 		}
 		tmp = tmp->next;
 	}
-
-	t_redir *blub = node->cmd->redirect;
-	while (blub)
-	{
-		printf("t:%ds:%s\n",blub->type, blub->file);
-		blub = blub->next;
-	}
 	create_exec(&node->cmd);
 }
 	// free_token_list(tmp);
