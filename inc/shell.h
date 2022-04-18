@@ -30,6 +30,7 @@
 typedef struct s_env
 {
 	char			*str;
+	int				flag;
 	struct s_env	*next;
 }					t_env;
 
