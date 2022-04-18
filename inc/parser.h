@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:33:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/06 16:24:33 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 15:03:47 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
+
+// typedef struct s_redir
+// {
+// 	t_type			type;
+// 	char			*file;
+// 	struct s_redir	*next;
+// 	struct s_redir	*prev;
+// }	t_redir;
 
 typedef struct s_cmd
 {

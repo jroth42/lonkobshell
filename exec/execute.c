@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/06 18:58:14 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/06 19:23:20 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	execute_cmd(t_cmd *cmd, char **env)
 
 void	pipe_it(t_exec *exec, t_cmd *cmd, char **env)
 {
+	if (cmd->re_out)
+		redirect_output(exec, cmd, env);
 	pipe(exec->fd);
 	exec->pid = fork();
 	if (exec->pid < 0)
@@ -35,16 +37,15 @@ void	pipe_it(t_exec *exec, t_cmd *cmd, char **env)
 	{
 		dup2(exec->tmp_fd, STDIN_FILENO);
 		dup2(exec->fd[WRITE], STDOUT_FILENO);
-		close(exec->fd[READ]);
 		close(exec->fd[WRITE]);
 		close(exec->tmp_fd);
 		execute_cmd(cmd, env);
 	}
 	else
 	{
+		wait(NULL);
 		close(exec->fd[WRITE]);
 		close(exec->tmp_fd);
-		wait(NULL);
 		exec->tmp_fd = dup(exec->fd[READ]);
 		close(exec->fd[READ]);
 	}
