@@ -1,6 +1,5 @@
 
 #include "../inc/shell.h"
-#include "libft.c"
 #include "env.c"
 
 //deletes flagged node
@@ -119,14 +118,14 @@ void    built_unset(t_env **node, char *str)
         return ;
 }
 
-int main(int argc, char **argv, char **envp)
-{
-	t_env *env_struct;
+// int main(int argc, char **argv, char **envp)
+// {
+// 	t_env *env_struct;
 
-	env_struct = NULL;
+// 	env_struct = NULL;
 	
-	create_env_list(&env_struct, envp);
-    built_unset(&env_struct, argv[1]);
-	print_env(env_struct);
-	return 0;
-}
+// 	create_env_list(&env_struct, envp);
+//     built_unset(&env_struct, argv[1]);
+// 	print_env(env_struct);
+// 	return 0;
+// }

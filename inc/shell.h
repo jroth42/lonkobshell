@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/06 19:02:19 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 16:50:47 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,12 @@
 # include "../utils/libft/libft.h"
 # include "parser.h"
 # include "exec.h"
+# include "built_in.h"
 
 # define INFILE 0
 # define OUTFILE 1
 # define READ 0
 # define WRITE 1
-
-typedef struct s_env
-{
-	char			*str;
-	int				flag;
-	struct s_env	*next;
-}					t_env;
-
-// env
-void	create_env_list(t_env **s_env, char **env);
-void	print_env(t_env *ori);
 
 //	----- UTILS ------ 
 void	input_handle(t_node *node);

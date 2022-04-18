@@ -24,6 +24,7 @@ t_cmd	*create_cmd(t_cmd *cmd)
 	new->args = NULL;
 	new->re_in = NULL;
 	new->re_out = NULL;
+	new->re_type = -1;
 	new->next = NULL;
 	if (!cmd)
 	{

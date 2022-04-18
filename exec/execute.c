@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/06 19:23:20 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 17:09:31 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,23 @@ void	execute(t_cmd *cmd, char **env)
 {
 	t_exec	exec;
 	t_cmd	*tmp;
-
+	
 	tmp = cmd;
 	check_redirects(&exec, cmd);
 	exec.tmp_fd = dup(STDIN_FILENO);
 	while (cmd)
 	{
+		if (check_single_built_in(tmp, env))
+			break ;
 		if (cmd->next)
 			pipe_it(&exec, cmd, env);
 		else if (!cmd->next)
 			write_it(&exec, cmd, env);
 		cmd = cmd->next;
 	}
-	close(exec.fd[READ]);
-	close(exec.fd[WRITE]);
-	close(exec.tmp_fd);
-	close(exec.file_fd);
+	// close(exec.fd[READ]);
+	// close(exec.fd[WRITE]);
+	// close(exec.tmp_fd);
+	// close(exec.file_fd);
 }
 	// free_cmd_list(tmp);

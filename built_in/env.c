@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 23:40:10 by hngo              #+#    #+#             */
-/*   Updated: 2022/04/06 17:42:21 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 17:03:13 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ void	create_env_list(t_env **env_list, char **environ)
 
 	i = 0;
 	while (environ[i])
-	{
-		env_add_back(env_list, environ[i]);
-		i++;
-	}
+		env_add_back(env_list, environ[i++]);
 }
 
 void	print_env(t_env *ori)
@@ -70,12 +67,19 @@ void	print_env(t_env *ori)
 	t_env *node;
 
 	node = ori;
-	int i;
 
-	i = 0;
 	while (node)
 	{
 		printf("%s\n", node->str);
 		node = node->next;
 	}
+}
+
+void    ft_env(char **env)
+{
+    t_env *env_struct;
+
+    env_struct = NULL;
+    create_env_list(&env_struct, env);
+    print_env(env_struct);
 }

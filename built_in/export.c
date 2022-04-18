@@ -2,8 +2,6 @@
 
 #include "../inc/shell.h"
 #include "env.c"
-#include "libft.c"
-
 
 int has_equal(char *str)
 {
