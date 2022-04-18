@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:36:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 22:37:04 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 23:22:39 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 
 typedef struct s_exec
 {
-	// pid_t	pid;
-	// int		fd[2];
-	// int		tmp_fd[2];
-	
-	// int		file_fd;
 	pid_t	pid;
 	int		fd[2];
 	int		here_fd[2];

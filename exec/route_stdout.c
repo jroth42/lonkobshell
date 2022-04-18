@@ -6,26 +6,26 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:43:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 22:39:16 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 23:19:15 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-
-int	route_append(t_redir *out)
+int	route_out(int type, t_redir *out)
 {
-	open(out->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (access(out->file, W_OK) < 0)
-		return (-1);
-	return (0);
-}
-
-int	route_out(t_redir *out)
-{
-	open(out->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (access(out->file, W_OK) < 0)
-		return (-1);
+	if (type == GREAT)
+	{
+		open(out->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (access(out->file, W_OK) < 0)
+			return (-1);
+	}
+	else if (type == GREATGREAT)
+	{
+		open(out->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (access(out->file, W_OK) < 0)
+			return (-1);
+	}
 	return (0);
 }
 
@@ -39,16 +39,8 @@ t_redir	*get_last_out_redir(t_redir *head)
 		if (head->type == GREAT || head->type == GREATGREAT)
 		{
 			out = head;
-			if (head->type == GREAT)
-			{
-				if (route_out(out) < 0)
-					break ;
-			}
-			else if (head->type == GREATGREAT)
-			{
-				if (route_append(out) < 0)
-					break ;
-			}
+			if (route_out(head->type, out) < 0)
+				break ;
 		}
 		head = head->next;
 	}

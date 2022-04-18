@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 22:49:07 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 23:16:06 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,28 @@ void	set_exec(t_exec *exec)
 	exec->i = 0;
 }
 
+int	exec(t_cmd *cmd, char **env)
+{
+	char	*path;
+
+	path = find_path(cmd->cmd, env);
+	if (!path)
+		perror("Could not resolve environ array.\n");
+	if (check_builtin(cmd))
+	{
+		built_in_exec(cmd, env);
+		// ft_free_split(env_arr);
+	}
+	else if (cmd->exec)
+	{
+		execve(path, cmd->exec, env);
+		// g_exit_status = -1;
+		// ft_free_split(env_arr);
+		exit(EXIT_FAILURE);
+	}
+	exit(EXIT_SUCCESS);
+}
+
 void	execute_loop(t_cmd *cmd, char **env)
 {
 	t_cmd	*tmp;
@@ -98,26 +120,4 @@ void	execute_loop(t_cmd *cmd, char **env)
 		tmp = tmp->next;
 	}
 	end_prcs(&exec);
-}
-
-int	exec(t_cmd *cmd, char **env)
-{
-	char	*path;
-
-	path = find_path(cmd->cmd, env);
-	if (!path)
-		perror("Could not resolve environ array.\n");
-	if (check_builtin(cmd))
-	{
-		built_in_exec(cmd, env);
-		// ft_free_split(env_arr);
-	}
-	else if (cmd->exec)
-	{
-		execve(path, cmd->exec, env);
-		// g_exit_status = -1;
-		// ft_free_split(env_arr);
-		exit(EXIT_FAILURE);
-	}
-	exit(EXIT_SUCCESS);
 }

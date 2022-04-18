@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:48:40 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 17:08:28 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 23:24:18 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ typedef struct s_env
 }					t_env;
 
 // env
-void    ft_env(char **env);
+void	ft_env(char **env);
 
 #endif
