@@ -1,7 +1,7 @@
 
 
 #include "../inc/shell.h"
-#include "env.c"
+
 
 int has_equal(char *str)
 {
@@ -92,7 +92,7 @@ void    built_export(t_env **node, char *str)
         env_add_back(node, str);   */
 }
 
-int main(int argc, char **argv, char **envp)
+/* int main(int argc, char **argv, char **envp)
 {
 	t_env *env_struct;
 
@@ -102,4 +102,11 @@ int main(int argc, char **argv, char **envp)
 	built_export(&env_struct, argv[1]);
 	print_env(env_struct);
 	return 0;
+} */
+
+void	ft_export(t_cmd *table, t_env *env_struct)
+{
+	//create_env_list(&env_struct, envp);
+	built_export(&env_struct, table->exec[1]);
+	print_env(env_struct);
 }

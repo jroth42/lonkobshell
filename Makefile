@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
+#    By: hngo <hngo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/04/18 16:54:47 by jroth            ###   ########.fr        #
+#    Updated: 2022/04/18 21:33:52 by hngo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,9 +30,9 @@ SRC =	$(PRMPT)main.c \
 		$(EXEC)exec_utils.c $(EXEC)execute.c $(EXEC)exec_redirect.c\
 		$(EXEC)check_builtin.c\
 		$(UTL)utils.c $(UTL)print.c $(UTL)free.c \
-		$(BLT)env.c
+		$(BLT)env.c $(BLT)export.c $(BLT)unset.c \
 
-CC = gcc -g -Wall -Werror -Wextra
+CC = gcc 
 
 LIBFT = $(UTL)libft/
 

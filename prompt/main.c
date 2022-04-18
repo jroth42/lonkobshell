@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hngo <hngo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 14:59:23 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 21:51:02 by hngo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,19 @@ t_node	*add_node(t_node *node)
 int	main(int argc, char **argv, char **env)
 {
 	t_node	*node;
-
+	t_env	*env_struct;
+	
 	(void) argv;
 	(void) argc;
  	node = add_node(NULL);
+	create_env_list(&env_struct, env);
 	while (1)
 	{
 		node->input = readline("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)-> ...:  ");
 		add_history(node->input);
 		input_handle(node);
 		lexer(node);
-		execute(node->cmd, env);
+		execute(node->cmd, env, env_struct);
 		node = add_node(node);
 	}
 	return (0);

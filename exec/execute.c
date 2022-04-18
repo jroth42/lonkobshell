@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hngo <hngo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 17:09:31 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/18 22:01:42 by hngo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	write_it(t_exec *exec, t_cmd *cmd, char **env)
 	}
 }
 
-void	execute(t_cmd *cmd, char **env)
+void	execute(t_cmd *cmd, char **env, t_env *env_struct)
 {
 	t_exec	exec;
 	t_cmd	*tmp;
@@ -81,7 +81,7 @@ void	execute(t_cmd *cmd, char **env)
 	exec.tmp_fd = dup(STDIN_FILENO);
 	while (cmd)
 	{
-		if (check_single_built_in(tmp, env))
+		if (check_single_built_in(tmp, env_struct))
 			break ;
 		if (cmd->next)
 			pipe_it(&exec, cmd, env);
