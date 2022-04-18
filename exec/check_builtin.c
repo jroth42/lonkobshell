@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hngo <hngo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:26:37 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 21:55:51 by hngo             ###   ########.fr       */
+/*   Updated: 2022/04/18 16:57:01 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	check_builtin(t_cmd *table)
 	return (false);
 }
 
-int	built_in_exec(t_cmd *table, t_env *env_struct)
+int	built_in_exec(t_cmd *table, char **env)
 {
 	if (table->cmd)
 	{
@@ -60,14 +60,14 @@ int	built_in_exec(t_cmd *table, t_env *env_struct)
 		// 	ft_cd(table);
 		// if (!ft_strcmp_upper_lower(table->cmd, "echo"))
 		// 	ft_echo(table);
-		if (!ft_strcmp(table->cmd, "export"))
-			ft_export(table, env_struct);
-		// if (!ft_strcmp_upper_lower(table->cmd, "env"))
-		// 	ft_env(env);
+		// if (!ft_strcmp(table->cmd, "export"))
+		// 	ft_export(table);
+		if (!ft_strcmp_upper_lower(table->cmd, "env"))
+			ft_env(env);
 		// if (!ft_strcmp(table->cmd, "exit"))
 		// 	ft_exit(table);
 		// if (!ft_strcmp(table->cmd, "unset"))
-		// 	ft_unset(table,);
+		// 	ft_unset(table);
 		// return (g_exit_status);
 		return (0);
 	}
@@ -75,13 +75,13 @@ int	built_in_exec(t_cmd *table, t_env *env_struct)
 	return (-1);
 }
 
-bool	check_single_built_in(t_cmd *tmp, t_env *env_struct)
+bool	check_single_built_in(t_cmd *tmp, char **env)
 {
 	if (tmp->prev == NULL && tmp->next == NULL
 		&& tmp->re_type == -1 && check_builtin(tmp))
 	{
 		//g_exit_status = 
-		built_in_exec(tmp, env_struct);
+		built_in_exec(tmp, env);
 		return (true);
 	}
 	return (false);
