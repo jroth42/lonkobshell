@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:53:26 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 15:40:00 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 21:30:36 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 	char	*delimiter_nl;
 
 	delimiter_nl = ft_strjoin(delimiter, "\n");
-	// signal(SIGINT, sigint_handler_heredoc);
+	signal(SIGINT, sigint_handler_heredoc);
 	while (true)
 	{
 		here_doc_print(fds);

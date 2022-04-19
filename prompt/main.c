@@ -6,11 +6,13 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 15:58:44 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 21:40:31 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
+
+int g_exit = SUCCESS;
 
 // create node for each line of input
 t_node	*add_node(t_node *node)
@@ -39,20 +41,26 @@ t_node	*add_node(t_node *node)
 int	main(int argc, char **argv, char **env)
 {
 	t_node	*node;
+	char	*prompt;
 
 	(void) argv;
 	(void) argc;
+	prompt = ft_strdup("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)-> ...:  ");
  	node = add_node(NULL);
-	handle_signals();
 	while (1)
 	{
-		node->input = readline("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)-> ...:  ");
+		handle_signals();
+		node->input = readline(prompt);
 		if (node->input != NULL && ft_strcmp(node->input, "") != 0)
 		{
 			add_history(node->input);
 			input_handle(node);
 			lexer(node);
-			execute_loop(node->cmd, env);
+			if (g_exit == SUCCESS)
+			{
+				change_termios(false);
+				execute_loop(node->cmd, env);
+			}
 			node = add_node(node);
 			free_node(node->prev);
 		}

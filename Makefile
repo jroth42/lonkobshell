@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/04/19 15:38:55 by jroth            ###   ########.fr        #
+#    Updated: 2022/04/19 21:42:21 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,17 +22,14 @@ EXEC = ./exec/
 
 UTL = ./utils/
 
-SGNL = ./signals/
-
 LIBFT = $(UTL)libft/
 
-SRC =	$(PRMPT)main.c \
+SRC =	$(PRMPT)main.c $(PRMPT)signals.c \
 		$(LX)tokenize.c $(LX)token_handle.c $(LX)token_redirect.c \
 		$(LX)parse_cmd.c $(LX)redirect_list.c \
 		$(EXEC)exec_utils.c $(EXEC)execute.c \
 		$(EXEC)check_builtin.c $(EXEC)route_stdin.c $(EXEC)route_stdout.c $(EXEC)here_doc.c\
 		$(UTL)utils.c $(UTL)print.c $(UTL)free.c \
-		$(SGNL)signals.c \
 		$(BLT)env.c
 
 CC = gcc -g -Wall -Werror -Wextra
@@ -57,7 +54,6 @@ clean:
 	@rm -f $(UTL)*.o
 	@rm -f $(EXEC)*.o
 	@rm -f $(BLT)*.o
-	@rm -f $(SGNL)*.o
 
 fclean:
 	@rm -f $(NAME)

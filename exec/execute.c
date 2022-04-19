@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 23:16:06 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 21:34:59 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	create_prcs(t_cmd *cmd, t_exec *fds, char **env)
 {
 	pipe(fds->fd);
-	// define_sig_prc(cmd);
+	define_sig_prc(cmd);
 	fds->i++;
 	fds->pid = fork();
 	if (fds->pid == 0)
@@ -23,14 +23,14 @@ static int	create_prcs(t_cmd *cmd, t_exec *fds, char **env)
 		close(fds->fd[READ]);
 		if (!cmd->prev && !cmd->next
 			&& !cmd->redirect && !check_builtin(cmd))
-				exec(cmd, env); //g_exit_status = 
+				g_exit = exec(cmd, env);
 		else
 		{
 			if (route_stdin(cmd, fds) < 0)
 				exit(1);
 			if (route_stdout(cmd, fds) < 0)
 				exit(1);
-			exec(cmd, env); // g_exit_status = 
+			g_exit = exec(cmd, env);
 		}
 	}
 	close(fds->tmp_fd);
@@ -49,8 +49,8 @@ static void	end_prcs(t_exec *fds)
 	while (fds->i > 0)
 	{
 		waitpid(0, &fds->pid, 0);
-		// if (WIFEXITED(fds->pid))
-		// 	g_exit_status = WEXITSTATUS(fds->pid);
+		if (WIFEXITED(fds->pid))
+			g_exit = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
 }
@@ -86,11 +86,11 @@ int	exec(t_cmd *cmd, char **env)
 	else if (cmd->exec)
 	{
 		execve(path, cmd->exec, env);
-		// g_exit_status = -1;
+		g_exit = -1;
 		// ft_free_split(env_arr);
-		exit(EXIT_FAILURE);
+		exit(FAIL);
 	}
-	exit(EXIT_SUCCESS);
+	exit(SUCCESS);
 }
 
 void	execute_loop(t_cmd *cmd, char **env)
@@ -113,7 +113,7 @@ void	execute_loop(t_cmd *cmd, char **env)
 		{
 			if (create_prcs(tmp, &exec, env) < 0)
 			{
-				// g_exit_status = 1;
+				g_exit = 1;
 				break ;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 15:58:17 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 21:30:47 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@
 # define WRITE 1
 # define SIGINT 2
 # define SIGQUIT 3
+# define SUCCESS 0
+# define FAIL 1
+
+extern int	g_exit;
 
 //	----- UTILS ------ 
 void	input_handle(t_node *node);
@@ -50,6 +54,9 @@ int		strlen_to_c(char *str, char c);
 void	handle_signals(void);
 void	sigint_handler(int sig);
 int		change_termios(bool hide);
+void	define_sig_prc(t_cmd *cmd);
+void	sigint_handler_heredoc(int sig);
+
 // FREE
 void	myfree(void *mlc);
 void	free_node(t_node *node);

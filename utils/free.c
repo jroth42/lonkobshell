@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:02:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 16:12:10 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 19:48:05 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ void	free_node(t_node *node)
 			free_token_list(node->token);
 		if (node->cmd)
 			free_cmd_list(node->cmd);
+		myfree(node);
 	}
 }

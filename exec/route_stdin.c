@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:44:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 16:20:12 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 18:13:13 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static int	last_route(t_redir *last_in, t_exec *fds)
 		}
 		dup2(fds->file_fd, STDIN_FILENO);
 		close(fds->file_fd);
-		printf("TEST\n");
 	}
 	else if (last_in->type == HEREDOC || last_in->type == HEREDOC + 1)
 	{
 		pipe(fds->here_fd);
+		printf("%s\n", last_in->file);
 		heredoc(last_in->file, fds, last_in->type);
 		dup2(fds->here_fd[READ], STDIN_FILENO);
 	}
@@ -88,7 +88,9 @@ int	multiple_redir_in(t_cmd *cmd, t_exec *fds)
 						return (-1);
 				}
 				if (tmp->type == HEREDOC)
+				{
 					route_heredoc(fds, tmp);
+				}
 			}
 			tmp = tmp->next;
 		}
