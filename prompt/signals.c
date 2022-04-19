@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 13:48:50 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 21:39:34 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 21:52:12 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	sigint_handler(int sig)
 void	handle_signals(void)
 {
 	change_termios(true);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sigint_handler);
 	signal(SIGINT, sigint_handler);
 }
 
