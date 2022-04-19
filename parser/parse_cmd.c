@@ -114,8 +114,8 @@ void	parse_cmd(t_node *node)
 		if (tmp->type == ARG || tmp->type == SQUOTE
 			|| tmp->type == DQUOTE)
 			fill_arguments(tmp, &node->cmd);
-		if (tmp->type == LESS || tmp->type == LESSLESS
-			|| tmp->type == GREAT || tmp->type == GREATGREAT)
+		if (tmp->type == READ_INPUT || tmp->type == HEREDOC
+			|| tmp->type == TRUNCATE || tmp->type == APPPEND)
 			add_redirection(tmp, &node->cmd->redirect);
 		if (tmp->type == PIPE)
 		{

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:44:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 22:35:12 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 12:29:37 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	route_heredoc(t_exec *fds, t_redir *tmp)
 
 static int	last_route(t_redir *last_in, t_exec *fds)
 {
-	if (last_in->type == LESS)
+	if (last_in->type == READ_INPUT)
 	{
 		fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
 		if (fds->file_fd < 0)
@@ -34,7 +34,7 @@ static int	last_route(t_redir *last_in, t_exec *fds)
 		dup2(fds->file_fd, STDIN_FILENO);
 		close(fds->file_fd);
 	}
-	else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
+	else if (last_in->type == HEREDOC || last_in->type == HEREDOC + 1)
 	{
 		pipe(fds->here_fd);
 		heredoc(last_in->file, fds, last_in->type);
@@ -71,22 +71,22 @@ int	multiple_redir_in(t_cmd *cmd, t_exec *fds)
 	t_redir	*tmp;
 
 	tmp = cmd->redirect;
-	if (cmd->redirect && cmd->redirect->next && (cmd->redirect->next->type == LESS
-			|| cmd->redirect->next->type == LESSLESS
-			|| cmd->redirect->next->type == LESSLESS + 1))
+	if (cmd->redirect && cmd->redirect->next && (cmd->redirect->next->type == READ_INPUT
+			|| cmd->redirect->next->type == HEREDOC
+			|| cmd->redirect->next->type == HEREDOC + 1))
 	{
 		while (tmp)
 		{
-			if (tmp->next && (tmp->type == LESS || tmp->type == LESSLESS
-					|| tmp->type == LESSLESS + 1))
+			if (tmp->next && (tmp->type == READ_INPUT || tmp->type == HEREDOC
+					|| tmp->type == HEREDOC + 1))
 			{
-				if (tmp->type == LESS)
+				if (tmp->type == READ_INPUT)
 				{
 					fds->file_fd = open_file(tmp->file, O_RDONLY, 0);
 					if (fds->file_fd < 0)
 						return (-1);
 				}
-				if (tmp->type == LESSLESS)
+				if (tmp->type == HEREDOC)
 					route_heredoc(fds, tmp);
 			}
 			tmp = tmp->next;

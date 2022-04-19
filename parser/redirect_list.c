@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:15:02 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 22:39:05 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 12:29:37 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ t_redir	*get_last_in_redir(t_redir *head)
 	in = NULL;
 	while (head)
 	{
-		if (head->type == LESS || head->type == LESSLESS
-			|| head->type == LESSLESS + 1)
+		if (head->type == READ_INPUT || head->type == HEREDOC
+			|| head->type == HEREDOC + 1)
 		{
 			in = head;
-			if (head->type == LESS)
+			if (head->type == READ_INPUT)
 			{
 				if (access(in->file, R_OK) < 0)
 				{

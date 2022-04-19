@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:33:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 22:38:46 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 12:29:37 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ enum e_type
 	SQUOTE = '\'',
 	DQUOTE = '\"',
 	PIPE = '|',
-	LESS = '<',
-	LESSLESS = 240,
-	GREAT = '>',
-	GREATGREAT = 248,
+	READ_INPUT = '<',
+	HEREDOC = 240,
+	TRUNCATE = '>',
+	APPPEND = 248,
 };
 
 typedef struct s_token

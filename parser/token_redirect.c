@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:24:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/05 18:55:36 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 12:29:37 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	handle_redirect_out(t_token **token, char **input)
 	{
 		join = find_filename(input);
 		(*token)->chr = ft_strdup(join);
-		(*token)->type = GREATGREAT;
+		(*token)->type = APPPEND;
 	}		
 	else
 	{
 		join = find_filename(input);
 		(*token)->chr = ft_strdup(join);
-		(*token)->type = GREAT;
+		(*token)->type = TRUNCATE;
 	}
 	if ((*token)->chr)
 		*token = create_token(*token);
@@ -77,13 +77,13 @@ void	handle_redirect_in(t_token **token, char **input)
 	{
 		join = find_filename(input);
 		(*token)->chr = ft_strdup(join);
-		(*token)->type = LESSLESS;
+		(*token)->type = HEREDOC;
 	}		
 	else
 	{
 		join = find_filename(input);
 		(*token)->chr = ft_strdup(join);
-		(*token)->type = LESS;
+		(*token)->type = READ_INPUT;
 	}
 	if ((*token)->chr)
 		*token = create_token(*token);
