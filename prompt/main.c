@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 15:15:07 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 15:58:44 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,19 @@ int	main(int argc, char **argv, char **env)
 	(void) argv;
 	(void) argc;
  	node = add_node(NULL);
-	signal(SIGINT, sigint_handler);
+	handle_signals();
 	while (1)
 	{
 		node->input = readline("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)-> ...:  ");
-		add_history(node->input);
-		input_handle(node);
-		lexer(node);
-		execute_loop(node->cmd, env);
-		node = add_node(node);
+		if (node->input != NULL && ft_strcmp(node->input, "") != 0)
+		{
+			add_history(node->input);
+			input_handle(node);
+			lexer(node);
+			execute_loop(node->cmd, env);
+			node = add_node(node);
+			free_node(node->prev);
+		}
 	}
 	return (0);
 }

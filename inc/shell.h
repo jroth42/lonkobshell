@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 15:35:25 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 15:58:17 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ bool	white_space(const char c);
 int		strlen_to_c(char *str, char c);
 
 // SIGNALS
+void	handle_signals(void);
 void	sigint_handler(int sig);
+int		change_termios(bool hide);
 // FREE
 void	myfree(void *mlc);
-void	free_token_list(t_token *token);
-void	free_cmd_list(t_cmd *cmd);
+void	free_node(t_node *node);
 
 #endif

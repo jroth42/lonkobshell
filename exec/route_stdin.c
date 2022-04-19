@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:44:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 12:29:37 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 16:20:12 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ static int	last_route(t_redir *last_in, t_exec *fds)
 		fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
 		if (fds->file_fd < 0)
 		{
-			free(fds);
+			myfree(fds);
 			return (-1);
 		}
 		dup2(fds->file_fd, STDIN_FILENO);
 		close(fds->file_fd);
+		printf("TEST\n");
 	}
 	else if (last_in->type == HEREDOC || last_in->type == HEREDOC + 1)
 	{
@@ -50,7 +51,7 @@ int	route_stdin(t_cmd *cmd, t_exec *fds)
 	last_in = get_last_in_redir(cmd->redirect);
 	if (multiple_redir_in(cmd, fds) < 0)
 	{
-		free(fds);
+		myfree(fds);
 		return (-1);
 	}
 	if (last_in)

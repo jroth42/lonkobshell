@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:02:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 21:38:48 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 16:12:10 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,42 @@ void	free_2d(char **exec)
 void	free_cmd_list(t_cmd *cmd)
 {
 	t_cmd	*tmp;
+	// t_redir	*redir_tmp;
 
 	while (cmd)
 	{
+		// if (cmd->redirect)
+		// {
+		// 	while (cmd->redirect)
+		// 	{
+		// 		redir_tmp = cmd->redirect;
+		// 		cmd->redirect = cmd->redirect->next;
+		// 		if (redir_tmp->file)
+		// 			myfree(redir_tmp->file);
+		// 		if (redir_tmp)
+		// 			myfree(redir_tmp);
+		// 	}
+		// }
 		if (cmd->exec)
 			free_2d(cmd->exec);
 		if (cmd->cmd)
 			myfree(cmd->cmd);
 		if (cmd->args)
 			myfree(cmd->args);
-		// if (cmd->re_in)
-		// 	myfree(cmd->re_in);
-		// if (cmd->re_out)
-		// 	myfree(cmd->re_out);
 		tmp = cmd;
 		cmd = cmd->next;
 		if (tmp)
 			myfree(tmp);
+	}
+}
+
+void	free_node(t_node *node)
+{
+	if (node)
+	{
+		if (node->token)
+			free_token_list(node->token);
+		if (node->cmd)
+			free_cmd_list(node->cmd);
 	}
 }
