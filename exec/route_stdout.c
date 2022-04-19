@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:43:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 12:29:02 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 13:38:08 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	last_redir_out(t_exec *fds, t_redir *last_out)
 
 void	handle_redir_out(t_cmd *cmd, t_exec *fds)
 {
-	if (cmd->next == NULL)
+	if (!cmd->next)
 	{
 		if (fds->here_fd[READ] > 0 || fds->here_fd[WRITE] > 0)
 		{

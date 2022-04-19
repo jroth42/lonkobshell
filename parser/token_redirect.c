@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:24:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 12:29:37 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 15:35:25 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ char	*find_filename(char **input)
 	{
 		while (check_char(str[i]))
 			i++;
-		while (str[i] && whitespace(str[i]))
+		while (str[i] && white_space(str[i]))
 			i++;
-		while (str[i + j] && !whitespace(str[i + j]))
+		while (str[i + j] && !white_space(str[i + j]))
 		{
 			j++;
 			if (check_char(str[i + j]))

@@ -1,47 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 20:41:08 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 15:35:25 by jroth            ###   ########.fr       */
+/*   Created: 2022/04/19 13:48:50 by jroth             #+#    #+#             */
+/*   Updated: 2022/04/19 15:14:57 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-void	skip_white_space(char **str)
+void	sigint_handler(int sig)
 {
-	while (white_space(**str))
-		(*str)++;
-}
-
-bool	white_space(const char c)
-{
-	if (c == ' ' || c == '\t' || c == '\v' || c == '\f' || c == '\r')
-		return (true);
-	return (false);
-}
-
-void	myfree(void *mlc)
-{
-	if (mlc)
+	if (sig == SIGINT)
 	{
-		free(mlc);
-		mlc = NULL;
+		write(STDOUT_FILENO, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
-}
-
-int	strlen_to_c(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != c)
-		i++;
-	if (str[i] == c)
-		return (i);
-	return (-1);
 }

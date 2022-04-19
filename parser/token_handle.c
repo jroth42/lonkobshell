@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 20:14:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 12:29:37 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/19 15:35:25 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	handle_word(t_token **token, char **input)
 
 	str = *input;
 	i = 0;
-	while (str[i] && !whitespace(str[i]))
+	while (str[i] && !white_space(str[i]))
 		i++;
 	(*token)->chr = ft_strdupn(*input, i);
 	if ((*token)->prev)
