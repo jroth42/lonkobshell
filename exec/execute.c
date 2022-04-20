@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 21:34:59 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/20 16:50:15 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	execute_loop(t_cmd *cmd, char **env)
 		{
 			if (create_prcs(tmp, &exec, env) < 0)
 			{
-				g_exit = 1;
+				g_exit = FAIL;
 				break ;
 			}
 		}

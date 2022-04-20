@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 21:30:47 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/20 20:39:55 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 # include "exec.h"
 # include "built_in.h"
 
-# define INFILE 0
-# define OUTFILE 1
+// # define INFILE 0
+// # define OUTFILE 1
 # define READ 0
 # define WRITE 1
 # define SIGINT 2
@@ -42,13 +42,13 @@
 # define SUCCESS 0
 # define FAIL 1
 
-extern int	g_exit;
+typedef struct s_string
+{
+	char	*str;
+	int		len;
+}	t_string;
 
-//	----- UTILS ------ 
-void	input_handle(t_node *node);
-void	skip_white_space(char **str);
-bool	white_space(const char c);
-int		strlen_to_c(char *str, char c);
+extern int	g_exit;
 
 // SIGNALS
 void	handle_signals(void);
@@ -60,5 +60,21 @@ void	sigint_handler_heredoc(int sig);
 // FREE
 void	myfree(void *mlc);
 void	free_node(t_node *node);
+
+//	----- UTILS ------ 
+void	input_handle(t_node *node);
+void	skip_white_space(char **str);
+bool	white_space(const char c);
+int		strlen_to_c(char *str, char c);
+//		STRBUILDER
+t_string *s_create(void);
+void	s_copy(t_string *old, char **new);
+int		s_reset(t_string *str);
+char	*s_get_str(t_string *t_str);
+int		s_add_c(t_string *str, const char c);
+int		s_add_str(t_string *t_str, const char *append);
+int		s_add_int(t_string *t_str, int n);
+int		s_add_strn(t_string *t_str, char *append, int len);
+// void	test_string(void);
 
 #endif
