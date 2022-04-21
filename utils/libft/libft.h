@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 15:04:00 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 16:59:24 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/21 17:41:24 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_list
 /* functions */
 
 bool	ft_isalpha(int c);
-int		ft_isdigit(int c);
+bool	ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);

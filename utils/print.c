@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:31:42 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/06 16:49:19 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/21 15:15:40 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,21 @@
 // 	}
 // }
 
-// void	print_tokens(t_node	*node)
-// {
-// 	t_token	*token;
+void	print_tokens(t_node	*node)
+{
+	t_token	*token;
 
-// 	token = node->token;
-// 	while (token && token->prev)
-// 		token = token->prev;
-// 	printf("--------------------\n");
-// 	while (token->next)
-// 	{
-// 		printf("Chars:\t%s\nType:\t%d\n", token->chr, token->type);
-// 		printf("--------------------\n");
-// 		token = token->next;
-// 	}
-// }
+	token = node->token;
+	while (token && token->prev)
+		token = token->prev;
+	printf("--------------------\n");
+	while (token->next)
+	{
+		printf("Chars:\t%s\nType:\t%d\n", token->chr, token->type);
+		printf("--------------------\n");
+		token = token->next;
+	}
+}
 
 // void	print_nodes(t_node *node)
 // {
@@ -90,28 +90,28 @@ bool	stringcmp(char *str, char *cmp)
 	return (false);
 }
 
-// void	input_handle(t_node *node)
-// {
-// 	if (node->prev)
-// 	{
-// 		if (stringcmp("token", node->input))
-// 			print_tokens(node->prev);
-// 		if (stringcmp("node", node->input))
-// 			print_nodes(node->prev);
-// 		if (stringcmp("cmd", node->input))
-// 			print_cmd(node->prev);
-// 	}
-// 	if (stringcmp("exit", node->input))
-// 		exit(0);
-// }
-
 void	input_handle(t_node *node)
 {
-	if (node)
+	if (node->prev)
 	{
-		if (stringcmp("pwd", node->input))
-			node++;//insert function
+		if (stringcmp("token", node->input))
+			print_tokens(node->prev);
+		// if (stringcmp("node", node->input))
+		// 	print_nodes(node->prev);
+		// if (stringcmp("cmd", node->input))
+		// 	print_cmd(node->prev);
 	}
 	if (stringcmp("exit", node->input))
 		exit(0);
 }
+
+// void	input_handle(t_node *node)
+// {
+// 	if (node)
+// 	{
+// 		if (stringcmp("pwd", node->input))
+// 			node++;//insert function
+// 	}
+// 	if (stringcmp("exit", node->input))
+// 		exit(0);
+// }

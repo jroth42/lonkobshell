@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:26:37 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 21:30:07 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/21 17:11:19 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	check_builtin(t_cmd *table)
 	return (false);
 }
 
-int	built_in_exec(t_cmd *table, char **env)
+int	built_in_exec(t_cmd *table)
 {
 	if (table->cmd)
 	{
@@ -63,7 +63,7 @@ int	built_in_exec(t_cmd *table, char **env)
 		// if (!ft_strcmp(table->cmd, "export"))
 		// 	ft_export(table);
 		if (!ft_strcmp_upper_lower(table->cmd, "env"))
-			ft_env(env);
+			ft_env();
 		// if (!ft_strcmp(table->cmd, "exit"))
 		// 	ft_exit(table);
 		// if (!ft_strcmp(table->cmd, "unset"))
@@ -74,12 +74,12 @@ int	built_in_exec(t_cmd *table, char **env)
 	return (FAIL);
 }
 
-bool	check_single_built_in(t_cmd *tmp, char **env)
+bool	check_single_built_in(t_cmd *tmp)
 {
 	if (tmp->prev == NULL && tmp->next == NULL
 		&& check_builtin(tmp))
 	{
-		g_exit = built_in_exec(tmp, env);
+		g_exit = built_in_exec(tmp);
 		return (true);
 	}
 	return (false);

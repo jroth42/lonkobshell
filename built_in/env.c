@@ -5,81 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 23:40:10 by hngo              #+#    #+#             */
-/*   Updated: 2022/04/19 18:29:23 by jroth            ###   ########.fr       */
+/*   Created: 2022/04/21 17:04:16 by jroth             #+#    #+#             */
+/*   Updated: 2022/04/21 17:04:16 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-t_env	*last_node(t_env *node)
+t_env	*new_env(char *str)
 {
-	t_env *tmp;
+	t_env	*new;
 
-	tmp = node;
-	while (tmp)
-	{
-		if (tmp && !tmp->next)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (tmp);
-}
-
-t_env	*env_new(char *env_str)
-{
-	t_env *new;
-
-	new = (t_env *)malloc(sizeof(t_env));
+	if (!str)
+		return (NULL);
+	new = ft_calloc(1, sizeof(t_env));
 	if (!new)
 		return (NULL);
-	new->str = NULL;
-	new->str = ft_strdup(env_str);
+	new->var = ft_strdup(str);
+	if (ft_strchr(str, '='))
+		new->hidden = false;
+	else
+		new->hidden = true;
 	new->next = NULL;
 	return (new);
 }
 
-void	env_add_back(t_env **list, char *str)
+t_env	*get_last_env(t_env *head)
 {
-	t_env *tmp;
+	if (!head)
+		return (NULL);
+	while (head->next)
+		head = head->next;
+	return (head);
+}
 
-	tmp = NULL;
-	if (*list == NULL)
-		*list = env_new(str);
+t_env	*append_env(t_env **head, t_env *new)
+{
+	t_env	*last;
+
+	if (!(*head))
+		*head = new;
 	else
 	{
-		tmp = last_node(*list);
-		tmp->next = env_new(str);
+		last = get_last_env(*head);
+		last->next = new;
 	}
+	return (new);
 }
 
-void	create_env_list(t_env **env_list, char **environ)
+t_env	**get_env(char **environ)
 {
-	int i;
+	static t_env	*env;
+	int				i;
 
-	i = 0;
-	while (environ[i])
-		env_add_back(env_list, environ[i++]);
-}
-
-void	print_env(t_env *ori)
-{
-	t_env *node;
-
-	node = ori;
-
-	while (node)
+	if (!env)
 	{
-		printf("%s\n", node->str);
-		node = node->next;
+		i = 0;
+		while (environ[i])
+		{
+			append_env(&env, new_env(environ[i]));
+			i++;
+		}
 	}
+	return (&env);
 }
 
-void    ft_env(char **env)
+void	ft_env(void)
 {
-    t_env *env_struct;
+	t_env	*tmp;
 
-    env_struct = NULL;
-    create_env_list(&env_struct, env);
-    print_env(env_struct);
+	tmp = *(get_env(NULL));
+	while (tmp)
+	{
+		if (!tmp->hidden)
+			printf("%s\n", tmp->var);
+		tmp = tmp->next;
+	}
 }

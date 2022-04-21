@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:36:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 23:22:39 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/21 17:11:28 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int		open_file(char *file, int mode, int rights);
 char	*find_path(char *cmd, char **env);
 
 // BUILTINS
-bool	check_single_built_in(t_cmd *tm, char **env);
+bool	check_single_built_in(t_cmd *tm);
 bool	check_builtin(t_cmd *table);
-int		built_in_exec(t_cmd *table, char **env);
+int		built_in_exec(t_cmd *table);
 
 // UTILS
 

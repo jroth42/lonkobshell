@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:16:04 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/20 20:39:54 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/21 17:07:18 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	s_add_c(t_string *t_str, const char c)
 	return (0);
 }
 
-int	s_add_str(t_string *t_str, const char *append)
+int	s_add_str(t_string *t_str, char *append)
 {
 	char	*tmp;
 	int		i;

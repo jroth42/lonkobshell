@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/20 20:39:55 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/21 17:06:57 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ void	s_copy(t_string *old, char **new);
 int		s_reset(t_string *str);
 char	*s_get_str(t_string *t_str);
 int		s_add_c(t_string *str, const char c);
-int		s_add_str(t_string *t_str, const char *append);
+int		s_add_str(t_string *t_str, char *append);
 int		s_add_int(t_string *t_str, int n);
 int		s_add_strn(t_string *t_str, char *append, int len);
+int		s_destroy(t_string *t_str);
 // void	test_string(void);
 
 #endif
