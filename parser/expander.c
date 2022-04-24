@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 13:12:28 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/21 20:09:51 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/24 20:49:40 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,8 @@ void	expand(t_token **token, char **input)
 
 int	expander(t_token **token, char **input)
 {
-	t_token	*tmp;
-
 	if (*token)
 	{
-		tmp = *token;
 		if (check_expand_arg(input))
 		{
 			expand(token, input);

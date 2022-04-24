@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:26:37 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/21 17:11:19 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/24 21:31:51 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,39 @@ int	ft_strcmp_upper_lower(const char *s1, const char *s2)
 		return (new1[i] - new2[i]);
 }
 
-bool	check_builtin(t_cmd *table)
+bool	check_builtin(t_cmd *cmd)
 {
-	if (!table->cmd)
+	if (!cmd->cmd)
 		return (false);
-	if (!ft_strcmp_upper_lower(table->cmd, "pwd")
-		|| !ft_strcmp(table->cmd, "cd")
-		|| !ft_strcmp_upper_lower(table->cmd, "echo")
-		|| !ft_strcmp(table->cmd, "export")
-		|| !ft_strcmp_upper_lower(table->cmd, "env")
-		|| !ft_strcmp(table->cmd, "exit")
-		|| !ft_strcmp(table->cmd, "unset"))
+	if (!ft_strcmp_upper_lower(cmd->cmd, "pwd")
+		|| !ft_strcmp(cmd->cmd, "cd")
+		|| !ft_strcmp_upper_lower(cmd->cmd, "echo")
+		|| !ft_strcmp(cmd->cmd, "export")
+		|| !ft_strcmp_upper_lower(cmd->cmd, "env")
+		|| !ft_strcmp(cmd->cmd, "exit")
+		|| !ft_strcmp(cmd->cmd, "unset"))
 		return (true);
 	return (false);
 }
 
-int	built_in_exec(t_cmd *table)
+int	built_in_exec(t_cmd *cmd)
 {
-	if (table->cmd)
+	if (cmd->cmd)
 	{
-		// if (!ft_strcmp_upper_lower(table->cmd, "pwd"))
-		// 	ft_pwd();
-		// if (!ft_strcmp(table->cmd, "cd"))
-		// 	ft_cd(table);
-		// if (!ft_strcmp_upper_lower(table->cmd, "echo"))
-		// 	ft_echo(table);
-		// if (!ft_strcmp(table->cmd, "export"))
-		// 	ft_export(table);
-		if (!ft_strcmp_upper_lower(table->cmd, "env"))
+		if (!ft_strcmp_upper_lower(cmd->cmd, "pwd"))
+			ft_pwd();
+		// if (!ft_strcmp(cmd->cmd, "cd"))
+		// 	ft_cd(cmd);
+		if (!ft_strcmp_upper_lower(cmd->cmd, "echo"))
+			ft_echo(cmd);
+		if (!ft_strcmp(cmd->cmd, "export"))
+			ft_export(cmd);
+		if (!ft_strcmp_upper_lower(cmd->cmd, "env"))
 			ft_env();
-		// if (!ft_strcmp(table->cmd, "exit"))
-		// 	ft_exit(table);
-		// if (!ft_strcmp(table->cmd, "unset"))
-		// 	ft_unset(table);
+		if (!ft_strcmp(cmd->cmd, "exit"))
+			ft_exit(cmd);
+		if (!ft_strcmp(cmd->cmd, "unset"))
+			ft_unset(cmd);
 		// return (g_exit);
 		return (SUCCESS);
 	}

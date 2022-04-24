@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:31:42 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/21 15:15:40 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/24 20:17:31 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void	input_handle(t_node *node)
 		// if (stringcmp("cmd", node->input))
 		// 	print_cmd(node->prev);
 	}
-	if (stringcmp("exit", node->input))
-		exit(0);
+	// if (stringcmp("exit", node->input))
+	// 	exit(0);
 }
 
 // void	input_handle(t_node *node)

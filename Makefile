@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/04/21 17:11:58 by jroth            ###   ########.fr        #
+#    Updated: 2022/04/24 21:31:32 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC =	$(PRMPT)main.c $(PRMPT)signals.c \
 		$(EXEC)exec_utils.c $(EXEC)execute.c \
 		$(EXEC)check_builtin.c $(EXEC)route_stdin.c $(EXEC)route_stdout.c $(EXEC)here_doc.c\
 		$(UTL)utils.c $(UTL)print.c $(UTL)free.c $(UTL)stringbuilder.c \
-		$(BLT)env.c $(BLT)env_utils.c
+		$(BLT)env.c $(BLT)env_utils.c $(BLT)echo.c $(BLT)exit.c $(BLT)export.c $(BLT)unset.c
 
 CC = gcc -g -Wall -Werror -Wextra
 
