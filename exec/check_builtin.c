@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:26:37 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 21:31:51 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/24 22:09:04 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ int	built_in_exec(t_cmd *cmd)
 			ft_exit(cmd);
 		if (!ft_strcmp(cmd->cmd, "unset"))
 			ft_unset(cmd);
-		// return (g_exit);
-		return (SUCCESS);
+		return (g_exit);
 	}
 	return (FAIL);
 }

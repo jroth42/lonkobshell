@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 20:05:23 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 20:25:00 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/24 22:13:21 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_pwd(void)
 	if (!pwd)
 		return (1);
 	printf("%s\n", pwd);
-	myfree(pwd);
+	free(pwd);
 	g_exit = SUCCESS;
 	return (g_exit);
 }

@@ -112,7 +112,7 @@ void	parse_cmd(t_node *node)
 		if (tmp->type == COMMAND)
 			(node)->cmd->cmd = ft_strdup(tmp->chr);
 		if (tmp->type == ARG || tmp->type == SQUOTE
-			|| tmp->type == DQUOTE)
+			|| tmp->type == DQUOTE || tmp->type == DOLLAR)
 			fill_arguments(tmp, &node->cmd);
 		if (tmp->type == READ_INPUT || tmp->type == HEREDOC
 			|| tmp->type == TRUNCATE || tmp->type == APPPEND)

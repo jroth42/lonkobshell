@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 20:14:03 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 20:22:32 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/24 22:19:54 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ static bool	check_valid_arg(char *arg)
 
 void	ft_exit(t_cmd *cmd)
 {
-	if (!ft_strcmp(cmd->cmd, "exit"))
+	if (!ft_strcmp(*cmd->exec, "exit"))
 	{
+		(cmd->exec)++;
 		if (get_arr_size(cmd->exec) > 0)
 		{
 			if (ft_isalpha(**cmd->exec)
@@ -70,7 +71,7 @@ void	ft_exit(t_cmd *cmd)
 			return ;
 		}
 		g_exit = SUCCESS;
-		// free_table(&table);
+		// free_table(&cmd);
 		valid_exit();
 	}
 }
