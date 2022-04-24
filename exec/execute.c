@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 22:27:12 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 00:16:23 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,6 @@ void	set_exec(t_exec *exec)
 	exec->i = 0;
 }
 
-void	exec_message(char *str)
-{
-	write(STDERR_FILENO, "lonkob: ", 9);
-	write(STDERR_FILENO, str, (int) ft_strlen(str));
-	write(STDERR_FILENO, ": command not found\n", 20);
-}
-
 int	exec(t_cmd *cmd, char **env)
 {
 	char	*path;
@@ -86,17 +79,15 @@ int	exec(t_cmd *cmd, char **env)
 	if (!path)
 		perror("Could not resolve environ array.\n");
 	if (check_builtin(cmd))
-	{
 		built_in_exec(cmd);
-		// ft_free_split(env_arr);
-	}
 	else if (cmd->exec)
 	{
 		execve(path, cmd->exec, env);
-		exec_message(cmd->cmd);
 		g_exit = -1;
-		// ft_free_split(env_arr);
-		exit(FAIL);
+		ft_putstr_fd("lonkob: ", STDERR_FILENO);
+		ft_putstr_fd(cmd->cmd, STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		exit(g_exit);
 	}
 	exit(SUCCESS);
 }

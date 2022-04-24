@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 22:27:03 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/24 23:58:19 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	main(int argc, char **argv, char **env)
 				execute_loop(node->cmd, env);
 			}
 			node = add_node(node);
-			// free_node(node->prev);
 		}
 	}
 	return (0);

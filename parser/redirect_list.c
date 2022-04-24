@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:15:02 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 21:23:40 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 00:05:48 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ t_redir	*get_last_in_redir(t_redir *head)
 
 void	add_redirection(t_token *tmp, t_redir **redir)
 {
-	if (!(*redir))
+	if (!ft_strcmp(tmp->chr, ""))
+		error_msg("syntax error near unexpected token 'newline'", FAIL);
+	else if (!(*redir))
 		*redir = new_redir(tmp->chr, tmp->type);
 	else
 		append_redir(redir, new_redir(tmp->chr, tmp->type));

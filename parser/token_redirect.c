@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:24:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 15:35:25 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 00:03:19 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	handle_redirect_out(t_token **token, char **input)
 	}
 	if ((*token)->chr)
 		*token = create_token(*token);
+	if (join)
+		myfree(join);
 }
 
 //	checks if << or < before assigning token
@@ -87,6 +89,8 @@ void	handle_redirect_in(t_token **token, char **input)
 	}
 	if ((*token)->chr)
 		*token = create_token(*token);
+	if (join)
+		myfree(join);
 }
 
 //	redirect call from lexer
