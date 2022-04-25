@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 21:50:24 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 21:51:13 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 01:02:01 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,42 @@ void	expand_var(t_token **token, t_string **t_str, char **input)
 
 void	dquote(t_token **token, t_string **t_str, char **input)
 {
-	s_add_c(*t_str, **input);
-	(*input)++;
-	while (**input && **input != DQUOTE)
-	{
-		if (**input == '$' && (*(*input + 1) == DQUOTE || *(*input + 1) == ' '))
-			s_add_c(*t_str, '$');
-		else if (**input == '$')
-		{
-			expand_var(token, t_str, input);
-			continue ;
-		}
-		else
-			s_add_c(*t_str, **input);
-		(*input)++;
-	}
-	if (**input)
-	{
-		s_add_c(*t_str, **input);
-		(*input)++;
-	}
-	if ((*token)->prev)
-		(*token)->type = DQUOTE;
-	else
-		(*token)->type = COMMAND;
+	int	i;
+
+	i = 1;
+	while ((*input)[i] && (*input)[i] != DQUOTE)
+		i++;
+	if ((*input)[i] == DQUOTE)
+		i++;
+	s_add_strn(*t_str, *input + 1, i - 2);
+	(*token)->type = DQUOTE;
+	*input += i;
 }
 
+	// s_add_c(*t_str, **input);
+	// (*input)++;
+	// while (**input && **input != DQUOTE)
+	// {
+	// 	if (**input == '$' && (*(*input + 1) == DQUOTE || *(*input + 1) == ' '))
+	// 		s_add_c(*t_str, '$');
+	// 	else if (**input == '$')
+	// 	{
+	// 		expand_var(token, t_str, input);
+	// 		continue ;
+	// 	}
+	// 	else
+	// 		s_add_c(*t_str, **input);
+	// 	(*input)++;
+	// }
+	// if (**input)
+	// {
+	// 	s_add_c(*t_str, **input);
+	// 	(*input)++;
+	// }
+	// if ((*token)->prev)
+	// 	(*token)->type = DQUOTE;
+	// else
+	// 	(*token)->type = COMMAND;
 void	squote(t_token **token, t_string **t_str, char **input)
 {
 	int	i;
@@ -89,7 +99,7 @@ void	squote(t_token **token, t_string **t_str, char **input)
 		i++;
 	if ((*input)[i] == SQUOTE)
 		i++;
-	s_add_strn(*t_str, *input, i);
+	s_add_strn(*t_str, *input + 1, i - 2);
 	(*token)->type = SQUOTE;
 	*input += i;
 }
@@ -110,5 +120,7 @@ void	expand(t_token **token, char **input)
 	if ((*token)->chr)
 		myfree((*token)->chr);
 	(*token)->chr = s_get_str(t_str);
+	if (!(*token)->prev || (*token)->prev->type == PIPE)
+		(*token)->type = COMMAND;
 	s_destroy(t_str);
 }

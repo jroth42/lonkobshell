@@ -80,27 +80,30 @@ void	create_exec(t_cmd **cmd)
 	*cmd = head;
 }
 
-//	strjoin args from tokenlist
-//	later split them up again in parse_args -> create_exec to create **args
-void	fill_arguments(t_token *token, t_cmd **cmd)
-{
-	char	*join;
-	char	*copy;
-
-	if ((*cmd)->args)
-	{
-		copy = ft_strjoin((*cmd)->args, " ");
-		join = ft_strjoin(copy, token->chr);
-		myfree(copy);
-		(*cmd)->args = join;
-		myfree(join);
-	}
-	else
-		(*cmd)->args = ft_strdup(token->chr);
-}
-
 //	walk through tokens and append them to cmd struct
 //	create new cmd struct if pipe is found
+char	*add_cmd(t_token **token)
+{
+	t_string	*t_str;
+	char		*ret;
+	char		**env;
+
+	env = return_env(NULL);
+	t_str = s_create();
+	while ((*token)->next && ((*token)->type == SQUOTE
+			|| (*token)->type == DQUOTE || (*token)->type == COMMAND
+			|| (*token)->type == ARG))
+	{
+		s_add_str(t_str, (*token)->chr);
+		(*token) = (*token)->next;
+		if (t_str->str[0] != '/' && !access(find_path(t_str->str, env), F_OK))
+			break ;
+	}
+	ret = s_get_str(t_str);
+	s_destroy(t_str);
+	return (ret);
+}
+
 void	parse_cmd(t_node *node)
 {
 	t_token	*tmp;
@@ -112,7 +115,9 @@ void	parse_cmd(t_node *node)
 	while (tmp->next && !parser_error(tmp))
 	{
 		if (tmp->type == COMMAND)
-			(node)->cmd->cmd = ft_strdup(tmp->chr);
+			(node)->cmd->cmd = add_cmd(&tmp);
+		if (!tmp->next)
+			break ;
 		else if (tmp->type == ARG || tmp->type == SQUOTE
 			|| tmp->type == DQUOTE || tmp->type == DOLLAR)
 			fill_arguments(tmp, &node->cmd);
@@ -120,10 +125,7 @@ void	parse_cmd(t_node *node)
 			|| tmp->type == TRUNCATE || tmp->type == APPEND)
 			add_redirection(tmp, &node->cmd->redirect);
 		else if (tmp->type == PIPE)
-		{
-			(node)->cmd->next = create_cmd(node->cmd);
-			node->cmd = node->cmd->next;
-		}
+			pipe_cmd_handle(&node);
 		tmp = tmp->next;
 	}
 	create_exec(&node->cmd);

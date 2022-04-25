@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 22:02:59 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 00:27:38 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_string
 
 extern int	g_exit;
 
+char		**return_env(char **env);
 // SIGN	LS
 void		handle_signals(void);
 void		sigint_handler(int sig);
