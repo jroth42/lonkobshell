@@ -91,7 +91,9 @@ void	fill_arguments(t_token *token, t_cmd **cmd)
 	{
 		copy = ft_strjoin((*cmd)->args, " ");
 		join = ft_strjoin(copy, token->chr);
+		myfree(copy);
 		(*cmd)->args = join;
+		myfree(join);
 	}
 	else
 		(*cmd)->args = ft_strdup(token->chr);
@@ -107,17 +109,17 @@ void	parse_cmd(t_node *node)
 	while (tmp && tmp->prev)
 		tmp = tmp->prev;
 	node->cmd = create_cmd(NULL);
-	while (tmp->next)
+	while (tmp->next && !parser_error(tmp))
 	{
 		if (tmp->type == COMMAND)
 			(node)->cmd->cmd = ft_strdup(tmp->chr);
-		if (tmp->type == ARG || tmp->type == SQUOTE
+		else if (tmp->type == ARG || tmp->type == SQUOTE
 			|| tmp->type == DQUOTE || tmp->type == DOLLAR)
 			fill_arguments(tmp, &node->cmd);
-		if (tmp->type == READ_INPUT || tmp->type == HEREDOC
+		else if (tmp->type == READ_INPUT || tmp->type == HEREDOC
 			|| tmp->type == TRUNCATE || tmp->type == APPEND)
 			add_redirection(tmp, &node->cmd->redirect);
-		if (tmp->type == PIPE)
+		else if (tmp->type == PIPE)
 		{
 			(node)->cmd->next = create_cmd(node->cmd);
 			node->cmd = node->cmd->next;
@@ -126,4 +128,3 @@ void	parse_cmd(t_node *node)
 	}
 	create_exec(&node->cmd);
 }
-	// free_token_list(tmp);

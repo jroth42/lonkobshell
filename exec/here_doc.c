@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:53:26 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 20:50:56 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 21:53:17 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 				write(2, "\n", 1);
 			break ;
 		}
-		(void) type;
-		// if (type == 240)
-		// 	expand(&read);
+		if (type == 240)
+			expand(NULL, &read);
 		write(fds->here_fd[WRITE], read, ft_strlen(read));
 		myfree((void **)&read);
 	}

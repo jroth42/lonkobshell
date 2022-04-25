@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 16:04:06 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 17:42:42 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	exec(t_cmd *cmd, char **env)
 	else if (cmd->exec)
 	{
 		execve(path, cmd->exec, env);
-		g_exit = -1;
+		g_exit = 127;
 		ft_putstr_fd("lonkob: ", STDERR_FILENO);
 		ft_putstr_fd(cmd->cmd, STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
@@ -100,7 +100,7 @@ void	execute_loop(t_cmd *cmd, char **env)
 	set_exec(&exec);
 	while (tmp)
 	{
-		if (!tmp->cmd)
+		if (!tmp->cmd && !tmp->redirect)
 		{
 			tmp = tmp->next;
 			continue ;

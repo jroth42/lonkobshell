@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:33:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 16:12:22 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 21:52:20 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ enum e_type
 	HEREDOC = 240,
 	TRUNCATE = '>',
 	APPEND = 248,
-	DOLLAR	= '$'
+	DOLLAR	= '$',
 };
 
 typedef struct s_token
@@ -62,14 +62,16 @@ typedef struct s_node
 	struct s_node	*prev;
 }					t_node;
 
+bool	parser_error(t_token *token);
 void	lexer(t_node *node);
 t_token	*create_token(t_token *token);
 void	handle_quotation(t_token **token, char **input);
 void	handle_redirections(t_token **token, char **input);
 void	handle_word(t_token **token, char **input);
-void	handle_pipe(t_token **token, char **input);
+
 int		expander(t_token **token, char **input);
 void	expand(t_token **token, char **input);
+char	*env_var_variable(char **input);
 // REDIRECTs
 void	add_redirection(t_token *tmp, t_redir **redir);
 t_redir	*get_last_in_redir(t_redir *head);

@@ -6,31 +6,13 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 15:36:06 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 22:05:39 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
 int	g_exit = SUCCESS;
-
-void	sigint_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
-
-void	handle_signals(void)
-{
-	change_termios(true);
-	signal(SIGQUIT, sigint_handler);
-	signal(SIGINT, sigint_handler);
-}
 
 // create node for each line of input
 t_node	*add_node(t_node *node)
@@ -56,13 +38,20 @@ t_node	*add_node(t_node *node)
 	return (new);
 }
 
-int	main(int argc, char **argv, char **env)
+void	work_input(t_node *node, char **env)
+{
+	add_history(node->input);
+	input_handle(node);
+	lexer(node);
+	change_termios(false);
+	execute_loop(node->cmd, env);
+}
+
+void	init_shell(char **env)
 {
 	t_node	*node;
 	char	*prompt;
 
-	(void) argv;
-	(void) argc;
 	prompt = ft_strdup("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)-> ...:  ");
 	node = add_node(NULL);
 	get_env(env);
@@ -70,18 +59,23 @@ int	main(int argc, char **argv, char **env)
 	{
 		handle_signals();
 		node->input = readline(prompt);
-		if (node->input != NULL && ft_strcmp(node->input, "") != 0)
+		if (!node->input)
 		{
-			add_history(node->input);
-			input_handle(node);
-			lexer(node);
-			// if (g_exit == SUCCESS)
-			{
-				change_termios(false);
-				execute_loop(node->cmd, env);
-			}
-			node = add_node(node);
+			ft_putstr_fd("exit\n", 2);
+			free_env();
+			break ;
 		}
+		if (node->input != NULL && ft_strcmp(node->input, "") != 0)
+			work_input(node, env);
+		node = add_node(node);
+		free_node(node->prev);
 	}
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	(void) argv;
+	(void) argc;
+	init_shell(env);
 	return (g_exit);
 }

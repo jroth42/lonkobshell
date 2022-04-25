@@ -6,19 +6,29 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 20:14:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 16:12:22 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 21:48:41 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-void	handle_pipe(t_token **token, char **input)
+void	handle_pipe(t_string *t_str, t_token **token, char **input)
 {
-	(*token)->chr = ft_strdup("|");
-	(*token)->type = PIPE;
-	if ((*token)->chr)
-		*token = create_token(*token);
-	(*input)++;
+	if (*(*input + 1) == '|' || !(*token)->prev)
+	{
+		(*token)->type = -5;
+		while (**input == '|')
+		{
+			s_add_c(t_str, '|');
+			(*input)++;
+		}
+	}
+	else
+	{
+		(*token)->type = PIPE;
+		(*token)->chr = ft_strdup("|");
+		(*input)++;
+	}
 }
 
 void	handle_dquote(t_token **token, char **input)

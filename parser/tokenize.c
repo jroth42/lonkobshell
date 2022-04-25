@@ -6,11 +6,35 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:19:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/21 20:07:01 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 21:49:09 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
+
+bool	parser_error(t_token *token)
+{
+	char		*str;
+	t_string	*sb;
+	char		*err_msg;
+
+	if (token->type == -5)
+	{
+		str = token->chr;
+		sb = s_create();
+		if (ft_strlen(str) > 2)
+			str = ft_substr(str, 0, 2);
+		s_add_str(sb, "syntax error: near unexpected token '");
+		s_add_str(sb, str);
+		s_add_c(sb, '\'');
+		err_msg = s_get_str(sb);
+		s_destroy(sb);
+		error_msg(err_msg, 258);
+		myfree(err_msg);
+		return (true);
+	}
+	return (false);
+}
 
 //	creates list of tokens if !token otherwise appends tokens to list
 t_token	*create_token(t_token *token)
@@ -41,6 +65,29 @@ t_token	*create_token(t_token *token)
 //	... move Pointer within each function with **ptr 
 //		-> (*ptr) += chars to be skipped.
 //	afterwards send to cmd parser
+void	handle_forbidden_and_pipe(t_token **token, char **input)
+{
+	t_string	*t_str;
+
+	t_str = s_create();
+	if ((**input) == '&')
+	{
+		while (**input == '&')
+		{
+			s_add_c(t_str, '&');
+			(*input)++;
+		}
+		(*token)->type = -5;
+	}
+	else if (**input == '|')
+		handle_pipe(t_str, token, input);
+	if (!(*token)->chr)
+		(*token)->chr = s_get_str(t_str);
+	if ((*token)->chr)
+		*token = create_token(*token);
+	s_destroy(t_str);
+}
+
 void	lexer(t_node *node)
 {
 	char	*input;
@@ -54,8 +101,8 @@ void	lexer(t_node *node)
 			expander(&node->token, &input);
 		else if (*input == '>' || *input == '<')
 			handle_redirections(&node->token, &input);
-		else if (*input == '|')
-			handle_pipe(&node->token, &input);
+		else if (*input == '&' || (*input == '|'))
+			handle_forbidden_and_pipe(&node->token, &input);
 		else
 			handle_word(&node->token, &input);
 	}

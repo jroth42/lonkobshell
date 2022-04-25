@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 21:08:04 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 15:22:34 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 22:01:13 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,43 @@ static bool	check_valid_arg(char *str)
 	return (true);
 }
 
-static void	rm_env_var(char *str, t_env **env,  t_env *curr_env, t_env *prev)
+static bool	rm_env_help(char *str, t_env **env, t_env *curr_env, t_env *prev)
 {
 	char	*tmp;
 
+	tmp = get_var_name(curr_env);
+	if (!ft_strcmp(tmp, str) && !ft_strcmp(curr_env->var, prev->var))
+	{
+		prev = curr_env->next;
+		free(curr_env->var);
+		free(curr_env);
+		*env = prev;
+		free(tmp);
+		return (false);
+	}
+	else if (!ft_strcmp(tmp, str))
+	{
+		prev->next = curr_env->next;
+		free(curr_env->var);
+		free(curr_env);
+		free(tmp);
+		curr_env = NULL;
+		return (false);
+	}
+	return (true);
+}
+
+static void	rm_env_var(char *str, t_env **env, t_env *curr_env, t_env *prev)
+{
 	if (check_valid_arg(str))
 	{
 		while (curr_env)
 		{
-			tmp = get_var_name(curr_env);
-			if (!ft_strcmp(tmp, str) && !ft_strcmp(curr_env->var, prev->var))
-			{
-				prev = curr_env->next;
-				free(curr_env->var);
-				free(curr_env);
-				*env = prev;
+			if (!rm_env_help(str, env, curr_env, prev))
 				break ;
-			}
-			else if (!ft_strcmp(tmp, str))
-			{
-				prev->next = curr_env->next;
-				free(curr_env->var);
-				free(curr_env);
-				curr_env = NULL;
-				break ;
-			}
 			prev = curr_env;
 			curr_env = curr_env->next;
 		}
-		if (tmp)
-			free(tmp);
 	}
 	else
 		g_exit = unset_error(str, FAIL);

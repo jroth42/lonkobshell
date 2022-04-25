@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:15:02 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 00:05:48 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 21:48:18 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_redir	*get_last_in_redir(t_redir *head)
 			{
 				if (access(in->file, R_OK) < 0)
 				{
-					// g_exit = 1;
+					g_exit = 1;
 					break ;
 				}
 			}

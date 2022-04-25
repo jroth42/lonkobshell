@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:44:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 20:51:00 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 21:53:55 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	multiple_redir_in(t_cmd *cmd, t_exec *fds)
 	t_redir	*tmp;
 
 	tmp = cmd->redirect;
-	if (cmd->redirect && cmd->redirect->next && (cmd->redirect->next->type == READ_INPUT
-			|| cmd->redirect->next->type == HEREDOC
-			|| cmd->redirect->next->type == HEREDOC + 1))
+	if (cmd->redirect && cmd->redirect->next
+		&& (cmd->redirect->next->type == READ_INPUT
+			|| cmd->redirect->next->type == HEREDOC))
 	{
 		while (tmp)
 		{
@@ -87,9 +87,7 @@ int	multiple_redir_in(t_cmd *cmd, t_exec *fds)
 						return (-1);
 				}
 				if (tmp->type == HEREDOC)
-				{
 					route_heredoc(fds, tmp);
-				}
 			}
 			tmp = tmp->next;
 		}

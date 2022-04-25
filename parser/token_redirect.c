@@ -6,14 +6,14 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:24:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 16:12:22 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 21:44:53 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
 //	lil helper function
-bool	check_char(const char c)
+static bool	check_char(const char c)
 {
 	if (c == '>' || c == '<')
 		return (true);
@@ -21,7 +21,7 @@ bool	check_char(const char c)
 }
 
 //	finds and returns the next word after the redirection operator
-char	*find_filename(char **input)
+static char	*find_filename(char **input)
 {
 	int		i;
 	int		j;
@@ -48,7 +48,7 @@ char	*find_filename(char **input)
 }
 
 //	checks if >> or > before assigning token
-void	handle_redirect_out(t_token **token, char **input)
+static void	handle_redirect_out(t_token **token, char **input)
 {
 	char	*join;
 
@@ -71,7 +71,7 @@ void	handle_redirect_out(t_token **token, char **input)
 }
 
 //	checks if << or < before assigning token
-void	handle_redirect_in(t_token **token, char **input)
+static void	handle_redirect_in(t_token **token, char **input)
 {
 	char	*join;
 

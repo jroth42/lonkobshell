@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 15:33:58 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 22:02:59 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@
 # include "exec.h"
 # include "built_in.h"
 
-// # define INFILE 0
-// # define OUTFILE 1
 # define READ 0
 # define WRITE 1
 # define SIGINT 2
@@ -56,7 +54,7 @@ void		sigint_handler(int sig);
 int			change_termios(bool hide);
 void		define_sig_prc(t_cmd *cmd);
 void		sigint_handler_heredoc(int sig);
-
+void		handle_pipe(t_string *t_str, t_token **token, char **input);
 // FREE
 void		myfree(void *mlc);
 void		free_node(t_node *node);
