@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 20:14:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 15:35:25 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 16:12:22 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	handle_word(t_token **token, char **input)
 			(*token)->type = ARG;
 		if (type == READ_INPUT || type == HEREDOC)
 			(*token)->type = COMMAND;
-		if (type == TRUNCATE || type == APPPEND)
+		if (type == TRUNCATE || type == APPEND)
 			(*token)->type = COMMAND;
 	}
 	if ((*token)->chr)

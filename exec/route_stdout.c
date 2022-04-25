@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:43:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 13:38:08 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 16:12:22 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	route_out(int type, t_redir *out)
 		if (access(out->file, W_OK) < 0)
 			return (-1);
 	}
-	else if (type == APPPEND)
+	else if (type == APPEND)
 	{
 		open(out->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (access(out->file, W_OK) < 0)
@@ -36,7 +36,7 @@ t_redir	*get_last_out_redir(t_redir *head)
 	out = NULL;
 	while (head)
 	{
-		if (head->type == TRUNCATE || head->type == APPPEND)
+		if (head->type == TRUNCATE || head->type == APPEND)
 		{
 			out = head;
 			if (route_out(head->type, out) < 0)
@@ -58,7 +58,7 @@ int	last_redir_out(t_exec *fds, t_redir *last_out)
 		dup2(fds->file_fd, STDOUT_FILENO);
 		close(fds->file_fd);
 	}
-	if (last_out->type == APPPEND)
+	if (last_out->type == APPEND)
 	{
 		fds->file_fd = open_file(last_out->file,
 				O_WRONLY | O_CREAT | O_APPEND, 0644);

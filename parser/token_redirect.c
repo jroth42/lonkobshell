@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:24:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 00:03:19 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 16:12:22 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	handle_redirect_out(t_token **token, char **input)
 	{
 		join = find_filename(input);
 		(*token)->chr = ft_strdup(join);
-		(*token)->type = APPPEND;
+		(*token)->type = APPEND;
 	}		
 	else
 	{

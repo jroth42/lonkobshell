@@ -115,7 +115,7 @@ void	parse_cmd(t_node *node)
 			|| tmp->type == DQUOTE || tmp->type == DOLLAR)
 			fill_arguments(tmp, &node->cmd);
 		if (tmp->type == READ_INPUT || tmp->type == HEREDOC
-			|| tmp->type == TRUNCATE || tmp->type == APPPEND)
+			|| tmp->type == TRUNCATE || tmp->type == APPEND)
 			add_redirection(tmp, &node->cmd->redirect);
 		if (tmp->type == PIPE)
 		{

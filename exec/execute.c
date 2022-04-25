@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 00:16:23 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 16:04:06 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static int	create_prcs(t_cmd *cmd, t_exec *fds, char **env)
 	close(fds->fd[WRITE]);
 	return (fds->pid);
 }
-
 
 static void	end_prcs(t_exec *fds)
 {
