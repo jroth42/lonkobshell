@@ -6,13 +6,21 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:31:42 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 22:01:08 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 15:30:29 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
 // // printfuncttions for testing
+int	error_msg(char *error_msg, int r_value)
+{
+	ft_putstr_fd("lonkob: ", 2);
+	ft_putstr_fd(error_msg, 2);
+	ft_putchar_fd('\n', 2);
+	return (r_value);
+}
+
 void	print_cmd(t_node *node)
 {
 	int		i;
@@ -92,13 +100,9 @@ void	input_handle(t_node *node)
 	{
 		if (stringcmp("token", node->input))
 			print_tokens(node->prev);
-		// if (stringcmp("node", node->input))
-		// 	print_nodes(node->prev);
 		if (stringcmp("cmd", node->input))
 			print_cmd(node->prev);
 	}
-	// if (stringcmp("exit", node->input))
-	// 	exit(0);
 }
 
 // void	input_handle(t_node *node)

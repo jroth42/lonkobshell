@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 20:14:03 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 22:19:54 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 15:23:15 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 static void	valid_exit(void)
 {
 	write(2, "exit\n", 5);
-	// free_env();
-	// exit(g_exit);
-    exit(0);
+	free_env();
+	exit(g_exit);
 }
 
 static int	exit_error(char *str, int r_value)
 {
 	t_string	*sb;
-	char			*err_msg;
+	char		*err_msg;
 
 	sb = s_create();
 	s_add_str(sb, "exit: ");

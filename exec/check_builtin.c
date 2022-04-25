@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:26:37 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 22:09:04 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 15:22:41 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	built_in_exec(t_cmd *cmd)
 	{
 		if (!ft_strcmp_upper_lower(cmd->cmd, "pwd"))
 			ft_pwd();
-		// if (!ft_strcmp(cmd->cmd, "cd"))
-		// 	ft_cd(cmd);
+		if (!ft_strcmp((cmd->cmd), "cd"))
+			ft_cd(cmd);
 		if (!ft_strcmp_upper_lower(cmd->cmd, "echo"))
 			ft_echo(cmd);
 		if (!ft_strcmp(cmd->cmd, "export"))

@@ -6,13 +6,31 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 23:58:19 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 15:36:06 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-int g_exit = SUCCESS;
+int	g_exit = SUCCESS;
+
+void	sigint_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void	handle_signals(void)
+{
+	change_termios(true);
+	signal(SIGQUIT, sigint_handler);
+	signal(SIGINT, sigint_handler);
+}
 
 // create node for each line of input
 t_node	*add_node(t_node *node)
@@ -42,11 +60,11 @@ int	main(int argc, char **argv, char **env)
 {
 	t_node	*node;
 	char	*prompt;
-	
+
 	(void) argv;
 	(void) argc;
 	prompt = ft_strdup("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)-> ...:  ");
- 	node = add_node(NULL);
+	node = add_node(NULL);
 	get_env(env);
 	while (1)
 	{
@@ -65,5 +83,5 @@ int	main(int argc, char **argv, char **env)
 			node = add_node(node);
 		}
 	}
-	return (0);
+	return (g_exit);
 }

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 21:08:04 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 21:11:41 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 15:22:34 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	unset_error(char *str, int r_value)
 {
-	t_string    	*sb;
-	char			*err_msg;
+	t_string	*sb;
+	char		*err_msg;
 
 	sb = s_create();
 	s_add_str(sb, "unset: '");

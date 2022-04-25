@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:41:08 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 20:21:50 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 15:30:06 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,4 @@ int	get_arr_size(char **arr)
 	while (arr[res])
 		res++;
 	return (res);
-}
-
-int	error_msg(char *error_msg, int r_value)
-{
-	ft_putstr_fd("lonkob: ", 2);
-	ft_putstr_fd(error_msg, 2);
-	ft_putchar_fd('\n', 2);
-	return (r_value);
 }

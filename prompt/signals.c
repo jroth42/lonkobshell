@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 13:48:50 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/19 21:52:12 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 15:37:05 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sigchild_handler(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		g_exit = SUCCESS; //130
+		g_exit = 130;
 	}
 	if (sig == SIGQUIT)
 	{
@@ -36,7 +36,6 @@ void	sigchild_handler(int sig)
 		g_exit = SUCCESS;
 	}
 }
-
 
 static bool	check_heredoc(t_redir *redir)
 {
@@ -78,22 +77,3 @@ int	change_termios(bool hide)
 		return (FAIL);
 	return (SUCCESS);
 }
-
-void	sigint_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
-
-void	handle_signals(void)
-{
-	change_termios(true);
-	signal(SIGQUIT, sigint_handler);
-	signal(SIGINT, sigint_handler);
-}
-

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 20:05:23 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/24 23:51:12 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/25 15:20:23 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	ft_echo(t_cmd *cmd)
 		check_echoflag(cmd->exec[i], &opt, &i);
 		while (cmd->exec[i])
 		{
-				printf("%s", cmd->exec[i]);
-				if (!opt)
-					printf(" ");
-				i++;
+			printf("%s", cmd->exec[i]);
+			if (!opt)
+				printf(" ");
+			i++;
 		}
 	}
 	if (!opt)
