@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 20:33:59 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 23:44:14 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	work_input(t_node *node, char **env)
 	lexer(node);
 	change_termios(false);
 	execute_loop(node->cmd, env);
-	// free_node(node->prev);
+	free_node(node->prev);
 }
 
 char	**return_env(char **env)
@@ -64,8 +64,6 @@ void	init_shell(char **env)
 
 	prompt = ("lonkob@»-(٩(̾●̮̮̃̾•̃̾)۶)-> ...:  ");
 	node = add_node(NULL);
-	get_env(env);
-	return_env(env);
 	while (1)
 	{
 		handle_signals();
@@ -86,6 +84,8 @@ int	main(int argc, char **argv, char **env)
 {
 	(void) argv;
 	(void) argc;
+	get_env(env);
+	return_env(env);
 	init_shell(env);
 	return (g_exit);
 }

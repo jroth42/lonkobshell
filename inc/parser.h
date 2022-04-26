@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:33:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 01:09:02 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 22:10:10 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ typedef struct s_node
 
 void	fill_arguments(t_token *token, t_cmd **cmd);
 void	pipe_cmd_handle(t_node **node);
+bool	check_builtin_tk(char *cmd);
+void	create_exec(t_cmd **cmd);
+void	parse_args(t_cmd **cmd);
 bool	parser_error(t_token *token);
 void	lexer(t_node *node);
 t_token	*create_token(t_token *token);

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:58:40 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 03:29:05 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 22:11:13 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	open_file(char *file, int mode, int rights)
 	fd = open(file, mode, rights);
 	if (fd < 0 || access(file, W_OK) < 0)
 	{
-		g_exit = file_error("lonkob:", "errno", file);
+		g_exit = file_error("lonkob:", "no such file or directory", file);
 		return (-1);
 	}
 	return (fd);

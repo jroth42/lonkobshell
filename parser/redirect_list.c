@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:15:02 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 21:20:52 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 22:33:55 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_redir	*new_redir(char *file, int type)
 	if (!new)
 		return (NULL);
 	new->type = type;
-	new->file = file;
+	new->file = ft_strdup(file);
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:44:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 18:14:43 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 22:10:48 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,8 @@ static int	last_route(t_redir *last_in, t_exec *fds)
 	if (last_in->type == READ_INPUT)
 	{
 		fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
-		printf("%s", last_in->file);
 		if (fds->file_fd < 0)
-		{
-			myfree(fds);
 			return (-1);
-		}
 		dup2(fds->file_fd, STDIN_FILENO);
 		close(fds->file_fd);
 	}
@@ -50,10 +46,7 @@ int	route_stdin(t_cmd *cmd, t_exec *fds)
 
 	last_in = get_last_in_redir(cmd->redirect);
 	if (multiple_redir_in(cmd, fds) < 0)
-	{
-		myfree(fds);
 		return (-1);
-	}
 	if (last_in)
 	{
 		if (last_route(last_in, fds) < 0)

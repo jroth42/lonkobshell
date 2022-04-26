@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:19:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 20:45:53 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 22:08:13 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ bool	parser_error(t_token *token)
 	t_string	*sb;
 	char		*err_msg;
 
-	if (token->type == -5)
+	if (token->type == -5
+		|| ((token->type == SQUOTE || token->type == DQUOTE) && !token->prev))
 	{
 		str = token->chr;
 		sb = s_create();

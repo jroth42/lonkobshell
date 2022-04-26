@@ -58,62 +58,24 @@ void	parse_args(t_cmd **cmd)
 	free_2d(args);
 }
 
-bool	check_builtin_tk(char *cmd)
-{
-	if (!cmd)
-		return (false);
-	if (!ft_strcmp_upper_lower(cmd, "pwd")
-		|| !ft_strcmp(cmd, "cd")
-		|| !ft_strcmp_upper_lower(cmd, "echo")
-		|| !ft_strcmp(cmd, "export")
-		|| !ft_strcmp_upper_lower(cmd, "env")
-		|| !ft_strcmp(cmd, "exit")
-		|| !ft_strcmp(cmd, "unset"))
-		return (true);
-	return (false);
-}
-
-// create 2D array with exec cmd at [0] if args available parse_args
-void	create_exec(t_cmd **cmd)
-{
-	t_cmd	*head;
-
-	while ((*cmd) && (*cmd)->prev)
-		(*cmd) = (*cmd)->prev;
-	head = *cmd;
-	while ((*cmd))
-	{
-		if ((*cmd)->args && (*cmd)->cmd)
-			parse_args(cmd);
-		else if ((*cmd)->cmd)
-		{
-			(*cmd)->exec = malloc(sizeof(char **) * 2);
-			(*cmd)->exec[0] = ft_strdup((*cmd)->cmd);
-			(*cmd)->exec[1] = NULL;
-		}
-		*cmd = (*cmd)->next;
-	}
-	*cmd = head;
-}
-
 //	walk through tokens and append them to cmd struct
 //	create new cmd struct if pipe is found
 
-bool	check_access(char *str)
-{
-	char		**env;
-	char		*path;
-	
-	env = return_env(NULL);
-	path = find_path(str, env);
-	if (!access(path, F_OK))
-	{
-		myfree(path);
-		return (true);
-	}
-	myfree(path);
-	return (false);
-}
+// bool	check_access(char *str)
+// {
+// 	char		**env;
+// 	char		*path;
+
+// 	env = return_env(NULL);
+// 	path = find_path(str, env);
+// 	if (!access(path, F_OK))
+// 	{
+// 		myfree(path);
+// 		return (true);
+// 	}
+// 	myfree(path);
+// 	return (false);
+// }
 
 char	*add_cmd(t_token **token)
 {
@@ -154,66 +116,3 @@ void	parse_cmd(t_node *node)
 	}
 	create_exec(&node->cmd);
 }
-
-// char	*add_cmd(t_token **token)
-// {
-// 	t_string	*t_str;
-// 	char		*ret;
-// 	bool		access;
-
-// 	access = false;
-// 	if (check_builtin_tk((*token)->chr))
-// 		return (ft_strdup((*token)->chr));
-// 	if ((*token)->chr[0] == '/')
-// 		return (ft_strdup((*token)->chr));
-// 	ret = ft_strdup((*token)->chr);
-// 	t_str = s_create();
-// 	while ((*token) && (*token)->next && ((*token)->type == SQUOTE
-// 			|| (*token)->type == DQUOTE || (*token)->type == COMMAND
-// 			|| (*token)->type == ARG))
-// 	{
-// 		s_add_str(t_str, (*token)->chr);
-// 		if (check_access(s_get_str(t_str)))
-// 		{
-// 			access = true;
-// 			break ;
-// 		}
-// 		(*token) = (*token)->next;
-// 	}
-// 	if (access)
-// 	{
-// 		myfree(ret);
-// 		ret = ft_strdup(t_str->str);
-// 	}
-// 	s_destroy(t_str);
-// 	return (ret);
-// }
-
-// char	*add_cmd(t_token **token)
-// {
-// 	t_string	*t_str;
-// 	char		*ret;
-// 	char		**env;
-// 	char		*path;
-
-// 	env = return_env(NULL);
-// 	if (check_builtin_tk((*token)->chr))
-// 		return (ft_strdup((*token)->chr));
-// 	if ((*token)->chr[0] == '/')
-// 		return (ft_strdup((*token)->chr));
-// 	t_str = s_create();
-// 	while ((*token) && (*token)->next && ((*token)->type == SQUOTE
-// 			|| (*token)->type == DQUOTE || (*token)->type == COMMAND
-// 			|| (*token)->type == ARG))
-// 	{
-// 		s_add_str(t_str, (*token)->chr);
-// 		(*token) = (*token)->next;
-// 		path = find_path(t_str->str, env);
-// 		if (!access(path, F_OK))
-// 			break ;
-// 	}
-// 	myfree(path);
-// 	ret = s_get_str(t_str);
-// 	s_destroy(t_str);
-// 	return (ret);
-// }

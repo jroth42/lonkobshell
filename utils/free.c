@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:02:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 20:33:46 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 23:49:17 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,26 @@ void	free_2d(char **exec)
 		if (exec[i])
 		{
 			while (exec[i])
-			{
-				{
-					myfree(exec[i++]);
-				}
-			}		
+				myfree(exec[i++]);
 		}
 		myfree(exec);
+	}
+}
+
+void	free_redir_list(t_redir *red)
+{
+	t_redir	*tmp;
+
+	if (red)
+	{
+		while (red)
+		{
+			tmp = red;
+			if (red->file)
+				myfree(red->file);
+			myfree(red);
+			red = tmp->next;
+		}
 	}
 }
 
@@ -61,6 +74,8 @@ void	free_cmd_list(t_cmd *cmd)
 			free_2d(cmd->exec);
 		if (cmd->args)
 			myfree(cmd->args);
+		if (cmd->redirect)
+			free_redir_list(cmd->redirect);
 		tmp = cmd;
 		cmd = cmd->next;
 		if (tmp)
