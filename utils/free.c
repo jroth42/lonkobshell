@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:02:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 21:47:33 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 02:39:47 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	free_token_list(t_token *token)
 		if (token->chr)
 			myfree(token->chr);
 		tmp = token;
-		token = token->next;
 		if (tmp)
 			myfree(tmp);
+		token = token->next;
 	}
 }
 
@@ -62,6 +62,8 @@ void	free_node(t_node *node)
 {
 	if (node)
 	{
+		if (node->input)
+			free(node->input);
 		if (node->token)
 			free_token_list(node->token);
 		if (node->cmd)

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:58:40 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/18 22:08:40 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 02:20:24 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ char	*find_path(char *cmd, char **env)
 	{
 		dir = ft_strdupn(path, strlen_to_c(path, ':'));
 		bin = join_paths(dir, cmd);
-		myfree(dir);
+		free(dir);
 		if (access(bin, F_OK) == 0)
 			return (bin);
-		myfree(bin);
+		free(bin);
 		path += strlen_to_c(path, ':') + 1;
 	}
 	return (cmd);
@@ -95,7 +95,7 @@ int	open_file(char *file, int mode, int rights)
 	fd = open(file, mode, rights);
 	if (fd < 0 || access(file, W_OK) < 0)
 	{
-		file_error("minishell", "errno", file);
+		g_exit = file_error("minishell", "errno", file);
 		return (-1);
 	}
 	return (fd);

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 20:14:03 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 21:54:21 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 02:00:27 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	valid_exit(void)
 {
 	write(2, "exit\n", 5);
 	free_env();
+	system("leaks minishell");
 	exit(g_exit);
 }
 

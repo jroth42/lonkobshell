@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 01:07:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 01:10:19 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 02:51:12 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	fill_arguments(t_token *token, t_cmd **cmd)
 	char	*join;
 	char	*copy;
 
+	copy = NULL;
+	join = NULL;
 	if ((*cmd)->args)
 	{
 		copy = ft_strjoin((*cmd)->args, " ");

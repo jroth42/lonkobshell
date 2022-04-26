@@ -87,6 +87,7 @@ char	*add_cmd(t_token **token)
 	t_string	*t_str;
 	char		*ret;
 	char		**env;
+	char		*path;
 
 	env = return_env(NULL);
 	t_str = s_create();
@@ -96,7 +97,8 @@ char	*add_cmd(t_token **token)
 	{
 		s_add_str(t_str, (*token)->chr);
 		(*token) = (*token)->next;
-		if (t_str->str[0] != '/' && !access(find_path(t_str->str, env), F_OK))
+		path = find_path(t_str->str, env);
+		if (t_str->str[0] != '/' && !access(path, F_OK))
 			break ;
 	}
 	ret = s_get_str(t_str);

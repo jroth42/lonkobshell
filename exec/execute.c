@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:03:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 17:42:42 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 02:19:52 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,14 @@ int	exec(t_cmd *cmd, char **env)
 	else if (cmd->exec)
 	{
 		execve(path, cmd->exec, env);
-		g_exit = 127;
+		free(path);
 		ft_putstr_fd("lonkob: ", STDERR_FILENO);
 		ft_putstr_fd(cmd->cmd, STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		g_exit = 127;
 		exit(g_exit);
 	}
+	free(cmd->cmd);
 	exit(SUCCESS);
 }
 
