@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:16:04 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 15:26:08 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 19:58:54 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	s_add_strn(t_string *t_str, char *append, int len)
 	t_str->len += i;
 	tmp = t_str->str;
 	t_str->str = new;
-	free(tmp);
+	myfree(tmp);
 	return (SUCCESS);
 }
 

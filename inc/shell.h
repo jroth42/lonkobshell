@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 00:27:38 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 17:23:32 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void		handle_pipe(t_string *t_str, t_token **token, char **input);
 // FREE
 void		myfree(void *mlc);
 void		free_node(t_node *node);
-
+void		free_token_list(t_token *token);
+void		free_2d(char **exec);
 //	----- UTILS ------ 
 void		input_handle(t_node *node);
 void		skip_white_space(char **str);

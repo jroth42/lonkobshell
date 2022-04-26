@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:02:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 03:35:23 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 20:33:46 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,14 @@ void	free_2d(char **exec)
 	i = 0;
 	if (exec)
 	{
-		while (exec[i])
+		if (exec[i])
 		{
-			if (exec[i])
-				myfree(exec[i++]);
+			while (exec[i])
+			{
+				{
+					myfree(exec[i++]);
+				}
+			}		
 		}
 		myfree(exec);
 	}
@@ -51,10 +55,10 @@ void	free_cmd_list(t_cmd *cmd)
 
 	while (cmd)
 	{
-		if (cmd->exec)
-			free_2d(cmd->exec);
 		if (cmd->cmd)
 			myfree(cmd->cmd);
+		if (cmd->exec)
+			free_2d(cmd->exec);
 		if (cmd->args)
 			myfree(cmd->args);
 		tmp = cmd;

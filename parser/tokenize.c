@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:19:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 23:19:20 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 20:45:53 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,31 +87,6 @@ void	handle_forbidden_and_pipe(t_token **token, char **input)
 		*token = create_token(*token);
 	s_destroy(t_str);
 }
-
-// static void	valid_quotes(t_token **token)
-// {
-// 	t_string	*t_str;
-// 	t_token		*tmp;
-
-// 	tmp = *token;
-// 	t_str = s_create();
-// 	while (tmp->type == SQUOTE || tmp->type == DQUOTE)
-// 	{
-// 		while (*(tmp->chr))
-// 		{
-// 			if (*tmp->chr != '\'' || *tmp->chr != '\"')
-// 				s_add_c(t_str, *tmp->chr);
-// 			tmp->chr++;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	printf("%s\n", t_str->str);
-// 	if (access(tmp->chr, F_OK))
-// 		tmp->type = COMMAND;
-// 	else
-// 		tmp->type = ARG;
-// 	*token = tmp;
-// }
 
 void	lexer(t_node *node)
 {
