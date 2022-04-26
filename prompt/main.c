@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:08:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 01:33:48 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 03:50:10 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	init_shell(char **env)
 		if (node->input != NULL && ft_strcmp(node->input, "") != 0)
 			work_input(node, env);
 		node = add_node(node);
-		free_node(node->prev);
+		// free_node(node->prev);
 	}
 }
 

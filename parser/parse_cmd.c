@@ -82,6 +82,21 @@ void	create_exec(t_cmd **cmd)
 
 //	walk through tokens and append them to cmd struct
 //	create new cmd struct if pipe is found
+bool	check_builtin_tk(char *cmd)
+{
+	if (!cmd)
+		return (false);
+	if (!ft_strcmp_upper_lower(cmd, "pwd")
+		|| !ft_strcmp(cmd, "cd")
+		|| !ft_strcmp_upper_lower(cmd, "echo")
+		|| !ft_strcmp(cmd, "export")
+		|| !ft_strcmp_upper_lower(cmd, "env")
+		|| !ft_strcmp(cmd, "exit")
+		|| !ft_strcmp(cmd, "unset"))
+		return (true);
+	return (false);
+}
+
 char	*add_cmd(t_token **token)
 {
 	t_string	*t_str;
@@ -91,6 +106,8 @@ char	*add_cmd(t_token **token)
 
 	env = return_env(NULL);
 	t_str = s_create();
+	if (check_builtin_tk((*token)->chr))
+		return ((*token)->chr);
 	while ((*token)->next && ((*token)->type == SQUOTE
 			|| (*token)->type == DQUOTE || (*token)->type == COMMAND
 			|| (*token)->type == ARG))

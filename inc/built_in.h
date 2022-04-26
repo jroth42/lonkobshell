@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 16:48:40 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 15:27:48 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 03:43:58 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_unset(t_cmd *cmd);
 void	ft_cd(t_cmd *cmd);
 
 //export utils
+int	ft_strcmp_upper_lower(const char *s1, const char *s2);
 bool	check_valid_var(char **str);
 t_env	*check_var_existence(t_env **env, char *args);
 // env utils

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 19:02:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 02:39:47 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 03:35:23 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,15 @@ void	free_2d(char **exec)
 	int	i;
 
 	i = 0;
-	while (exec[i])
-		myfree(exec[i++]);
-	myfree(exec);
+	if (exec)
+	{
+		while (exec[i])
+		{
+			if (exec[i])
+				myfree(exec[i++]);
+		}
+		myfree(exec);
+	}
 }
 
 void	free_cmd_list(t_cmd *cmd)
