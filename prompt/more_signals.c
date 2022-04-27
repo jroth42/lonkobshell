@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 21:46:18 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 21:46:29 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/26 23:59:25 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,13 @@ void	handle_signals(void)
 	change_termios(true);
 	signal(SIGQUIT, sigint_handler);
 	signal(SIGINT, sigint_handler);
+}
+
+char	**return_env(char **env)
+{
+	static char	**environment;
+
+	if (!environment)
+		environment = env;
+	return (*(&(environment)));
 }

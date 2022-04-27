@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 16:24:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 20:41:08 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/27 18:21:25 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*find_filename(char **input)
 	{
 		while (check_char(str[i]))
 			i++;
-		while (str[i] && white_space(str[i]))
+		while (white_space(str[i]))
 			i++;
 		while (str[i + j] && !white_space(str[i + j]))
 		{
@@ -64,8 +64,11 @@ static void	handle_redirect_out(t_token **token, char **input)
 		(*token)->chr = ft_strdup(join);
 		(*token)->type = TRUNCATE;
 	}
-	if (!ft_strcmp((*token)->chr, ""))
+	if (!ft_strcmp(join, ""))
+	{
+		(*token)->chr = ft_strdup(">");
 		(*token)->type = -5;
+	}
 	if ((*token)->chr)
 		*token = create_token(*token);
 	if (join)
@@ -90,7 +93,10 @@ static void	handle_redirect_in(t_token **token, char **input)
 		(*token)->type = READ_INPUT;
 	}
 	if (!ft_strcmp(join, ""))
+	{
+		(*token)->chr = ft_strdup("<");
 		(*token)->type = -5;
+	}
 	if ((*token)->chr)
 		*token = create_token(*token);
 	if (join)

@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 15:26:32 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 02:28:33 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/27 18:10:34 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_string	*s_create(void)
 {
 	t_string	*new;
 
-	new = calloc(1, sizeof(t_string));
+	new = ft_calloc(1, sizeof(t_string));
 	if (!new)
 		return (NULL);
 	new->str = ft_calloc(1, sizeof(char));

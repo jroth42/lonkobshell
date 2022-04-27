@@ -20,6 +20,7 @@ t_cmd	*create_cmd(t_cmd *cmd)
 	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
+	new->cmd = NULL;
 	new->exec = NULL;
 	new->args = NULL;
 	new->redirect = NULL;
@@ -58,25 +59,6 @@ void	parse_args(t_cmd **cmd)
 	free_2d(args);
 }
 
-//	walk through tokens and append them to cmd struct
-//	create new cmd struct if pipe is found
-
-// bool	check_access(char *str)
-// {
-// 	char		**env;
-// 	char		*path;
-
-// 	env = return_env(NULL);
-// 	path = find_path(str, env);
-// 	if (!access(path, F_OK))
-// 	{
-// 		myfree(path);
-// 		return (true);
-// 	}
-// 	myfree(path);
-// 	return (false);
-// }
-
 char	*add_cmd(t_token **token)
 {
 	char		*ret;
@@ -114,5 +96,6 @@ void	parse_cmd(t_node *node)
 			pipe_cmd_handle(&node);
 		tmp = tmp->next;
 	}
-	create_exec(&node->cmd);
+	if (node->cmd->cmd)
+		create_exec(&node->cmd);
 }

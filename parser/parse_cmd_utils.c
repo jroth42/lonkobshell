@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 01:07:09 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 22:09:14 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/27 18:25:50 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	create_exec(t_cmd **cmd)
 	while ((*cmd) && (*cmd)->prev)
 		(*cmd) = (*cmd)->prev;
 	head = *cmd;
+	if (!(*cmd)->cmd)
+		return ;
 	while ((*cmd))
 	{
 		if ((*cmd)->args && (*cmd)->cmd)

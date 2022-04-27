@@ -6,7 +6,7 @@
 #    By: jroth <jroth@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 20:26:26 by jroth             #+#    #+#              #
-#    Updated: 2022/04/26 01:09:37 by jroth            ###   ########.fr        #
+#    Updated: 2022/04/27 18:50:34 by jroth            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ LIBFT = $(UTL)libft/
 SRC =	$(PRMPT)main.c $(PRMPT)signals.c $(PRMPT)more_signals.c\
 		$(LX)tokenize.c $(LX)token_handle.c $(LX)token_redirect.c \
 		$(LX)parse_cmd.c $(LX)parse_cmd_utils.c $(LX)redirect_list.c  $(LX)expander.c $(LX)exxpander.c\
-		$(EXEC)exec_utils.c $(EXEC)execute.c \
-		$(EXEC)check_builtin.c $(EXEC)route_stdin.c $(EXEC)route_stdout.c $(EXEC)here_doc.c\
+		$(EXEC)exec_utils.c $(EXEC)execute.c $(EXEC)check_builtin.c \
+		$(EXEC)route_stdin.c $(EXEC)route_stdout.c $(EXEC)here_doc.c $(EXEC)here_utils.c \
 		$(UTL)utils.c $(UTL)print.c $(UTL)free.c $(UTL)stringbuilder.c $(UTL)stringbuilder_create.c \
 		$(BLT)env.c $(BLT)env_utils.c $(BLT)echo.c $(BLT)exit.c $(BLT)export.c $(BLT)unset.c $(BLT)cd.c $(BLT)export_utils.c
 

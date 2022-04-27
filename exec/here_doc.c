@@ -6,20 +6,48 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:53:26 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/25 21:53:17 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/27 18:57:00 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-static void	here_doc_print(t_exec *fds)
+void	squote_no_expand(t_string **sb, char **tmp)
 {
-	while (fds->cmd_count)
+	int	i;
+
+	i = 1;
+	while ((*tmp)[i] && (*tmp)[i] != SQUOTE)
+		i++;
+	if ((*tmp)[i] == SQUOTE)
+		i++;
+	s_add_strn(*sb, *tmp, i);
+	*tmp += i;
+}
+
+void	expand_here(char **str)
+{
+	t_string	*sb;
+	char		*tmp;
+
+	sb = s_create();
+	tmp = *str;
+	while (*tmp)
 	{
-		write(0, "> ", 2);
-		fds->cmd_count--;
+		if (*tmp == '$')
+			dollar_expand(&sb, &tmp);
+		else if (*tmp == DQUOTE)
+			dquote_expand(&sb, &tmp);
+		else if (*tmp == SQUOTE)
+			squote_no_expand(&sb, &tmp);
+		else
+		{
+			s_add_c(sb, *tmp);
+			tmp++;
+		}
 	}
-	write(0, "> ", 2);
+	*str = s_get_str(sb);
+	s_destroy(sb);
 }
 
 int	heredoc(char *delimiter, t_exec *fds, int type)
@@ -40,13 +68,12 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 			break ;
 		}
 		if (type == 240)
-			expand(NULL, &read);
-		write(fds->here_fd[WRITE], read, ft_strlen(read));
-		myfree((void **)&read);
+			expand_here(&read);
+		write(fds->here_fd[WRITE], read, (int) ft_strlen(read));
 	}
 	change_termios(false);
 	close(fds->here_fd[WRITE]);
-	myfree((void **)&read);
-	myfree((void **)&delimiter_nl);
+	myfree(read);
+	myfree(delimiter_nl);
 	return (EXIT_SUCCESS);
 }

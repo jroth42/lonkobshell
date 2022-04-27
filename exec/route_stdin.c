@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 21:44:17 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 22:10:48 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/27 18:02:21 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static int	last_route(t_redir *last_in, t_exec *fds)
 	else if (last_in->type == HEREDOC || last_in->type == HEREDOC + 1)
 	{
 		pipe(fds->here_fd);
-		printf("%s\n", last_in->file);
 		heredoc(last_in->file, fds, last_in->type);
 		dup2(fds->here_fd[READ], STDIN_FILENO);
 	}

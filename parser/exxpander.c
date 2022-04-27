@@ -6,13 +6,13 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 21:50:24 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 01:02:01 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/27 18:51:05 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/shell.h"
 
-static void	dollar_special_expand(t_string **t_str, char **input)
+void	dollar_special_expand(t_string **t_str, char **input)
 {
 	if (**input == '$')
 	{
@@ -66,30 +66,6 @@ void	dquote(t_token **token, t_string **t_str, char **input)
 	*input += i;
 }
 
-	// s_add_c(*t_str, **input);
-	// (*input)++;
-	// while (**input && **input != DQUOTE)
-	// {
-	// 	if (**input == '$' && (*(*input + 1) == DQUOTE || *(*input + 1) == ' '))
-	// 		s_add_c(*t_str, '$');
-	// 	else if (**input == '$')
-	// 	{
-	// 		expand_var(token, t_str, input);
-	// 		continue ;
-	// 	}
-	// 	else
-	// 		s_add_c(*t_str, **input);
-	// 	(*input)++;
-	// }
-	// if (**input)
-	// {
-	// 	s_add_c(*t_str, **input);
-	// 	(*input)++;
-	// }
-	// if ((*token)->prev)
-	// 	(*token)->type = DQUOTE;
-	// else
-	// 	(*token)->type = COMMAND;
 void	squote(t_token **token, t_string **t_str, char **input)
 {
 	int	i;

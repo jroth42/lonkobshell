@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 18:33:58 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 22:10:10 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/27 18:41:41 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ void	handle_quotation(t_token **token, char **input);
 void	handle_redirections(t_token **token, char **input);
 void	handle_word(t_token **token, char **input);
 
+// EXPAND
 int		expander(t_token **token, char **input);
 void	expand(t_token **token, char **input);
 char	*env_var_variable(char **input);
+
 // REDIRECTs
 void	add_redirection(t_token *tmp, t_redir **redir);
 t_redir	*get_last_in_redir(t_redir *head);

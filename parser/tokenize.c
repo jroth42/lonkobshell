@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 18:19:05 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 22:08:13 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/27 16:11:52 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ void	lexer(t_node *node)
 	input = node->input;
 	while (*input)
 	{
-		if (white_space(*input))
+		if (*input == '&' || (*input == '|'))
+			handle_forbidden_and_pipe(&node->token, &input);
+		else if (white_space(*input))
 			skip_white_space(&input);
 		else if ((*input == '\"' || *input == '\'' || *input == '$'))
 			expander(&node->token, &input);
 		else if (*input == '>' || *input == '<')
 			handle_redirections(&node->token, &input);
-		else if (*input == '&' || (*input == '|'))
-			handle_forbidden_and_pipe(&node->token, &input);
 		else
 			handle_word(&node->token, &input);
 	}

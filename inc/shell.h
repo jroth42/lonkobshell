@@ -6,7 +6,7 @@
 /*   By: jroth <jroth@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:16:01 by jroth             #+#    #+#             */
-/*   Updated: 2022/04/26 17:23:32 by jroth            ###   ########.fr       */
+/*   Updated: 2022/04/27 18:51:13 by jroth            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,14 @@ int			s_add_str(t_string *t_str, char *append);
 int			s_add_int(t_string *t_str, int n);
 int			s_add_strn(t_string *t_str, char *append, int len);
 int			s_destroy(t_string *t_str);
+
+// EXPAND && HEREDOC EXPAND
+char		*get_word_envname(char **tmp);
+void		dollar_expand(t_string **sb, char **tmp);
+void		dollar_special_expand(t_string **t_str, char **input);
+void		here_doc_print(t_exec *fds);
+void		dquote_expand(t_string **sb, char **tmp);
+void		expand_here(char **str);
 // void	test_string(void);
 
 #endif
